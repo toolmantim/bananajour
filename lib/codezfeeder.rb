@@ -35,6 +35,8 @@ module CodezFeeder
     puts
     puts "Nice to meet you #{name}, i'm CodezFeeder."
     puts
+    puts "You can add a project using 'codezfeeder add' in your project's dir."
+    puts
   end
   # Returns the pids of the forked processes
   def self.boot!
@@ -43,11 +45,11 @@ module CodezFeeder
     CodezFeeder.advertise!
   end
   def self.serve_web!
-    puts "* Serving codez on da web at http://tim.local:90210/"
+    puts "* Serving codez to the web at http://tim.local:90210/"
     Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p 90210` }
   end
   def self.serve_git!
-    puts "* Serving codez on da gitz at git://tim.local/"
+    puts "* Serving codez to the gits at git://tim.local/"
     Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
   end
   def self.advertise!
