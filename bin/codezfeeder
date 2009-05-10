@@ -3,9 +3,16 @@
 require 'rubygems'
 require "#{File.dirname(__FILE__)}/../lib/codezfeeder"
 
-CodezFeeder.setup! unless CodezFeeder.setup?
-
-CodezFeeder.serve_web!
-CodezFeeder.serve_git!  
+if !CodezFeeder.setup?
+  CodezFeeder.setup!
+  CodezFeeder.boot!
+  puts
+  puts "Everything's up and running! Add a project using the add command, for example:"
+  puts
+  puts "  code/myproject$ " + "codezfeeder add".foreground(:green)
+  puts
+else
+  CodezFeeder.boot!
+end  
 
 Process.wait
