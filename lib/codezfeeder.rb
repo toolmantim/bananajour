@@ -1,3 +1,6 @@
+libdir = File.dirname(__FILE__)
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+
 require 'yaml'
 require 'fancypath'
 require 'ostruct'
@@ -49,10 +52,42 @@ module CodezFeeder
     Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p 90210` }
   end
   def self.serve_git!
-    puts "* Serving codez to the gits at git://tim.local/"
+    puts "* Serving codez to the gits at #{git_uri}"
     Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
+  end
+  def self.git_uri
+    "git://tim.local/"
   end
   def self.advertise!
     puts "* Advertising services on bonjour"
+    # TODO:
+  end
+  def self.add!(name)
+    unless File.directory?(".git")
+      STDERR.puts "Can't add project #{File.expand_path(".")}, no .git directory found."
+      exit(1)
+    end
+
+    repo = name ? Repository.for_name(name) : Repository.for_working_path(Fancypath("."))
+
+    if repo.exists?
+      STDERR.puts "You've already a project #{repo}."
+      exit(1)
+    end
+
+    repo.init!
+    `git remote add feeder #{repo.path.expand_path}`
+    puts added_success_message(repo.dirname)
+  end
+  def self.added_success_message(repo_dirname)
+    "Repo #{repo_dirname} added. To get started: git push feeder master"
+  end
+  def self.repositories
+    repositories_path.children.map {|r| Repository.new(r)}.sort_by {|r| r.name}
+  end
+  def self.repository(name)
+    repositories.find {|r| r.name == name}
   end
 end
+
+require 'codezfeeder/repository'

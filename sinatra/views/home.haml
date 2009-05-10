@@ -1,1 +1,38 @@
-%h2 Projects
+- if @repositories.empty?
+
+  %h2 Add a project
+  
+  %pre
+    :preserve
+      $ cd ~/Code/milliondollaridea
+      $ codezfeeder add
+      #{CodezFeeder.added_success_message('milliondollaridea.git')}
+      $ git push feeder master
+      Counting objects: 3, done.
+      Writing objects: 100% (3/3), 229 bytes, done.
+      Total 3 (delta 0), reused 3 (delta 0)
+      Unpacking objects: 100% (3/3), done.
+      To #{CodezFeeder.repositories_path.expand_path}/milliondollaridea.git
+       * [new branch]      master -> master
+      
+- else
+
+  %h2 Projects
+
+  - for repository in @repositories
+    %h3
+      &= repository.name
+    %p
+      &= repository.uri
+
+    - if admin?
+      %form{:action => "/#{repository.dirname}", :method => "post"}
+        %input{:type => "hidden", :name => "_method", :value => "DELETE"}/
+        %input{:type => "submit", :value => "Delete"}/
+    
+    %ul
+      - for commit in repository.grit_repo.commits
+        %li
+          %p&= commit.id_abbrev
+          %p&= commit.short_message
+          %p&= commit.author_string
