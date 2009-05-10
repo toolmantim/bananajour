@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require "#{File.dirname(__FILE__)}/../lib/codezfeeder"
+
+CodezFeeder.setup! unless CodezFeeder.setup?
+
+CodezFeeder.serve_web!
+CodezFeeder.serve_git!  
+
+Process.wait
