@@ -40,13 +40,24 @@
         
         h2
           :margin 0 0 5px 0
+          :color #333
+          :font-size 24px
+        
+        h3
+          :font-size 12px
           :color #666
+          :margin 5px 0
           
         span.uri
           :margin 5px 0
           :font-size 14px
           :color #888
           :font-weight normal
+          
+        p.heads
+          :font-size 12px
+          :margin 5px 0
+          :color #888
         
         form.admin
           :position absolute
@@ -94,14 +105,21 @@
         %span.uri
           &= repository.uri
 
+      %p.heads
+        %strong Branches:
+        - repository.grit_repo.heads.collect {|h| h.name}.each_with_index do |branch, i|
+          = ",&nbsp;" unless i == 0
+          %span>&= branch
       - if admin?
         %form.admin{:action => "/#{repository.dirname}", :method => "post", :onsubmit => "return confirm('Delete #{repository.name}?');"}
           %input{:type => "hidden", :name => "_method", :value => "DELETE"}/
           %input{:type => "submit", :value => "Delete"}/
-    
+
+      %h3 Recent commits to master:
       %ul.commits
         - limit = 5
-        - for commit in repository.grit_repo.commits('master', limit)
+        
+        - repository.grit_repo.commits("head", limit).each do |commit|
           %li{:class => cycle}
             %em.meta
               \~

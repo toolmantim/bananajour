@@ -2,9 +2,14 @@ libdir = File.dirname(__FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'yaml'
-require 'fancypath'
 require 'ostruct'
+
+gem 'fancypath'
+require 'fancypath'
+
+gem 'rainbow'
 require 'rainbow'
+
 require 'socket'
 
 module Bananajour
