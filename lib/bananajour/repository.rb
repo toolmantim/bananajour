@@ -40,5 +40,8 @@ module Bananajour
     def destroy!
       path.remove
     end
+    def readme
+      grit_repo.tree.contents.find {|c| c.name =~ /Readme/i }
+    end
   end
 end

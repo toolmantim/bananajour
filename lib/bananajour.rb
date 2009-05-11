@@ -41,12 +41,12 @@ module Bananajour
     puts
   end
   def self.serve_web!
-    puts "* Serving codez to the web at " + "http://#{host_name}:90210/".foreground(:yellow)
     Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p 90210` }
+    puts "* Started " + "http://#{host_name}:90210/".foreground(:yellow)
   end
   def self.serve_git!
-    puts "* Serving codez to the gits at " + "#{git_uri}".foreground(:yellow)
     Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
+    puts "* Started " + "#{git_uri}".foreground(:yellow)
   end
   def self.host_name
     Socket.gethostname
@@ -55,7 +55,7 @@ module Bananajour
     "git://#{host_name}/"
   end
   def self.advertise!
-    puts "* Advertising services on bonjour"
+    puts "* Advertising on bonjour"
     # TODO:
   end
   def self.add!(name)
@@ -72,7 +72,7 @@ module Bananajour
     end
 
     repo.init!
-    `git remote add feeder #{repo.path.expand_path}`
+    `git remote add banana #{repo.path.expand_path}`
     puts added_success_message(repo.dirname)
   end
   def self.added_success_message(repo_dirname)

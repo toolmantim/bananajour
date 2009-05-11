@@ -5,14 +5,26 @@
     %style{:type => "text/css"}
       :sass
         body
-          :background-color yellow
+          :background-color #dc0
           :color black
+          :font-family "Helvetica", arial, sans-serif
+          :width 600px
+          :margin 0 auto
+          
+        h1
+          :font-size 32px
+          :margin 20px 0 10px 0
+
+          .owner
+            :display block
+            :font-size 14px
+            :font-weight bold
+            :text-transform uppercase
+            :color #fff
       
   %body
     %h1
+      %span.owner
+        == #{Bananajour.config.name}&rsquo;s
       Bananajour
-      \-
-      == #{Bananajour.config.name} 
-
     = yield
-
