@@ -24,6 +24,8 @@ Commands:
   none       - Start the web, git and bonjour serving
   add [name] - Adds the current directory as a new project.
 HELP
+
 else
   raise "Don't understand"
+
 end
