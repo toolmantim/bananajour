@@ -76,7 +76,7 @@ module Bananajour
     puts added_success_message(repo.dirname)
   end
   def self.added_success_message(repo_dirname)
-    "Repo #{repo_dirname} added. To get started: git push feeder master"
+    "Repo #{repo_dirname} added. To get started: git push banana master"
   end
   def self.repositories
     repositories_path.children.map {|r| Repository.new(r)}.sort_by {|r| r.name}
