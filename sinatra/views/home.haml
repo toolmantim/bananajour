@@ -5,14 +5,14 @@
   %pre
     :preserve
       $ cd ~/Code/milliondollaridea
-      $ codezfeeder add
-      #{CodezFeeder.added_success_message('milliondollaridea.git')}
+      $ bananajour add
+      #{Bananajour.added_success_message('milliondollaridea.git')}
       $ git push feeder master
       Counting objects: 3, done.
       Writing objects: 100% (3/3), 229 bytes, done.
       Total 3 (delta 0), reused 3 (delta 0)
       Unpacking objects: 100% (3/3), done.
-      To #{CodezFeeder.repositories_path.expand_path}/milliondollaridea.git
+      To #{Bananajour.repositories_path.expand_path}/milliondollaridea.git
        * [new branch]      master -> master
       
 - else

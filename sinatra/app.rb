@@ -1,7 +1,8 @@
 require 'rubygems'
-require "#{File.dirname(__FILE__)}/../lib/codezfeeder"
+require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
 require 'sinatra'
+require 'ipaddr'
 
 disable :logging
 
@@ -12,13 +13,13 @@ helpers do
 end
 
 get "/" do
-  @repositories = CodezFeeder.repositories
+  @repositories = Bananajour.repositories
   haml :home
 end
 
 delete "/:repository.git" do
   if admin?
-    repo = CodezFeeder.repository(params[:repository])
+    repo = Bananajour.repository(params[:repository])
     repo.destroy!
   end
   redirect "/"

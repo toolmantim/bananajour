@@ -1,20 +1,20 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require "#{File.dirname(__FILE__)}/../lib/codezfeeder"
+require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
-CodezFeeder.setup! unless CodezFeeder.setup?
+Bananajour.setup! unless Bananajour.setup?
 
 case ARGV.first
 
 when nil, "serve"
-  CodezFeeder.serve_web!
-  CodezFeeder.serve_git!
-  CodezFeeder.advertise!
+  Bananajour.serve_web!
+  Bananajour.serve_git!
+  Bananajour.advertise!
   Process.wait
 
 when "add"
-  CodezFeeder.add!(ARGV[1])
+  Bananajour.add!(ARGV[1])
 
 when "help", "--help", "-h"
   puts <<-HELP

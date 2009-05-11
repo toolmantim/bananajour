@@ -1,13 +1,13 @@
 gem 'mojombo-grit'
 require 'grit'
 
-module CodezFeeder
+module Bananajour
   class Repository
     def self.for_name(name)
-      new(CodezFeeder.repositories_path / (name + ".git"))
+      new(Bananajour.repositories_path / (name + ".git"))
     end
     def self.for_working_path(working_path)
-      new(CodezFeeder.repositories_path / (working_path.expand_path.split.last.to_s + ".git"))
+      new(Bananajour.repositories_path / (working_path.expand_path.split.last.to_s + ".git"))
     end
     def initialize(path)
       @path = Fancypath(path)
@@ -32,7 +32,7 @@ module CodezFeeder
       name
     end
     def uri
-      CodezFeeder.git_uri + dirname
+      Bananajour.git_uri + dirname
     end
     def grit_repo
       Grit::Repo.new(path)

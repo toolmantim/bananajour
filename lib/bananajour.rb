@@ -5,10 +5,11 @@ require 'yaml'
 require 'fancypath'
 require 'ostruct'
 require 'rainbow'
+require 'socket'
 
-module CodezFeeder
+module Bananajour
   def self.path
-    Fancypath(File.expand_path("~/.codezfeeder"))
+    Fancypath(File.expand_path("~/.bananajour"))
   end
   def self.config_path
     path/"config.yml"
@@ -25,32 +26,33 @@ module CodezFeeder
   def self.setup!
     path.create_dir
     repositories_path.create_dir
-    puts "Welcome! I don't think we've met."
+    puts "Holy bananarama! I don't think we've met."
     puts
     name = ""
     while name.length == 0 do
-      print "Your name? ".foreground(:red)
+      print "Your name plz? ".foreground(:yellow)
       name = (gets || "").strip
     end
-
     config_path.write({"name" => name}.to_yaml)
-
     puts
-    puts "Nice to meet you #{name}, i'm CodezFeeder."
+    puts "Nice to meet you #{name}, I'm Bananajour."
     puts
-    puts "You can add a project using 'codezfeeder add' in your project's dir."
+    puts "You can add a project using 'bananajour add' in your project's dir."
     puts
   end
   def self.serve_web!
-    puts "* Serving codez to the web at http://tim.local:90210/"
+    puts "* Serving codez to the web at " + "http://#{host_name}:90210/".foreground(:yellow)
     Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p 90210` }
   end
   def self.serve_git!
-    puts "* Serving codez to the gits at #{git_uri}"
+    puts "* Serving codez to the gits at " + "#{git_uri}".foreground(:yellow)
     Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
   end
+  def self.host_name
+    Socket.gethostname
+  end
   def self.git_uri
-    "git://tim.local/"
+    "git://#{host_name}/"
   end
   def self.advertise!
     puts "* Advertising services on bonjour"
@@ -84,4 +86,4 @@ module CodezFeeder
   end
 end
 
-require 'codezfeeder/repository'
+require 'bananajour/repository'
