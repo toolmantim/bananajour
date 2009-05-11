@@ -31,7 +31,7 @@ module Bananajour
     name = ""
     while name.length == 0 do
       print "Your name plz? ".foreground(:yellow)
-      name = (gets || "").strip
+      name = (STDIN.gets || "").strip
     end
     config_path.write({"name" => name}.to_yaml)
     puts
