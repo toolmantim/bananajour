@@ -33,3 +33,19 @@ delete "/:repository.git" do
   end
   redirect "/"
 end
+
+get "/:repository.git/discover" do
+  hosts = []
+
+  service = DNSSD.browse("_git._tcp") do |reply|
+    DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
+      hosts << [reply.name, rr.text_record]
+    end
+  end
+
+  sleep 5
+  service.stop
+
+  content_type "text/plain"
+  hosts.inspect
+end

@@ -43,5 +43,12 @@ module Bananajour
     def readme
       grit_repo.tree.contents.find {|c| c.name =~ /Readme/i }
     end
+    def advertise!
+      tr = DNSSD::TextRecord.new
+      tr["uri"] = uri
+      tr["bjour-name"] = Bananajour.config.name
+      tr["bjour-uri"] = Bananajour.web_uri
+      DNSSD.register(name, "_git._tcp", nil, 9418, tr) {}
+    end
   end
 end

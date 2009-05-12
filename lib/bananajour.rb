@@ -12,6 +12,8 @@ require 'rainbow'
 
 require 'socket'
 
+require 'dnssd'
+
 module Bananajour
   def self.path
     Fancypath(File.expand_path("~/.bananajour"))
@@ -46,8 +48,14 @@ module Bananajour
     puts
   end
   def self.serve_web!
-    Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p 90210` }
-    puts "* Started " + "http://#{host_name}:90210/".foreground(:yellow)
+    Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port}` }
+    puts "* Started " + web_uri.foreground(:yellow)
+  end
+  def self.web_port
+    90210
+  end
+  def self.web_uri
+    "http://#{host_name}:90210/"
   end
   def self.serve_git!
     Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
@@ -61,7 +69,11 @@ module Bananajour
   end
   def self.advertise!
     puts "* Advertising on bonjour"
-    # TODO:
+    
+    tr = DNSSD::TextRecord.new
+    tr["uri"] = web_uri
+    tr["name"] = Bananajour.config.name
+    DNSSD.register("#{config.owner}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
   def self.add!(name)
     unless File.directory?(".git")

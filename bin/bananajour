@@ -11,11 +11,12 @@ when nil, "serve"
   Bananajour.serve_web!
   Bananajour.serve_git!
   Bananajour.advertise!
+  Bananajour.repositories.each {|r| r.advertise!}
   Process.wait
 
 when "add"
   Bananajour.add!(ARGV[1])
-
+  
 when "help", "--help", "-h"
   puts <<-HELP
 Usage: #{$0} [<command>]
