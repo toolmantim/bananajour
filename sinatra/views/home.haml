@@ -154,7 +154,7 @@
 
       %ul.commits
         - for uc in repository.recent_unique_commits
-          %li{:class => cycle}
+          %li
             %span.branches
               - for head in uc.heads
                 %strong&= head.name
