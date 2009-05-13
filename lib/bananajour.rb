@@ -104,3 +104,4 @@ module Bananajour
 end
 
 require 'bananajour/repository'
+require 'bananajour/grit_extensions'

@@ -25,6 +25,7 @@
         :text-align right
         :margin-top -30px
         :font-size 14px
+        :opacity 0.5
         
         a
           :color #000
@@ -78,21 +79,56 @@
           :padding 0
           :list-style none
         
+        ul.commits
+          :width 100%
+        
         ul.commits li
           :font-size 12px
           :line-height 1.5em
-          :padding 5px 8px
+          :padding 8px 5px
+          :min-height 30px
+          :border 0px solid #ddd
+          :border-top-width 1px
           
-          &.odd
-            :background-color #e5e5e5
-          &.even
-            :background-color #f5f5f5
+          &:first-child
+            :border-top-width 0
           
-          .meta
-            :font-size 10px
-            :text-transform uppercase
-            :color #999
+          span.branches
             :float right
+            :display block
+            :font-size 11px
+            strong
+              :background-color #eee
+              :color #666
+              :padding 2px 5px
+              :margin-left 3px
+              :font-weight normal
+          
+          img.avatar
+            :float left
+            :width 30px
+            :height 30px
+            :margin-right 5px
+
+          p
+            :margin 0
+            :line-height 1em
+            :margin-left 40px
+            
+          p.message
+            :line-height 1.4em
+
+          p.meta
+            :font-size 10px
+            :color #999
+            :line-height 1.5em
+            
+            span.extra
+              :display none
+              
+          &:hover p.meta span.extra
+            :display inline
+
   %p.toc
     Repos:
     - for repository in @repositories
@@ -110,21 +146,25 @@
         - repository.grit_repo.heads.collect {|h| h.name}.each_with_index do |branch, i|
           = ",&nbsp;" unless i == 0
           %span>&= branch
+
       - if admin?
         %form.admin{:action => "/#{repository.dirname}", :method => "post", :onsubmit => "return confirm('Delete #{repository.name}?');"}
           %input{:type => "hidden", :name => "_method", :value => "DELETE"}/
           %input{:type => "submit", :value => "Delete"}/
 
-      %h3 Recent commits to master:
       %ul.commits
-        - limit = 5
-        
-        - repository.grit_repo.commits("head", limit).each do |commit|
+        - for uc in repository.recent_unique_commits
           %li{:class => cycle}
-            %em.meta
-              \~
-              &= time_ago_in_words(commit.committed_date).gsub("about ","")
+            %span.branches
+              - for head in uc.heads
+                %strong&= head.name
+            %img.avatar{:src => uc.commit.author.gravatar_image}
+            %p.message&= uc.commit.short_message
+            %p.meta
+              &= time_ago_in_words(uc.commit.committed_date).gsub("about ","")
               ago
-              \-
-              &= commit.author
-            &= commit.short_message
+              %span.extra
+                \-
+                &= uc.commit.author
+                \-
+                &= uc.commit.id_abbrev

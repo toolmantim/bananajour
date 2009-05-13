@@ -16,9 +16,6 @@ helpers do
   def gravatar(email)
     "http://www.gravatar.com/avatar/#{Digest::md5(email.downcase)}"
   end
-  def cycle
-    %w{even odd}[@_cycle = ((@_cycle || -1) + 1) % 2]
-  end
 end
 
 get "/" do

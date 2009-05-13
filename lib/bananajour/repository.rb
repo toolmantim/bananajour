@@ -37,6 +37,38 @@ module Bananajour
     def grit_repo
       Grit::Repo.new(path)
     end
+    def recent_commits_all_branches
+      grit_repo.heads.collect do |head|
+        grit_repo.commits(head.name).map do |commit|
+          Struct.new(:commit, :branch).new(commit, head)
+        end
+      end.flatten.sort_by {|cb| cb.commit.committed_date}.reverse
+    end
+    def recent_unique_commits
+      unique_commits = {}
+      grit_repo.heads.each do |head|
+        grit_repo.commits(head.name).each do |commit|
+          unique_commits[commit.id] ||= Struct.new(:commit, :heads).new(commit, [])
+          unique_commits[commit.id].heads << head
+        end
+      end
+      unique_commits.to_a.map {|id, unique_commit| unique_commit}.sort_by {|uc| uc.commit.committed_date}.reverse
+    end
+    # def all_recent_commits
+    #   commits_to_heads = {}
+    # 
+    #   grit_repo.heads.collect do |head|
+    #     grit_repo.commits(head.name).map do |commit|
+    #       commits[commit.id] ||= []
+    #       commits[commit.id] << head
+    #     end
+    # 
+    #   end.flatten
+    #   
+    #   
+    #   Struct.new(:commit, :heads)
+    #   
+    # end
     def destroy!
       path.remove
     end
