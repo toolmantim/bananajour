@@ -19,3 +19,7 @@ add a new project
     git push banana master
 
 and fire up http://localhost:90210/
+
+If somebody starts sharing a bananjour repository with the same name on the network it'll automatically show up on the web interface, along with their branches and recent git commit activity.
+
+
