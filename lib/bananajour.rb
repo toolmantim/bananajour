@@ -97,7 +97,7 @@ module Bananajour
     puts init_success_message(repo.dirname)
   end
   def self.init_success_message(repo_dirname)
-    "Repo #{repo_dirname} init'd - remote banana added. To get started: " + "git push banana master".foreground(:yellow)
+    "Bananajour repository #{repo_dirname} initialised and remote banana added.\nNext: " + "git push banana master".foreground(:yellow)
   end
   def self.repositories
     repositories_path.children.map {|r| Repository.new(r)}.sort_by {|r| r.name}

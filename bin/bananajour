@@ -14,8 +14,8 @@ when nil
   Bananajour.repositories.each {|r| r.advertise!}
   Process.wait
 
-when "add"
-  Bananajour.add!(ARGV[1] || File.expand_path("."))
+when "init"
+  Bananajour.init!(ARGV[1] || File.expand_path("."))
   
 when "help", "--help", "-h"
   puts <<-HELP
