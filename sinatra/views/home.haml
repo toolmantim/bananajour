@@ -123,10 +123,11 @@
           &:hover p.meta span.extra
             :display inline
 
-  %p.toc
-    Repos:
-    - for repository in @repositories
-      %a{:href => "##{repository.dirname}"}&= repository.name
+  - if @repositories.length > 1
+    %p.toc
+      Repos:
+      - for repository in @repositories
+        %a{:href => "##{repository.dirname}"}&= repository.name
     
   - for repository in @repositories
     .repository{:id => repository.dirname}
