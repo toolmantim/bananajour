@@ -7,6 +7,13 @@ Unlike gitjour the repositories you're serving are not your working git reposito
 
 Bananajour was developed by [Tim Lucas](http://toolmantim.com/).
 
+Requirements and Support
+------------------------
+
+So far it's only been tested with Mac OS 10.5 and Ruby 1.8.6. Any feedback and help to support linux and windows platforms would be much appreciated!
+
+You'll need at least git version 1.6
+
 Installation and usage
 ----------------------
 
@@ -29,11 +36,6 @@ Fire up [http://localhost:90210/](http://localhost:90210/) to check it out.
 
 If somebody starts sharing a bananajour repository with the same name on the
 network it'll automatically show up in the network thanks to the wonder that is bonjour.
-
-Requirements and Support
-------------------------
-
-So far it's only been tested with Mac OS 10.5 and Ruby 1.8.6. Any feedback and help to support linux and windows platforms would be much appreciated!
 
 Official repository and support
 -------------------------------

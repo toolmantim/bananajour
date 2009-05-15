@@ -15,7 +15,7 @@ module Bananajour
     end
     def init!
       path.create_dir
-      Dir.chdir(path) { `git-init --bare` }
+      Dir.chdir(path) { `git init --bare` }
     end
     def name
       dirname.sub(".git",'')

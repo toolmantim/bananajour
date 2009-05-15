@@ -36,7 +36,7 @@ module Bananajour
     repositories_path.create_dir
     puts "Holy bananarama! I don't think we've met."
     puts
-    default_name = `git-config user.name`.strip
+    default_name = `git config user.name`.strip
     print "Your Name?".foreground(:yellow) + " [#{default_name}] "
     name = (STDIN.gets || "").strip
     name = default_name if name.empty?
@@ -59,7 +59,7 @@ module Bananajour
     "http://#{host_name}:#{web_port}/"
   end
   def self.serve_git!
-    Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
+    Thread.new { `git daemon --base-path=#{repositories_path} --export-all` }
     puts "* Started " + "#{git_uri}".foreground(:yellow)
   end
   def self.host_name
