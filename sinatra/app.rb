@@ -1,9 +1,13 @@
 require 'rubygems'
 require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
+gem 'sinatra', '0.9.1.1'
 require 'sinatra'
-require 'digest/md5'
+
+gem 'json', '1.1.2'
 require 'json'
+
+require 'digest/md5'
 
 disable :logging
 set :environment, :production

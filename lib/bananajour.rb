@@ -4,14 +4,15 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'yaml'
 require 'ostruct'
 
-gem 'fancypath'
+gem 'fancypath', '0.5.8'
 require 'fancypath'
 
-gem 'rainbow'
+gem 'rainbow', '1.0.1'
 require 'rainbow'
 
 require 'socket'
 
+gem 'dnssd', '0.6.0'
 require 'dnssd'
 
 module Bananajour
@@ -41,7 +42,7 @@ module Bananajour
     name = default_name if name.empty?
     config_path.write({"name" => name}.to_yaml)
     puts
-    puts "Nice to meet you #{name}, I'm Bananajour. Add a project with " + "bananajour add".foreground(:yellow)
+    puts "Nice to meet you #{name}, I'm Bananajour. Add a project with " + "bananajour init".foreground(:yellow)
     puts
   end
   def self.serve_web!
@@ -138,3 +139,4 @@ end
 
 require 'bananajour/repository'
 require 'bananajour/grit_extensions'
+require 'bananajour/version'
