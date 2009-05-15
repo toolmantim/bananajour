@@ -7,7 +7,7 @@ Bananajour.setup! unless Bananajour.setup?
 
 case ARGV.first
 
-when nil, "serve"
+when nil
   Bananajour.serve_web!
   Bananajour.serve_git!
   Bananajour.advertise!
@@ -19,14 +19,14 @@ when "add"
   
 when "help", "--help", "-h"
   puts <<-HELP
-Usage: #{$0} [<command>]
+Usage: #{File.basename($0)} [<command>]
 
 Commands:
   none       - Start the web, git and bonjour serving
-  add [path] - Adds a new project
+  init [path] - Inits a new bananajour repository
 HELP
 
 else
-  raise "Don't understand"
-
+  STDERR.puts "Say what? Try: #{File.basename($0)} help"
+  exit(1)
 end

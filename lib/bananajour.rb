@@ -72,11 +72,11 @@ module Bananajour
     tr["name"] = Bananajour.config.name
     DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
-  def self.add!(dir)
+  def self.init!(dir)
     dir = Fancypath(dir)
     
     unless dir.join(".git").directory?
-      STDERR.puts "Can't add project #{dir}, no .git directory found."
+      STDERR.puts "Can't init project #{dir}, no .git directory found."
       exit(1)
     end
     
@@ -94,10 +94,10 @@ module Bananajour
     
     repo.init!
     Dir.chdir(dir) { `git remote add banana #{repo.path.expand_path}` }
-    puts added_success_message(repo.dirname)
+    puts init_success_message(repo.dirname)
   end
-  def self.added_success_message(repo_dirname)
-    "Repo #{repo_dirname} added. To get started: git push banana master"
+  def self.init_success_message(repo_dirname)
+    "Repo #{repo_dirname} init'd - remote banana added. To get started: " + "git push banana master".foreground(:yellow)
   end
   def self.repositories
     repositories_path.children.map {|r| Repository.new(r)}.sort_by {|r| r.name}
