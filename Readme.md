@@ -1,46 +1,51 @@
-# Bananajour
+Bananajour - Local git publication and collaboration
+====================================================
 
 Local git repository hosting with a sexy web interface and bonjour discovery. It's like a adhoc, local, network-aware github!
 
 Unlike gitjour the repositories you're serving are not your working git repositories, you can publish projects from any directory and it has a sexy web interface.
 
-## Installation
+Bananajour was developed by [Tim Lucas](http://toolmantim.com/).
+
+Installation and usage
+----------------------
 
     gem install bananajour
-
-## Getting started
 
 Start it up:
 
     bananajour
     
-to initialize a new bananjour repository:
+Initialize a new bananjour repository:
 
     cd ~/code/myproj
     bananajour init
 
-and publish your codez:
+Publish your codez:
 
     git push banana master
 
 Fire up [http://localhost:90210/](http://localhost:90210/) to check it out.
 
 If somebody starts sharing a bananajour repository with the same name on the
-network it'll automatically show up in the network.
+network it'll automatically show up in the network thanks to the wonder that is bonjour.
 
-## Supported configurations
+Requirements and Support
+------------------------
 
-* Mac OS X - Ruby 1.8.6
-* others? (need testers!)
+So far it's only been tested with Mac OS 10.5 and Ruby 1.8.6. Any feedback and help to support linux and windows platforms would be much appreciated!
 
-## Official repository and support
+Official repository and support
+-------------------------------
 
 [http://github.com/toolmantim/bananajour](http://github.com/toolmantim/bananajour) is where Bananajour lives along with all of its support issues.
 
-## Props
+Props
+-----
 
 [Carla Hackett](http://carlahackettdesign.com/) for the rad logo.
 
-## License
+License
+-------
 
-All directories and files are MIT Licensed except for public/logo.png which is All Rights Reserved.
+All directories and files are MIT Licensed.

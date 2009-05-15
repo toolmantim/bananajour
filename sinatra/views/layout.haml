@@ -1,9 +1,7 @@
 !!! Strict
 %html
   %head
-    %title
-      == #{Bananajour.config.name}&rsquo;s
-      Bananajour
+    %title= @page_title
 
     %style{:type => "text/css"}
       :sass
@@ -14,23 +12,23 @@
           :width 650px
           :margin 0 auto
           
-        h1
-          :font-size 32px
-          :margin 30px 0 10px 12px
-          :position relative
-          :text-transform uppercase
-
-          img
-            :position absolute
-            :top 0
-            :left -140px
-
-          .owner
-            :display block
-            :font-size 16px
-            :font-weight bold
+          > h1
+            :font-size 32px
+            :margin 30px 0 10px 12px
+            :position relative
             :text-transform uppercase
-            :color #fff
+
+            img
+              :position absolute
+              :top 0
+              :left -140px
+
+            .owner
+              :display block
+              :font-size 16px
+              :font-weight bold
+              :text-transform uppercase
+              :color #fff
       
   %body
     %h1

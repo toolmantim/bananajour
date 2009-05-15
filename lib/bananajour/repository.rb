@@ -46,5 +46,20 @@ module Bananajour
     def network_repositories(network_repositories)
       network_repositories.select {|nr| nr.name == name && Bananajour.web_uri != nr.bananajour.uri}
     end
+    def readme_file
+      grit_repo.tree.contents.find {|c| c.name =~ /readme/i}
+    end
+    def rendered_readme
+      case File.extname(readme_file.name)
+      when /\.md/i, /\.markdown/i
+        require 'rdiscount'
+        RDiscount.new(readme_file.data).to_html
+      when /\.textile/i
+        require 'redcloth'
+        RedCloth.new(readme_file.data).to_html(:textile)
+      end
+    rescue LoadError
+      ""
+    end
   end
 end

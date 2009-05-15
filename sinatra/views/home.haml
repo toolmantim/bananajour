@@ -1,3 +1,5 @@
+- @page_title = "#{Bananajour.config.name}&rsquo;s Bananajour"
+
 - if @repositories.empty?
 
   %h2 Add a project
@@ -39,6 +41,14 @@
         :margin 10px 0
         :position relative
         :border 4px solid #ff0
+        
+        .readme
+          :position absolute
+          :top 0
+          :right 10px
+          :font-size 12px
+          a
+            :color #888
         
         h2
           :margin 0 0 5px 0
@@ -117,11 +127,16 @@
     
   - for repository in @repositories
     .repository{:id => repository.dirname}
+
+      - if repository.readme_file
+        %p.readme
+          %a{:href => "/#{repository.dirname}/readme"} Readme
+    
       %h2
         %span.name&= repository.name
         %span.uri
           &= repository.uri
-
+          
       %p.heads
         %strong Published branches:
         - repository.grit_repo.heads.collect {|h| h.name}.each_with_index do |branch, i|

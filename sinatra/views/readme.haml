@@ -1,0 +1,36 @@
+- @page_title = "Readme for #{@repository.name}"
+
+%style{:type => "text/css"}
+  :sass
+    #readme
+      :font-size 75%
+      :background-color #fff
+      :padding 5px
+      
+      > *
+        :margin 10px
+        
+    .return
+      :float right
+      a
+        :color #000
+        
+    body > h2
+      :margin-left 12px
+      
+    body > h2, .return a
+      :color #980
+
+%p.return
+  %a{:href => "/"} Return to repositories
+
+%h2
+  Readme for
+  = @repository.name
+
+#readme
+  - if @rendered_readme
+    = @rendered_readme
+  - else
+    %pre
+      = @plain_readme
