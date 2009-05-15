@@ -52,7 +52,7 @@ module Bananajour
     90210
   end
   def self.web_uri
-    "http://#{host_name}:90210/"
+    "http://#{host_name}:#{web_port}/"
   end
   def self.serve_git!
     Thread.new { `git-daemon --base-path=#{repositories_path} --export-all` }
@@ -70,7 +70,7 @@ module Bananajour
     tr = DNSSD::TextRecord.new
     tr["uri"] = web_uri
     tr["name"] = Bananajour.config.name
-    DNSSD.register("#{config.owner}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
+    DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
   def self.add!(dir)
     dir = Fancypath(dir)
