@@ -45,6 +45,9 @@ module Bananajour
     puts
   end
   def self.serve_web!
+    if repositories.empty?
+      STDERR.puts "Warning: you don't have any bananajour repositories. See: bananajour init"
+    end
     Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port}` }
     puts "* Started " + web_uri.foreground(:yellow)
   end
