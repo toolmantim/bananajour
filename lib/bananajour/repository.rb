@@ -35,9 +35,6 @@ module Bananajour
     def recent_commits
       grit_repo.commits(nil, 10)
     end
-    def destroy!
-      path.remove
-    end
     def advertise!
       tr = DNSSD::TextRecord.new
       tr["uri"] = uri

@@ -23,14 +23,6 @@ get "/" do
   haml :home
 end
 
-delete "/:repository.git" do
-  if admin?
-    repo = Bananajour.repository(params[:repository])
-    repo.destroy!
-  end
-  redirect "/"
-end
-
 get "/:repository.git/discover" do
   hosts = []
 

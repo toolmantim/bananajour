@@ -147,11 +147,6 @@
           = ",&nbsp;" unless i == 0
           %span>&= branch
 
-      - if admin?
-        %form.admin{:action => "/#{repository.dirname}", :method => "post", :onsubmit => "return confirm('Delete #{repository.name}?');"}
-          %input{:type => "hidden", :name => "_method", :value => "DELETE"}/
-          %input{:type => "submit", :value => "Delete"}/
-
       %ul.commits
         - for commit in repository.recent_commits
           %li
