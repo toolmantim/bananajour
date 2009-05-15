@@ -15,6 +15,13 @@ set :environment, :production
 load "#{File.dirname(__FILE__)}/lib/date_helpers.rb"
 helpers DateHelpers
 
+helpers do
+  def json(body)
+    content_type "application/json"
+    params[:callback] ? "#{params[:callback]}(#{body});" : body
+  end
+end
+
 get "/" do
   @repositories = Bananajour.repositories
   @network_repositories = Bananajour.network_repositories
@@ -30,11 +37,9 @@ get "/:repository/readme" do
 end
 
 get "/index.json" do
-  content_type "application/json"
-  Bananajour.to_hash.to_json
+  json Bananajour.to_hash.to_json
 end
 
 get "/:repository.json" do
-  content_type "application/json"
-  Bananajour::Repository.for_name(params[:repository]).to_hash.to_json
+  json Bananajour::Repository.for_name(params[:repository]).to_hash.to_json
 end
