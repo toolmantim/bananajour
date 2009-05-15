@@ -85,7 +85,7 @@
         ul.commits li
           :font-size 12px
           :line-height 1.5em
-          :padding 8px 5px
+          :padding 8px 0
           :min-height 30px
           :border 0px solid #ddd
           :border-top-width 1px
@@ -93,27 +93,27 @@
           &:first-child
             :border-top-width 0
           
-          span.branches
+          em.branch
             :float right
             :display block
             :font-size 11px
-            strong
-              :background-color #eee
-              :color #666
-              :padding 2px 5px
-              :margin-left 3px
-              :font-weight normal
+            :background-color #e5e5e5
+            :color #666
+            :padding 2px 5px
+            :margin-left 3px
+            :font-weight normal
+            :font-style normal
           
-          img.avatar
-            :float left
-            :width 30px
-            :height 30px
-            :margin-right 5px
+          / img.avatar
+          /   :float left
+          /   :width 30px
+          /   :height 30px
+          /   :margin-right 5px
 
           p
             :margin 0
             :line-height 1em
-            :margin-left 40px
+            / :margin-left 40px
             
           p.message
             :line-height 1.4em
@@ -153,18 +153,17 @@
           %input{:type => "submit", :value => "Delete"}/
 
       %ul.commits
-        - for uc in repository.recent_unique_commits
+        - for commit in repository.recent_commits
           %li
-            %span.branches
-              - for head in uc.heads
-                %strong&= head.name
-            %img.avatar{:src => uc.commit.author.gravatar_image}
-            %p.message&= uc.commit.short_message
+            - if head = commit.head(repository.grit_repo)
+              %em.branch= head.name
+            -# %img.avatar{:src => commit.author.gravatar_image}
+            %p.message&= commit.short_message
             %p.meta
-              &= time_ago_in_words(uc.commit.committed_date).gsub("about ","")
+              &= time_ago_in_words(commit.committed_date).gsub("about ","")
               ago
               %span.extra
                 \-
-                &= uc.commit.author
+                &= commit.author
                 \-
-                &= uc.commit.id_abbrev
+                &= commit.id_abbrev
