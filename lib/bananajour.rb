@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'yaml'
 require 'ostruct'
 
-gem 'fancypath', '0.5.8'
+gem 'chrislloyd-fancypath', '0.5.8'
 require 'fancypath'
 
 gem 'rainbow', '1.0.1'
@@ -53,7 +53,7 @@ module Bananajour
     puts "* Started " + web_uri.foreground(:yellow)
   end
   def self.web_port
-    90210
+    9331
   end
   def self.web_uri
     "http://#{host_name}:#{web_port}/"

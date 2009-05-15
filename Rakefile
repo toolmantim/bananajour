@@ -8,7 +8,7 @@ end
 require "./lib/bananajour/version"
  
 runtime_deps = {
-  :sinatra => '0.9.1.1', :json => "1.1.2", :fancypath => '0.5.8',
+  :sinatra => '0.9.1.1', :json => "1.1.2", "chrislloyd-fancypath" => '0.5.8',
   :rainbow => '1.0.1', 'mojombo-grit' => '1.1.1', :dnssd => '0.6.0'
 }
  
