@@ -6,9 +6,11 @@
       :font-size 75%
       :background-color #fff
       :padding 5px
+      :line-height 1.3em
       
       > *
-        :margin 10px
+        :margin-left 10px
+        :margin-right 10px
         
     .return
       :float right
@@ -20,7 +22,12 @@
       
     body > h2, .return a
       :color #980
-
+      
+    code
+      :background-color #fff
+      :font-size 12px
+      :color #666
+  
 %p.return
   %a{:href => "/"} Return to repositories
 
@@ -30,7 +37,10 @@
 
 #readme
   - if @rendered_readme
-    = @rendered_readme
+    :preserve
+      #{@rendered_readme}
   - else
     %pre
-      = @plain_readme
+      :preserve
+        #{@plain_readme}
+

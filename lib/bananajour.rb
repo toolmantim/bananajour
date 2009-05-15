@@ -124,6 +124,16 @@ module Bananajour
   def self.repository(name)
     repositories.find {|r| r.name == name}
   end
+  def self.to_hash
+    {
+      "name" => config.name,
+      "uri"  => web_uri,
+      "git-uri" => git_uri,
+      "repositories" => repositories.collect do |r|
+        {"name" => r.name, "uri" => r.uri}
+      end
+    }
+  end
 end
 
 require 'bananajour/repository'

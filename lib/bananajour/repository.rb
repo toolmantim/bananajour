@@ -30,7 +30,7 @@ module Bananajour
       Bananajour.git_uri + dirname
     end
     def grit_repo
-      Grit::Repo.new(path)
+      @grit_repo ||= Grit::Repo.new(path)
     end
     def recent_commits
       grit_repo.commits(nil, 10)
@@ -60,6 +60,13 @@ module Bananajour
       end
     rescue LoadError
       ""
+    end
+    def to_hash
+      {
+        "name" => name,
+        "uri" => uri,
+        "recent_commits" => recent_commits.collect {|c| c.to_hash.merge("head" => c.head(grit_repo) && c.head(grit_repo).name) }
+      }
     end
   end
 end
