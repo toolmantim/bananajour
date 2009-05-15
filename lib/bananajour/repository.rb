@@ -4,10 +4,7 @@ require 'grit'
 module Bananajour
   class Repository
     def self.for_name(name)
-      new(Bananajour.repositories_path / (name + ".git"))
-    end
-    def self.for_working_path(working_path)
-      new(Bananajour.repositories_path / (working_path.expand_path.split.last.to_s + ".git"))
+      new(Bananajour.repositories_path.join(name + ".git"))
     end
     def initialize(path)
       @path = Fancypath(path)
@@ -18,9 +15,7 @@ module Bananajour
     end
     def init!
       path.create_dir
-      Dir.chdir(path) do
-        `git-init --bare`
-      end
+      Dir.chdir(path) { `git-init --bare` }
     end
     def name
       dirname.sub(".git",'')

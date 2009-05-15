@@ -15,7 +15,7 @@ when nil, "serve"
   Process.wait
 
 when "add"
-  Bananajour.add!(ARGV[1])
+  Bananajour.add!(ARGV[1] || File.expand_path("."))
   
 when "help", "--help", "-h"
   puts <<-HELP
@@ -23,7 +23,7 @@ Usage: #{$0} [<command>]
 
 Commands:
   none       - Start the web, git and bonjour serving
-  add [name] - Adds the current directory as a new project.
+  add [path] - Adds a new project
 HELP
 
 else
