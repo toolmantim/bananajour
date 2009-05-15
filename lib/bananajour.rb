@@ -35,16 +35,13 @@ module Bananajour
     repositories_path.create_dir
     puts "Holy bananarama! I don't think we've met."
     puts
-    name = ""
-    while name.length == 0 do
-      print "Your name plz? ".foreground(:yellow)
-      name = (STDIN.gets || "").strip
-    end
+    default_name = `git-config user.name`.strip
+    print "Your Name?".foreground(:yellow) + " [#{default_name}] "
+    name = (STDIN.gets || "").strip
+    name = default_name if name.empty?
     config_path.write({"name" => name}.to_yaml)
     puts
-    puts "Nice to meet you #{name}, I'm Bananajour."
-    puts
-    puts "You can add a project using 'bananajour add' in your project's dir."
+    puts "Nice to meet you #{name}, I'm Bananajour. Add a project with " + "bananajour add".foreground(:yellow)
     puts
   end
   def self.serve_web!
@@ -86,8 +83,9 @@ module Bananajour
     default_name = dir.basename.to_s
     print "Project Name?".foreground(:yellow) + " [#{default_name}] "
     name = (STDIN.gets || "").strip
+    name = default_name if name.empty?
 
-    repo = Repository.for_name(!name.empty? ? name : default_name)
+    repo = Repository.for_name(name)
     
     if repo.exists?
       STDERR.puts "You've already a project #{repo}."
