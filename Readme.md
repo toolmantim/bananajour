@@ -1,6 +1,8 @@
 # Bananajour
 
-Local git repository hosting with a sexy web interface and bonjour advertising. It's like your own little network-aware github.
+Local git repository hosting with a sexy web interface and bonjour discovery. It's like a adhoc, local, network-aware github!
+
+Unlike gitjour the repositories you're serving are not your working git repositories, you can publish projects from any directory and it has a sexy web interface.
 
 ## Installation
 
@@ -8,18 +10,37 @@ Local git repository hosting with a sexy web interface and bonjour advertising. 
 
 ## Getting started
 
-Start it up
+Start it up:
 
     bananajour
     
-add a new project
+to initialize a new bananjour repository:
 
     cd ~/code/myproj
-    bananajour add
+    bananajour init
+
+and publish your codez:
+
     git push banana master
 
-and fire up http://localhost:90210/
+Fire up [http://localhost:90210/](http://localhost:90210/) to check it out.
 
-If somebody starts sharing a bananjour repository with the same name on the network it'll automatically show up on the web interface, along with their branches and recent git commit activity.
+If somebody starts sharing a bananajour repository with the same name on the
+network it'll automatically show up in the network.
 
+## Supported configurations
 
+* Mac OS X - Ruby 1.8.6
+* others? (need testers!)
+
+## Official repository and support
+
+[http://github.com/toolmantim/bananajour](http://github.com/toolmantim/bananajour) is where Bananajour lives along with all of its support issues.
+
+## Props
+
+[Carla Hackett](http://carlahackettdesign.com/) for the rad logo.
+
+## License
+
+All directories and files are MIT Licensed except for public/logo.png which is All Rights Reserved.
