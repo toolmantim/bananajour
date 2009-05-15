@@ -104,12 +104,6 @@
             :font-weight normal
             :font-style normal
           
-          / img.avatar
-          /   :float left
-          /   :width 30px
-          /   :height 30px
-          /   :margin-right 5px
-
           p
             :margin 0
             :line-height 1em
@@ -152,7 +146,6 @@
           %li
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
-            -# %img.avatar{:src => commit.author.gravatar_image}
             %p.message&= commit.short_message
             %p.meta
               &= time_ago_in_words(commit.committed_date).gsub("about ","")
