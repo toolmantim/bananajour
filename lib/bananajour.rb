@@ -98,6 +98,8 @@ module Bananajour
     repo.init!
     Dir.chdir(dir) { `git remote add banana #{repo.path.expand_path}` }
     puts init_success_message(repo.dirname)
+    
+    repo
   end
   def self.init_success_message(repo_dirname)
     "Bananajour repository #{repo_dirname} initialised and remote banana added.\nNext: " + "git push banana master".foreground(:yellow)

@@ -15,8 +15,9 @@ when nil
   Process.wait
 
 when "init"
-  Bananajour.init!(ARGV[1] || File.expand_path("."))
-  
+  repo = Bananajour.init!(ARGV[1] || File.expand_path("."))
+  repo.advertise!
+
 when "help", "--help", "-h"
   puts <<-HELP
 Usage: #{File.basename($0)} [<command>]
