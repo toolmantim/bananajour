@@ -55,10 +55,15 @@
           :color #888
           :font-weight normal
           
-        p.heads
+        p.heads, p.network
+          :display inline
           :font-size 12px
           :margin 5px 0
-          :color #888
+          &, a
+            :color #888
+          
+        p.heads
+          :margin-right 10px
         
         form.admin
           :position absolute
@@ -81,17 +86,14 @@
         
         ul.commits
           :width 100%
+          :margin-top 5px
         
         ul.commits li
           :font-size 12px
           :line-height 1.5em
           :padding 8px 0
-          :min-height 30px
           :border 0px solid #ddd
           :border-top-width 1px
-          
-          &:first-child
-            :border-top-width 0
           
           em.branch
             :float right
@@ -112,16 +114,10 @@
           p.message
             :line-height 1.4em
 
-          p.meta
+          span.meta
             :font-size 10px
             :color #999
             :line-height 1.5em
-            
-            span.extra
-              :display none
-              
-          &:hover p.meta span.extra
-            :display inline
 
   - if @repositories.length > 1
     %p.toc
@@ -132,27 +128,34 @@
   - for repository in @repositories
     .repository{:id => repository.dirname}
       %h2
-        &= repository.name
+        %span.name&= repository.name
         %span.uri
           &= repository.uri
 
       %p.heads
-        %strong Branches:
+        %strong Published branches:
         - repository.grit_repo.heads.collect {|h| h.name}.each_with_index do |branch, i|
           = ",&nbsp;" unless i == 0
           %span>&= branch
+
+      %p.network
+        %strong Network:
+        - if (network_repositories = repository.network_repositories(@network_repositories)).empty?
+          lone soldier
+        - for nr in network_repositories
+          %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
 
       %ul.commits
         - for commit in repository.recent_commits
           %li
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
-            %p.message&= commit.short_message
-            %p.meta
-              &= time_ago_in_words(commit.committed_date).gsub("about ","")
-              ago
-              %span.extra
-                \-
+            %p.message
+              &= commit.short_message
+              %span.meta
+                \~
+                &= time_ago_in_words(commit.committed_date).gsub("about ","")
+                ago by
                 &= commit.author
                 \-
                 &= commit.id_abbrev

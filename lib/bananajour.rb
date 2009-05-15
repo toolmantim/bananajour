@@ -75,6 +75,17 @@ module Bananajour
     tr["name"] = Bananajour.config.name
     DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
+  def self.network_repositories
+    hosts = []
+    service = DNSSD.browse("_git._tcp") do |reply|
+      DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
+        hosts << Struct.new(:uri, :name, :bananajour).new(rr.text_record["uri"], rr.text_record["name"], Struct.new(:name, :uri).new(rr.text_record["bjour-name"], rr.text_record["bjour-uri"]))
+      end
+    end
+    sleep 0.5
+    service.stop
+    hosts
+  end
   def self.init!(dir)
     dir = Fancypath(dir)
     
