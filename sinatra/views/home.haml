@@ -37,7 +37,12 @@
         a
           :color #000
           :font-weight bold
-  
+      
+      .people
+        :font-size 14px
+        a
+          :color black
+      
       .repository
         :clear both
         :background-color white
@@ -170,6 +175,11 @@
                 &= commit.author
                 \-
                 &= commit.id_abbrev
+  .people
+    %p
+      Other Bananas:
+      = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
+
 
   :javascript
     var getData = function() {
@@ -182,7 +192,7 @@
         });
       });
     };
-    
+
     var ajaxUpdate = function(repository) {
       $.each(repository.recent_commits, function(i) {
         var commit = repository.recent_commits[i];
@@ -194,10 +204,9 @@
         $($("#" + repository.name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
       });      
     };
-    
+
     $(setInterval(getData, 9000));
-    
-    
 
 
-  
+
+

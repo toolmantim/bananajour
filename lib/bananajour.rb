@@ -28,6 +28,12 @@ module Bananajour
   def self.config
     OpenStruct.new(YAML.load(config_path.read))
   end
+  def self.check_git!
+    if (version = `git --version`.strip) =~ /git version 1\.[12345]/
+      STDERR.puts "You have #{version}, you need at least 1.6"
+      exit(1)
+    end
+  end
   def self.setup?
     config_path.exists?
   end
@@ -76,6 +82,7 @@ module Bananajour
     tr["name"] = Bananajour.config.name
     DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
+  
   def self.network_repositories
     hosts = []
     service = DNSSD.browse("_git._tcp") do |reply|
@@ -87,6 +94,37 @@ module Bananajour
     service.stop
     hosts
   end
+  
+  class Person
+    attr_accessor :name, :uri
+    
+    def initialize(hsh)
+      hsh.each { |k,v| self.send("#{k}=", v) }
+    end
+    
+    def ==(other)
+      self.uri == other.uri
+    end
+    
+  end
+  
+  def self.people
+    peoples = []
+    service = DNSSD.browse("_bananajour._tcp") do |reply|
+      DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
+        p = Person.new(:name => rr.text_record["name"], :uri => rr.text_record["uri"])
+        peoples << p unless peoples.include?(p)
+      end
+    end
+    sleep 0.5
+    service.stop
+    peoples
+  end
+  
+  def self.other_people
+    people.reject { |p| p.uri == self.web_uri }
+  end
+  
   def self.init!(dir)
     dir = Fancypath(dir)
     

@@ -3,6 +3,8 @@
 require 'rubygems'
 require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
+Bananajour.check_git!
+
 Bananajour.setup! unless Bananajour.setup?
 
 case ARGV.first
@@ -26,6 +28,11 @@ Commands:
   none       - Start the web, git and bonjour serving
   init [path] - Inits a new bananajour repository
 HELP
+
+when 'others'
+  Bananajour.people.each do |p|
+    puts p.name + ' - ' + p.uri
+  end
 
 else
   STDERR.puts "Say what? Try: #{File.basename($0)} help"
