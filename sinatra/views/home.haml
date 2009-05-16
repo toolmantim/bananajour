@@ -42,7 +42,7 @@
         :font-size 14px
         a
           :color black
-      
+        
       .repository
         :clear both
         :background-color white
@@ -51,7 +51,7 @@
         :padding 7px 10px
         :margin 10px 0
         :position relative
-        :border 4px solid #ff0
+        :border 4px solid #f1592a
         
         .readme
           :position absolute
@@ -136,16 +136,26 @@
             :font-size 10px
             :color #999
             :line-height 1.5em
-    
+      
+      #remotes
+        :margin 20px 0 0 0
+        .repository
+          :border-color #ff0
+      #remotes p.remote
+        :color #c8ae08
+        :font-size 1.6em
+        :font-style italic
+        :letter-spacing 8px
+        :margin 0 auto 20px auto
+        :text-align center
+        /*:text-transform uppercase
+        :width 50%
 
   - if @repositories.length > 1
     %p.toc
       Repos:
       - for repository in @repositories
         %a{:href => "##{repository.dirname}"}&= repository.name
-  
-  - if local?
-    %h2 Local Repos
   
   - for repository in @repositories
     - repository_id = repository.name.gsub(/[^A-Za-z]+/, '')
@@ -205,18 +215,18 @@
   -#     $('.repository .toggle_commits').click();
   
   - if local?  
-    %h2 Remote Repos
-  
-    - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
-    - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
-      .repository
+    #remotes
+      %p.remote Elsewhere
+      - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
+      - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
+        .repository
     
-        %h2
-          %span.name&= repo_name
+          %h2
+            %span.name&= repo_name
         
-        %p.network
-          - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
-            %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
+          %p.network
+            - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
+              %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
   
   .people
     %p
