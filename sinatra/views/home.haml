@@ -161,10 +161,10 @@
       %li Repos:
       - for repository in @repositories
         %li.repo
-          %a{:href => "##{repository.name.gsub(/[^A-Za-z]+/, '')}"}&= repository.name
+          %a{:href => "##{repository.html_friendly_name}"}&= repository.name
 
   - for repository in @repositories
-    - repository_id = repository.name.gsub(/[^A-Za-z]+/, '')
+    - repository_id = repository.html_friendly_name
     .repository{:id => repository_id}
 
       - if repository.readme_file
@@ -239,7 +239,7 @@
     var getData = function() {
       $.getJSON("/index.json", function(data) {
         $.each(data.repositories, function(i) {
-          $.getJSON("/" + data.repositories[i].name.replace(/[^A-Za-z]+/, '') + ".json", function(repository) {
+          $.getJSON("/" + data.repositories[i].name + ".json", function(repository) {
             ajaxUpdate(repository);
           });
         });
@@ -254,7 +254,7 @@
         }
         var messagePara = $("<p class=\"message\"/>").append(commit.message);
         messagePara.append($("<span class=\"meta\"/>").append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name + " - " + commit.id.substr(0, 7)));
-        $($("#" + repository.name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
+        $($("#" + repository.html_friendly_name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
       });      
     };
 
