@@ -26,23 +26,28 @@
 
   %style{:type => "text/css"}
     :sass
-      p.toc
+      ul.toc
         :float right
-        :width 70%
-        :text-align right
-        :margin-top -30px
         :font-size 14px
+        :line-height 1.3
+        :margin -30px 0 0.3em 13em
         :opacity 0.5
-        
+        :text-align right
+        :width auto
+          
+      ul.toc li
+        :display inline
+        :list-style-type none
+         
         a
           :color #000
-          :font-weight bold
+          :font-weight 700
       
       .people
         :font-size 14px
         a
           :color black
-      
+        
       .repository
         :clear both
         :background-color white
@@ -51,7 +56,7 @@
         :padding 7px 10px
         :margin 10px 0
         :position relative
-        :border 4px solid #ff0
+        :border 4px solid #f1592a
         
         .readme
           :position absolute
@@ -136,19 +141,30 @@
             :font-size 10px
             :color #999
             :line-height 1.5em
-    
+      
+      #remotes
+        :margin 20px 0 0 0
+        .repository
+          :border-color #ff0
+      #remotes p.remote
+        :color #c8ae08
+        :font-size 1.6em
+        :font-style italic
+        :letter-spacing 8px
+        :margin 0 auto 20px auto
+        :text-align center
+        /*:text-transform uppercase
+        :width 50%
 
   - if @repositories.length > 1
-    %p.toc
-      Repos:
+    %ul.toc
+      %li Repos:
       - for repository in @repositories
-        %a{:href => "##{repository.dirname}"}&= repository.name
-  
-  - if local?
-    %h2 Local Repos
-  
+        %li.repo
+          %a{:href => "##{repository.name.gsub(/[^A-Za-z]+/, '')}"}&= repository.name
+
   - for repository in @repositories
-    - repository_id = repository.dirname.gsub(/[^A-Za-z]+/, '')
+    - repository_id = repository.name.gsub(/[^A-Za-z]+/, '')
     .repository{:id => repository_id}
 
       - if repository.readme_file
@@ -168,7 +184,7 @@
 
       %p.network
         %strong Other network copies:
-        - if (network_repositories = repository.similar_network_repositories(@network_repositories)).empty?
+        - if (network_repositories = Bananajour::Bonjour.network_repositories_similar_to(repository)).empty?
           none
         - for nr in network_repositories
           %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
@@ -201,20 +217,46 @@
     });
   
   - if local?  
-    %h2 Remote Repos
+    #remotes
+      %p.remote Elsewhere
+      - yet_uncloned_network_repositories = Bananajour::Bonjour.yet_uncloned_network_repositories
+      - for repo_name in yet_uncloned_network_repositories.map { |dnr| dnr.name }.uniq.sort
+        .repository
+          %h2
+            %span.name&= repo_name
+
+          %p.network
+            - for nr in yet_uncloned_network_repositories.select { |dnr| dnr.name == repo_name }
+              %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
   
-    - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
-    - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
-      .repository
-    
-        %h2
-          %span.name&= repo_name
-        
-        %p.network
-          - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
-            %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
-  
-    .people
-      %p
-        Banana Ring:
-        = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
+  .people
+    %p
+      Banana Ring:
+      = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
+
+
+  :javascript
+    var getData = function() {
+      $.getJSON("/index.json", function(data) {
+        $.each(data.repositories, function(i) {
+          $.getJSON("/" + data.repositories[i].name.replace(/[^A-Za-z]+/, '') + ".json", function(repository) {
+            ajaxUpdate(repository);
+          });
+        });
+      });
+    };
+
+    var ajaxUpdate = function(repository) {
+      $.each(repository.recent_commits, function(i) {
+        var commit = repository.recent_commits[i];
+        if (commit.head != null) {
+          var headBranch = $("<em class=\"branch\"/>").append(commit.head);
+        }
+        var messagePara = $("<p class=\"message\"/>").append(commit.message);
+        messagePara.append($("<span class=\"meta\"/>").append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name + " - " + commit.id.substr(0, 7)));
+        $($("#" + repository.name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
+      });      
+    };
+
+    $(setInterval(getData, 9000));
+

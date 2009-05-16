@@ -1,6 +1,7 @@
-!!! Strict
-%html
+!!!
+%html{:lang => "en-au"}
   %head
+    %meta{:charset => "UTF-8"}
     %title= @page_title
 
     %style{:type => "text/css"}
@@ -45,8 +46,7 @@
                 :font-weight bold
                 :text-transform uppercase
                 :color #fff
-      
-    %script{:src => "/jquery-1.3.2.js"}
+    %script{:src => versioned_javascript("jquery-1.3.2.min"), :type => "text/javascript"}
   %body
     - if Bananajour.env == 'development'
       .dev_notice DEV MODE
@@ -58,3 +58,4 @@
           == #{Bananajour.config.name}&rsquo;s
         Bananajour
     = yield
+  
