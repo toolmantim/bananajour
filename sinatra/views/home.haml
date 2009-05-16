@@ -132,7 +132,6 @@
           p
             :margin 0
             :line-height 1em
-            / :margin-left 40px
             
           p.message
             :line-height 1.4em
@@ -146,14 +145,9 @@
         :margin 20px 0 0 0
         .repository
           :border-color #ff0
-      #remotes p.remote
-        :color #c8ae08
-        :font-size 1.6em
-        :font-style italic
-        :letter-spacing 8px
+      #remotes hr
+        :border 1px solid #c8ae08
         :margin 0 auto 20px auto
-        :text-align center
-        /*:text-transform uppercase
         :width 50%
 
   - if @repositories.length > 1
@@ -173,8 +167,7 @@
     
       %h2
         %span.name&= repository.name
-        %span.uri
-          &= repository.uri
+        %span.uri&= repository.uri
           
       %p.heads
         %strong Published branches:
@@ -218,7 +211,7 @@
   
   - if local?  
     #remotes
-      %p.remote Elsewhere
+      %hr
       - yet_uncloned_network_repositories = Bananajour::Bonjour.yet_uncloned_network_repositories
       - for repo_name in yet_uncloned_network_repositories.map { |dnr| dnr.name }.uniq.sort
         .repository
@@ -232,7 +225,7 @@
   .people
     %p
       Banana Ring:
-      = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
+      = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
 
 
   :javascript
