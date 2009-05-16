@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require "#{File.dirname(__FILE__)}/../lib/bananajour"
+require "rubygems"
+require "bananajour"
 
 Bananajour.check_git!
 
