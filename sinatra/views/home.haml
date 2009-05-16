@@ -176,8 +176,7 @@
                 \-
                 &= commit.id_abbrev
       
-    .people
-      %p
-        Other Bananas:
-        = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
-      
+  .people
+    %p
+      Other Bananas:
+      = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
