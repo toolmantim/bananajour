@@ -22,7 +22,7 @@ require 'bananajour/bonjour'
 
 module Bananajour
   
-  class Core
+  class << self
     
     include Bonjour
     
@@ -166,14 +166,7 @@ module Bananajour
         end
       }
     end
-  end
-  
-  def self.core
-    @core ||= Core.new
-  end
-  
-  def self.method_missing(meth, *args)
-    core.send(meth, *args)
+    
   end
   
 end
