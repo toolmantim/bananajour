@@ -31,6 +31,7 @@ module Bananajour
   def self.check_git!
     if (version = `git --version`.strip) =~ /git version 1\.[12345]/
       STDERR.puts "You have #{version}, you need at least 1.6"
+      exit(1)
     end
   end
   def self.setup?
