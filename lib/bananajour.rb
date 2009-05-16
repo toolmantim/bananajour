@@ -29,7 +29,7 @@ module Bananajour
     OpenStruct.new(YAML.load(config_path.read))
   end
   def self.check_git!
-    if (version = `git --version`.split) =~ /git version 1\.[12345]/
+    if (version = `git --version`.strip) =~ /git version 1\.[12345]/
       STDERR.puts "You have #{version}, you need at least 1.6"
     end
   end
