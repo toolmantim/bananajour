@@ -3,6 +3,8 @@
 require 'rubygems'
 require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
+Bananajour.check_git!
+
 Bananajour.setup! unless Bananajour.setup?
 
 case ARGV.first
