@@ -151,6 +151,8 @@
         :border 1px solid #c8ae08
         :margin 0 auto 20px auto
         :width 50%
+      .hidden
+        :display none
 
   - if @repositories.length > 1
     %ul.toc
@@ -185,11 +187,11 @@
           %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
 
       - if local?
-        %a.toggle_commits{:href => "#"} + Commits
+        %a.toggle_commits{:href => "#"} More Commits
 
-      %ul.commits{:style => ("display:none" if local?)}
+      %ul.commits
         - for commit in repository.recent_commits
-          %li
+          %li{:class => ("hidden" if commit != repository.recent_commits.first)}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
             %p.message
@@ -206,9 +208,9 @@
     $('.repository .toggle_commits').click(function(event) {
       event.preventDefault();
       var link = $(this);
-      var commits = link.parents('.repository').find('.commits');
+      var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
       commits.toggle();
-      commits.is(":visible") ? link.text("- Commits") : link.text("+ Commits");
+      commits.is(":not(:visible)") ? link.text("Less Commits") : link.text("More Commits");
     });
   
   - if local?  
