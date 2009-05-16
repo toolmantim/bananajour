@@ -22,7 +22,7 @@ helpers do
   end
   
   def local?
-    true
+    Socket.getaddrinfo(Socket.gethostname, nil)[0][3] == request.env["REMOTE_ADDR"]
   end
 end
 
