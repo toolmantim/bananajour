@@ -23,6 +23,9 @@ helpers do
     content_type "application/json"
     params[:callback] ? "#{params[:callback]}(#{body});" : body
   end
+  def local?
+    Socket.getaddrinfo(Socket.gethostname, nil)[0][3] == request.env["REMOTE_ADDR"]
+  end
 end
 
 get "/" do
