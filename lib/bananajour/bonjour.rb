@@ -3,7 +3,7 @@ module Bananajour::Bonjour
   # methods that call Bonjour, and little model wrappers for the response packets
   
   class Repo
-    attr_accessor :name, :uri, :bananajour 
+    attr_accessor :name, :uri, :person 
     def initialize(hsh)
       hsh.each { |k,v| self.send("#{k}=", v) }
     end
@@ -11,6 +11,8 @@ module Bananajour::Bonjour
     def ==(other)
       self.uri == other.uri
     end
+    
+    alias_method :bananajour, :person
   end
   
   class Person
@@ -40,7 +42,7 @@ module Bananajour::Bonjour
         r = Repo.new(
           :uri => rr.text_record["uri"], 
           :name => rr.text_record["name"], 
-          :bananajour => Person.new(:name => rr.text_record["bjour-name"], :uri => rr.text_record["bjour-uri"])
+          :person => Person.new(:name => rr.text_record["bjour-name"], :uri => rr.text_record["bjour-uri"])
         )
         hosts << r unless hosts.include?(r)
       end
