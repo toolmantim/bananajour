@@ -191,7 +191,7 @@
 
       %ul.commits
         - for commit in repository.recent_commits
-          %li{:class => ("hidden" if commit != repository.recent_commits.first)}
+          %li{:class => ("hidden" if commit != repository.recent_commits.first && local?)}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
             %p.message
@@ -210,7 +210,7 @@
       var link = $(this);
       var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
       commits.toggle();
-      commits.is(":not(:visible)") ? link.text("Less Commits") : link.text("More Commits");
+      commits.is(":visible") ? link.text("Less Commits") : link.text("More Commits");
     });
   
   - if local?  
