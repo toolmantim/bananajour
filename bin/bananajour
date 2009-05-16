@@ -27,6 +27,11 @@ Commands:
   init [path] - Inits a new bananajour repository
 HELP
 
+when 'others'
+  Bananajour.people.each do |p|
+    puts p.name + ' - ' + p.uri
+  end
+
 else
   STDERR.puts "Say what? Try: #{File.basename($0)} help"
   exit(1)
