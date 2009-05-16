@@ -184,7 +184,7 @@
 
       %p.network
         %strong Other network copies:
-        - if (network_repositories = repository.similar_network_repositories(@network_repositories)).empty?
+        - if (network_repositories = Bananajour::Bonjour.network_repositories_similar_to(repository)).empty?
           none
         - for nr in network_repositories
           %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
@@ -216,22 +216,17 @@
       commits.is(":visible") ? link.text("- Commits") : link.text("+ Commits");
     });
   
-  -# - unless local?
-  -#   :javascript
-  -#     $('.repository .toggle_commits').click();
-  
   - if local?  
     #remotes
       %p.remote Elsewhere
-      - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
-      - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
+      - yet_uncloned_network_repositories = Bananajour::Bonjour.yet_uncloned_network_repositories
+      - for repo_name in yet_uncloned_network_repositories.map { |dnr| dnr.name }.uniq.sort
         .repository
-    
           %h2
             %span.name&= repo_name
-        
+
           %p.network
-            - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
+            - for nr in yet_uncloned_network_repositories.select { |dnr| dnr.name == repo_name }
               %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
   
   .people
@@ -258,7 +253,7 @@
           var headBranch = $("<em class=\"branch\"/>").append(commit.head);
         }
         var messagePara = $("<p class=\"message\"/>").append(commit.message);
-        messagePara.append($("<span class=\"meta\"/>").append(" ~ " + commit.committed_date + " by " + commit.author.name + " - " + commit.id.substr(0, 7)));
+        messagePara.append($("<span class=\"meta\"/>").append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name + " - " + commit.id.substr(0, 7)));
         $($("#" + repository.name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
       });      
     };

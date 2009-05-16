@@ -49,7 +49,16 @@ module Bananajour::Bonjour
     service.stop
     hosts
   end
-  
+
+  def self.network_repositories_similar_to(repo)
+    Bananajour.network_repositories.select { |nr| nr.name == repo.name && nr.uri != repo.uri }.uniq.sort_by { |nr| nr.bananajour.name }
+  end
+
+  def self.yet_uncloned_network_repositories
+    local_repo_names = Bananajour.repositories.map { |repo| repo.name }
+    Bananajour.network_repositories.select { |remote| !local_repo_names.include? remote.name }.uniq.sort_by { |nr| nr.bananajour.name }
+  end
+
   def people
     peoples = []
     service = DNSSD.browse("_bananajour._tcp") do |reply|
