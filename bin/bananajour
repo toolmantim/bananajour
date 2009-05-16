@@ -34,6 +34,48 @@ when 'others'
     puts p.name + ' - ' + p.uri
   end
 
+when 'network_repositories'
+  repos = []
+  s = DNSSD.browse("_git._tcp") do |reply|
+    DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
+      r = {
+        'uri' => rr.text_record["uri"], 
+        'name' => rr.text_record["name"], 
+        'person' => {
+            'name' => rr.text_record["bjour-name"], 
+            'uri' => rr.text_record["bjour-uri"]
+        }
+      }
+      repos << r unless repos.include?(r)
+    end
+  end
+  sleep(0.5)
+  s.stop
+  puts YAML.dump(repos)
+
+when 'people'
+  peoples = []
+  service = DNSSD.browse("_bananajour._tcp") do |reply|
+    DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
+      p = { :name => rr.text_record["name"], :uri => rr.text_record["uri"] }
+      peoples << p unless peoples.include?(p)
+    end
+  end
+  sleep 0.5
+  service.stop
+  puts YAML.dump(peoples)
+
+when 'puller' # testing only
+  i = 0
+  loop do 
+    hosts = []
+    puts "####{i+=1}"
+    Bananajour.network_repositories.each do |r|
+      # puts r["name"] + ' - ' + r['person']['name']
+      puts r.name + ' - ' + r.person.name
+    end
+  end
+
 else
   STDERR.puts "Say what? Try: #{File.basename($0)} help"
   exit(1)
