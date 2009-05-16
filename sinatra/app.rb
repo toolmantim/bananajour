@@ -10,7 +10,7 @@ require 'json'
 require 'digest/md5'
 
 disable :logging
-set :environment, :production
+set :environment, Bananajour.env
 
 # need this for instrument analysis
 puts "PID: #{Process.pid}"
