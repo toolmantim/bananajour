@@ -20,6 +20,10 @@ helpers do
     content_type "application/json"
     params[:callback] ? "#{params[:callback]}(#{body});" : body
   end
+  
+  def local?
+    true
+  end
 end
 
 get "/" do
