@@ -83,11 +83,27 @@ module Bananajour
     DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
   
+  class Repo
+    attr_accessor :name, :uri, :bananajour 
+    def initialize(hsh)
+      hsh.each { |k,v| self.send("#{k}=", v) }
+    end
+    
+    def ==(other)
+      self.uri == other.uri
+    end
+  end
+  
   def self.network_repositories
     hosts = []
     service = DNSSD.browse("_git._tcp") do |reply|
       DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
-        hosts << Struct.new(:uri, :name, :bananajour).new(rr.text_record["uri"], rr.text_record["name"], Struct.new(:name, :uri).new(rr.text_record["bjour-name"], rr.text_record["bjour-uri"]))
+        r = Repo.new(
+          :uri => rr.text_record["uri"], 
+          :name => rr.text_record["name"], 
+          :bananajour => Person.new(:name => rr.text_record["bjour-name"], :uri => rr.text_record["bjour-uri"])
+        )
+        hosts << r unless hosts.include?(r)
       end
     end
     sleep 0.5
@@ -96,8 +112,7 @@ module Bananajour
   end
   
   class Person
-    attr_accessor :name, :uri
-    
+    attr_accessor :name, :uri 
     def initialize(hsh)
       hsh.each { |k,v| self.send("#{k}=", v) }
     end
@@ -105,7 +120,6 @@ module Bananajour
     def ==(other)
       self.uri == other.uri
     end
-    
   end
   
   def self.people
