@@ -184,7 +184,7 @@
         - if (network_repositories = Bananajour::Bonjour.network_repositories_similar_to(repository)).empty?
           none
         - for nr in network_repositories
-          %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
+          %a{:href => "#{nr.bananajour.uri}##{nr.html_friendly_name}"}= nr.bananajour.name
 
       - if local?
         %a.toggle_commits{:href => "#"} More Commits
@@ -255,5 +255,5 @@
       });      
     };
 
-    $(setInterval(getData, 9000));
+    // $(setInterval(getData, 9000));
 

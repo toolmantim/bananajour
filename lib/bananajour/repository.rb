@@ -21,7 +21,7 @@ module Bananajour
       dirname.sub(".git",'')
     end
     def html_friendly_name
-      name.gsub(/^[A-Za-z]+/, '')
+      name.gsub(/[^A-Za-z]+/, '')
     end
     def dirname
       path.split.last.to_s
