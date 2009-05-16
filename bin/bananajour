@@ -34,6 +34,9 @@ when 'others'
     puts p.name + ' - ' + p.uri
   end
 
+when 'test'
+  
+
 else
   STDERR.puts "Say what? Try: #{File.basename($0)} help"
   exit(1)
