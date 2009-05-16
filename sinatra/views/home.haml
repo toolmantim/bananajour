@@ -94,9 +94,17 @@
           :padding 0
           :list-style none
         
+        a.toggle_commits
+          :position absolute
+          :top 10
+          :right 10px
+          :font-size 12px
+          :color #888
+        
         ul.commits
           :width 100%
           :margin-top 5px
+          :display none
         
         ul.commits li
           :font-size 12px
@@ -129,15 +137,27 @@
             :font-size 10px
             :color #999
             :line-height 1.5em
+    
 
   - if @repositories.length > 1
     %p.toc
       Repos:
       - for repository in @repositories
         %a{:href => "##{repository.dirname}"}&= repository.name
-    
+  
+  %h2 Local Repos
+  
+  :javascript
+    function toggleCommitsForRepo(repository_id) {
+      var commits = $("#" + repository_id + " ul.commits");
+      var link = commits.siblings(".toggle_commits");
+      commits.toggle();
+      commits.is(":visible") ? link.text("- Commits") : link.text("+ Commits")
+    }
+
   - for repository in @repositories
-    .repository{:id => repository}
+    - repository_id = repository.name.gsub(/[^A-Za-z]+/, '')
+    .repository{:id => repository_id}
 
       - if repository.readme_file
         %p.readme
@@ -155,11 +175,13 @@
           %span>&= branch
 
       %p.network
-        %strong Network:
-        - if (network_repositories = repository.network_repositories(@network_repositories)).empty?
-          lone soldier
+        %strong Other network copies:
+        - if (network_repositories = repository.similar_network_repositories(@network_repositories)).empty?
+          none
         - for nr in network_repositories
           %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
+
+      %a.toggle_commits{:href => "#", :onclick => "toggleCommitsForRepo(\"#{repository_id}\");"} + Commits
 
       %ul.commits
         - for commit in repository.recent_commits
@@ -175,6 +197,20 @@
                 &= commit.author
                 \-
                 &= commit.id_abbrev
+                
+  %h2 Remote Repos
+  
+  - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
+  - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
+    .repository
+    
+      %h2
+        %span.name&= repo_name
+        
+      %p.network
+        - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
+          %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
+  
   .people
     %p
       Other Bananas:
@@ -185,7 +221,7 @@
     var getData = function() {
       $.getJSON("/index.json", function(data) {
         $.each(data.repositories, function(i) {
-          $.getJSON("/" + data.repositories[i].name + ".json", function(repository) {
+          $.getJSON("/" + data.repositories[i].name.replace(/[^A-Za-z]+/, '') + ".json", function(repository) {
             ajaxUpdate(repository);
           });
         });
