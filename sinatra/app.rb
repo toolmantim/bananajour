@@ -24,6 +24,9 @@ helpers do
     haml view, :options => {:format => :html5,
                               :attr_wrapper => '"'}
   end
+  def versioned_javascript(js)
+    "/javascripts/#{js}.js?" + File.mtime(File.join(Sinatra::Application.public, "javascripts", "#{js}.js")).to_i.to_s
+  end
 end
 
 get "/" do
