@@ -49,7 +49,7 @@ module Bananajour
     if repositories.empty?
       STDERR.puts "Warning: you don't have any bananajour repositories. See: bananajour init"
     end
-    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port}" }
+    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -s thin" }
     puts "* Started " + web_uri.foreground(:yellow)
   end
   def self.web_port
