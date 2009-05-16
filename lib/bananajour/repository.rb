@@ -20,6 +20,9 @@ module Bananajour
     def name
       dirname.sub(".git",'')
     end
+    def html_friendly_name
+      name.gsub(/^[A-Za-z]+/, '')
+    end
     def dirname
       path.split.last.to_s
     end
@@ -61,6 +64,7 @@ module Bananajour
     def to_hash
       {
         "name" => name,
+        "html_friendly_name" => html_friendly_name,
         "uri" => uri,
         "recent_commits" => recent_commits.collect {|c| c.to_hash.merge("head" => c.head(grit_repo) && c.head(grit_repo).name) }
       }
