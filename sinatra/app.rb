@@ -20,12 +20,16 @@ helpers do
     content_type "application/json"
     params[:callback] ? "#{params[:callback]}(#{body});" : body
   end
+  def view(view)
+    haml view, :options => {:format => :html5,
+                              :attr_wrapper => '"'}
+  end
 end
 
 get "/" do
   @repositories = Bananajour.repositories
   @network_repositories = Bananajour.network_repositories
-  haml :home
+  view :home
 end
 
 get "/:repository/readme" do
@@ -33,7 +37,7 @@ get "/:repository/readme" do
   readme_file = @repository.readme_file
   @rendered_readme = @repository.rendered_readme
   @plain_readme = readme_file.data
-  haml :readme
+  view :readme
 end
 
 get "/index.json" do
