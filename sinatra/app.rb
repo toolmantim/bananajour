@@ -30,6 +30,7 @@ helpers do
   end
   def versioned_javascript(js)
     "/javascripts/#{js}.js?" + File.mtime(File.join(Sinatra::Application.public, "javascripts", "#{js}.js")).to_i.to_s
+  end
   def local?
     Socket.getaddrinfo(Socket.gethostname, nil)[0][3] == request.env["REMOTE_ADDR"]
   end
