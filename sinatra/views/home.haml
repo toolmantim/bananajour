@@ -183,7 +183,6 @@
 
   :javascript
     var getData = function() {
-      console.log("ping");
       $.getJSON("/index.json", function(data) {
         $.each(data.repositories, function(i) {
           $.getJSON("/" + data.repositories[i].name + ".json", function(repository) {
