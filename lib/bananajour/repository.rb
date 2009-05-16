@@ -44,7 +44,7 @@ module Bananajour
       DNSSD.register(name, "_git._tcp", nil, 9418, tr) {}
     end
     def network_repositories(network_repositories)
-      network_repositories.select {|nr| nr.name == name && Bananajour.web_uri != nr.bananajour.uri}
+      network_repositories.select {|nr| nr.name == name && Bananajour.web_uri != nr.bananajour.uri}.uniq.sort_by {|nr| nr.bananajour.name}
     end
     def readme_file
       grit_repo.tree.contents.find {|c| c.name =~ /readme/i}

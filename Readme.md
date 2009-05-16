@@ -56,3 +56,7 @@ License
 -------
 
 All directories and files are MIT Licensed.
+
+Warning to all those who still believe secrecy will save their revenue stream
+-----------------------------------------------------------------------------
+Bananas were meant to be shared. There are no secret bananas.

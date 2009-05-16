@@ -49,7 +49,7 @@ module Bananajour
     if repositories.empty?
       STDERR.puts "Warning: you don't have any bananajour repositories. See: bananajour init"
     end
-    Thread.new { `/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port}` }
+    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -s thin" }
     puts "* Started " + web_uri.foreground(:yellow)
   end
   def self.web_port
@@ -59,7 +59,7 @@ module Bananajour
     "http://#{host_name}:#{web_port}/"
   end
   def self.serve_git!
-    Thread.new { `git daemon --base-path=#{repositories_path} --export-all` }
+    fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
     puts "* Started " + "#{git_uri}".foreground(:yellow)
   end
   def self.host_name
