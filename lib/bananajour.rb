@@ -76,7 +76,15 @@ module Bananajour
       if repositories.empty?
         STDERR.puts "Warning: you don't have any bananajour repositories. See: bananajour init"
       end
-      fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -s thin" }
+      fork do 
+        runner = if Bananajour.env == 'development' 
+          gem 'shotgun', '0.3'
+          '/usr/bin/env shotgun'
+        else
+          '/usr/bin/env ruby'
+        end
+        exec "#{runner} #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -s thin"
+      end
       puts "* Started " + web_uri.foreground(:yellow)
     end
     
