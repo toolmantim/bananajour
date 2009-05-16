@@ -46,6 +46,10 @@ module Bananajour
       Fancypath(File.expand_path("~/.bananajour"))
     end
     
+    def env
+      ENV['BANANA_ENV'] || 'production'
+    end
+    
     def config_path
       path/"config.yml"
     end
@@ -92,7 +96,7 @@ module Bananajour
     end
     
     def web_port
-      9331
+      env == 'production' ? 9331 : 1339
     end
     
     def web_uri
@@ -100,8 +104,12 @@ module Bananajour
     end
     
     def serve_git!
-      fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
-      puts "* Started " + "#{git_uri}".foreground(:yellow)
+      if env == 'production'
+        fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
+        puts "* Started " + "#{git_uri}".foreground(:yellow)
+      else
+        puts "* Not starting git server for development mode"
+      end
     end
     
     def host_name
