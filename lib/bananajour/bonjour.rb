@@ -8,6 +8,10 @@ module Bananajour::Bonjour
       hsh.each { |k,v| self.send("#{k}=", v) }
     end
     
+    def html_friendly_name
+      name.gsub(/^[A-Za-z]+/, '')
+    end
+
     def person=(hsh)
       @person = Person.new(hsh)
     end
