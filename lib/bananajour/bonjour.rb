@@ -3,14 +3,20 @@ module Bananajour::Bonjour
   # methods that call Bonjour, and little model wrappers for the response packets
   
   class Repo
-    attr_accessor :name, :uri, :bananajour 
+    attr_accessor :name, :uri, :person 
     def initialize(hsh)
       hsh.each { |k,v| self.send("#{k}=", v) }
+    end
+    
+    def person=(hsh)
+      @person = Person.new(hsh)
     end
     
     def ==(other)
       self.uri == other.uri
     end
+    
+    alias_method :bananajour, :person
   end
   
   class Person
@@ -34,20 +40,8 @@ module Bananajour::Bonjour
   end
   
   def network_repositories
-    hosts = []
-    service = DNSSD.browse("_git._tcp") do |reply|
-      DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
-        r = Repo.new(
-          :uri => rr.text_record["uri"], 
-          :name => rr.text_record["name"], 
-          :bananajour => Person.new(:name => rr.text_record["bjour-name"], :uri => rr.text_record["bjour-uri"])
-        )
-        hosts << r unless hosts.include?(r)
-      end
-    end
-    sleep 0.5
-    service.stop
-    hosts
+    yaml = `#{Fancypath(__FILE__).dirname/'../../bin/bananajour'} network_repositories`
+    YAML.load(yaml).map { |hsh| Repo.new(hsh) }
   end
 
   def self.network_repositories_similar_to(repo)
@@ -60,16 +54,8 @@ module Bananajour::Bonjour
   end
 
   def people
-    peoples = []
-    service = DNSSD.browse("_bananajour._tcp") do |reply|
-      DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
-        p = Person.new(:name => rr.text_record["name"], :uri => rr.text_record["uri"])
-        peoples << p unless peoples.include?(p)
-      end
-    end
-    sleep 0.5
-    service.stop
-    peoples
+    yaml = `#{Fancypath(__FILE__).dirname/'../../bin/bananajour'} people`
+    YAML.load(yaml).map { |hsh| Person.new(hsh) }
   end
 
   def other_people

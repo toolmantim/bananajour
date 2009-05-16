@@ -2,17 +2,17 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bananajour}
-  s.version = "1.0.4"
+  s.version = "1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Lucas"]
-  s.date = %q{2009-05-16}
+  s.date = %q{2009-05-17}
   s.default_executable = %q{bananajour}
   s.description = %q{Local git repository hosting with a sexy web interface and bonjour discovery. It's like a adhoc, local, network-aware github!}
   s.email = %q{t.lucas@toolmantim.com}
   s.executables = ["bananajour"]
   s.extra_rdoc_files = ["Readme.md"]
-  s.files = ["Readme.md", "Rakefile", "bin/bananajour", "lib/bananajour", "lib/bananajour/grit_extensions.rb", "lib/bananajour/repository.rb", "lib/bananajour/version.rb", "lib/bananajour.rb", "sinatra/app.rb", "sinatra/lib", "sinatra/lib/date_helpers.rb", "sinatra/public", "sinatra/public/logo.png", "sinatra/views", "sinatra/views/home.haml", "sinatra/views/layout.haml", "sinatra/views/readme.haml"]
+  s.files = ["Readme.md", "Rakefile", "bin/bananajour", "lib/bananajour", "lib/bananajour/bonjour.rb", "lib/bananajour/grit_extensions.rb", "lib/bananajour/repository.rb", "lib/bananajour/version.rb", "lib/bananajour.rb", "sinatra/app.rb", "sinatra/lib", "sinatra/lib/date_helpers.rb", "sinatra/public", "sinatra/public/javascripts", "sinatra/public/javascripts/jquery-1.3.2.min.js", "sinatra/public/logo.png", "sinatra/views", "sinatra/views/home.haml", "sinatra/views/layout.haml", "sinatra/views/readme.haml"]
   s.homepage = %q{http://github.com/toolmantim/bananajour}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
