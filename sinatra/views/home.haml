@@ -104,7 +104,6 @@
         ul.commits
           :width 100%
           :margin-top 5px
-          :display none
         
         ul.commits li
           :font-size 12px
@@ -145,16 +144,9 @@
       - for repository in @repositories
         %a{:href => "##{repository.dirname}"}&= repository.name
   
-  %h2 Local Repos
+  - if local?
+    %h2 Local Repos
   
-  :javascript
-    function toggleCommitsForRepo(repository_id) {
-      var commits = $("#" + repository_id + " ul.commits");
-      var link = commits.siblings(".toggle_commits");
-      commits.toggle();
-      commits.is(":visible") ? link.text("- Commits") : link.text("+ Commits")
-    }
-
   - for repository in @repositories
     - repository_id = repository.name.gsub(/[^A-Za-z]+/, '')
     .repository{:id => repository_id}
@@ -181,9 +173,10 @@
         - for nr in network_repositories
           %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
 
-      %a.toggle_commits{:href => "#", :onclick => "toggleCommitsForRepo(\"#{repository_id}\");"} + Commits
+      - if local?
+        %a.toggle_commits{:href => "#"} + Commits
 
-      %ul.commits
+      %ul.commits{:style => ("display:none" if local?)}
         - for commit in repository.recent_commits
           %li
             - if head = commit.head(repository.grit_repo)
@@ -197,23 +190,37 @@
                 &= commit.author
                 \-
                 &= commit.id_abbrev
-                
-  %h2 Remote Repos
   
-  - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
-  - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
-    .repository
+  :javascript
+    $('.repository .toggle_commits').click(function(event) {
+      event.preventDefault();
+      var link = $(this);
+      var commits = link.parents('.repository').find('.commits');
+      commits.toggle();
+      commits.is(":visible") ? link.text("- Commits") : link.text("+ Commits");
+    });
+  
+  -# - unless local?
+  -#   :javascript
+  -#     $('.repository .toggle_commits').click();
+  
+  - if local?  
+    %h2 Remote Repos
+  
+    - distinct_network_repositories = repository.distinct_network_repositories(@network_repositories)
+    - for repo_name in distinct_network_repositories.map { |dnr| dnr.name }.uniq.sort
+      .repository
     
-      %h2
-        %span.name&= repo_name
+        %h2
+          %span.name&= repo_name
         
-      %p.network
-        - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
-          %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
+        %p.network
+          - for nr in distinct_network_repositories.select { |dnr| dnr.name == repo_name }
+            %a{:href => "#{nr.bananajour.uri}##{nr.name}.git"}= nr.bananajour.name
   
   .people
     %p
-      Other Bananas:
+      Banana Ring:
       = Bananajour.other_people.map { |p| "<a href='#{p.uri}'>#{p.name}</a>" }.join(', ')
 
 
@@ -241,7 +248,4 @@
     };
 
     $(setInterval(getData, 9000));
-
-
-
 
