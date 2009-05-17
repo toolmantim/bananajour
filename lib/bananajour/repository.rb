@@ -1,8 +1,11 @@
 gem 'mojombo-grit', '1.1.1'
 require 'grit'
+require File.dirname(__FILE__) + "/../../sinatra/lib/date_helpers"
 
 module Bananajour
   class Repository
+    include DateHelpers
+    
     def self.for_name(name)
       new(Bananajour.repositories_path.join(name + ".git"))
     end
@@ -35,6 +38,9 @@ module Bananajour
     def uri
       Bananajour.git_uri + dirname
     end
+    def feed_uri
+      Bananajour.web_uri + name + ".json"
+    end
     def grit_repo
       @grit_repo ||= Grit::Repo.new(path)
     end
@@ -65,11 +71,19 @@ module Bananajour
       ""
     end
     def to_hash
+      recent_commit_details = recent_commits.collect do|c|
+        time_ago = time_ago_in_words(Time.parse(c.to_hash["committed_date"]))
+        c.to_hash.merge(
+          "head" => c.head(grit_repo) && c.head(grit_repo).name,
+          "committed_date_pretty" => time_ago.gsub("about ","") + " ago"
+        )
+      end
       {
         "name" => name,
         "html_friendly_name" => html_friendly_name,
         "uri" => uri,
-        "recent_commits" => recent_commits.collect {|c| c.to_hash.merge("head" => c.head(grit_repo) && c.head(grit_repo).name) }
+        "feed_uri" => feed_uri,
+        "recent_commits" => recent_commit_details
       }
     end
   end

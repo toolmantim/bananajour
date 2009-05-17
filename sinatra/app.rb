@@ -76,12 +76,24 @@ get "/:repository/:commit" do
   haml :commit
 end
 
+# returns {
+#  "name": "Lachlan",
+#  "email": "lachlan@pornman.com",
+#  "uri": "http://my-machine.railscamp.org:9331",
+#  "repositories": [{
+#    "name": "raphael",
+#    "uri": "git://my-machine.railscamp.org:9331/raphael.git",
+#    "feed_uri": "http://my-machine.railscamp.org:9331/raphael.json"
+#   }]
+# }
 get "/index.json" do
-  json Bananajour.to_hash.to_json
+  user = Bananajour.to_hash
+  user['repositories'].each do |repo|
+    repo.merge!(Bananajour::Repository.for_name(repo['name']).to_hash)
+  end
+  json user.to_json
 end
 
 get "/:repository.json" do
-  response = Bananajour::Repository.for_name(params[:repository]).to_hash
-  response["recent_commits"].map! { |c| c["committed_date_pretty"] = time_ago_in_words(Time.parse(c["committed_date"])).gsub("about ","") + " ago"; c }
-  json response.to_json
+  json Bananajour::Repository.for_name(params[:repository]).to_hash.to_json
 end
