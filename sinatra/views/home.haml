@@ -61,34 +61,32 @@
         a
           :color #888
         
-        .readme
-          :position absolute
-          :top 0
-          :right 10px
-          :font-size 12px
-        
         h2
           :margin 0 0 5px 0
           :color #333
           :font-size 24px
+          
+          span.branches
+            :font-size 14px
+            :color #666
         
         h3
           :font-size 12px
           :color #666
           :margin 5px 0
           
-        span.uri
+        p.extra
           :margin 5px 0
-          :font-size 14px
-          :color #888
-          :font-weight normal
-          
-        p.heads, p.network
-          :display inline
+          :padding 0
+          :font-size 12px
+          &, a
+            :color #888
+          span, a
+            :margin-right 0.5em
+
+        p.network
           :font-size 12px
           :margin 5px 0
-          strong
-            :font-weight bold
           &, a
             :color #888
           
@@ -99,13 +97,6 @@
           :margin 0
           :padding 0
           :list-style none
-        
-        a.toggle_commits
-          :position absolute
-          :top 10
-          :right 10px
-          :font-size 12px
-          :color #888
         
       .local .repository
         :border-color #980
@@ -131,31 +122,17 @@
     - repository_id = repository.html_friendly_name
     .repository{:id => repository_id, 'data-name' => repository.name}
 
-      - if repository.readme_file
-        %p.readme
-          %a{:href => "/#{repository.name}/readme"} Readme
-    
       %h2
         %span.name&= repository.name
+        %span.branches
+          = repository.grit_repo.heads.collect {|h| h.name}.join(" ")
+
+      %p.extra
         %span.uri&= repository.uri
-          
-      %p.heads
-        %strong Published branches:
-        - repository.grit_repo.heads.collect {|h| h.name}.each_with_index do |branch, i|
-          = ",&nbsp;" unless i == 0
-          %span>&= branch
-
-      %p.network
-        %strong
-          %a{:href => "/#{repository.name}/network-activity"} Others
-          \:
-        - if (network_repositories = Bananajour.network_repositories_similar_to(repository)).empty?
-          none
-        - for nr in network_repositories
-          %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
-
-      - if local?
-        %a.toggle_commits{:href => "#"} More Commits
+        - if repository.readme_file
+          %a.readme{:href => "/#{repository.name}/readme"} Readme
+        - if local?
+          %a.toggle_commits{:href => "#"} + More Commits
 
       %ul.commits
         - for commit in repository.recent_commits
@@ -170,6 +147,13 @@
                 &= time_ago_in_words(commit.committed_date).gsub("about ","")
                 ago by
                 &= commit.author
+                
+      - unless (network_repositories = Bananajour.network_repositories_similar_to(repository)).empty?
+        %p.network
+          %strong
+            Network (<a href="/#{repository.name}/network-activity">monitor</a>):
+          - for nr in network_repositories
+            %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
   
   :javascript
     $('.repository .toggle_commits').click(function(event) {
@@ -177,7 +161,7 @@
       var link = $(this);
       var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
       commits.toggle();
-      commits.is(":visible") ? link.text("Less Commits") : link.text("More Commits");
+      commits.is(":visible") ? link.text("- Less Commits") : link.text("+ More Commits");
     });
     
   :javascript
