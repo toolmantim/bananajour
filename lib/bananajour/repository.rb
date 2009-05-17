@@ -6,6 +6,9 @@ module Bananajour
     def self.for_name(name)
       new(Bananajour.repositories_path.join(name + ".git"))
     end
+    def self.html_friendly_name(name)
+      name.gsub(/[^A-Za-z]+/, '')
+    end
     def initialize(path)
       @path = Fancypath(path)
     end
@@ -21,7 +24,7 @@ module Bananajour
       dirname.sub(".git",'')
     end
     def html_friendly_name
-      name.gsub(/[^A-Za-z]+/, '')
+      self.class.html_friendly_name(name)
     end
     def dirname
       path.split.last.to_s

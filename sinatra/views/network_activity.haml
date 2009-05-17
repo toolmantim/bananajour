@@ -1,0 +1,37 @@
+- @page_title = "Network Activity for #{@repository.name}"
+
+%style{:type => 'text/css'}
+  :sass
+    ul.repos
+      &, li
+        :padding 0
+        :margin 0
+      
+      li
+        :list-style none
+        :border 1px solid #430
+        :float left
+        :padding 10px
+  
+%h2
+  Network Activity for
+  &= @repository.name
+
+:javascript
+  $(function() {
+    var repos = #{@network_repositories.map {|r| r.to_hash}.to_json};
+    
+    var reposList = $("<ul class='repos'/>").appendTo($("body"));
+
+    $(repos).each(function() {
+      
+      $("<li class='loading'/>").
+        append(
+          $("<a/>").
+            attr("href", this.web_uri).
+            text(this.person.name)
+        ).
+        appendTo(reposList);
+    });
+  })
+  

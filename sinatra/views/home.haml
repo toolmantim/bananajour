@@ -182,7 +182,8 @@
           %span>&= branch
 
       %p.network
-        %strong Network:
+        %strong
+          <a href="/#{repository.name}/network-activity">Others</a>:
         - if (network_repositories = Bananajour.network_repositories_similar_to(repository)).empty?
           none
         - for nr in network_repositories
