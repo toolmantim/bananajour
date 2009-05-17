@@ -1,0 +1,105 @@
+- @page_title = "Commit #{@commit}"
+
+%style{:type => 'text/css'}
+  :sass
+    #title
+      :margin-left 0
+    
+    #commit_id
+      :color rgb(153, 136, 0)
+      :text-transform uppercase
+      :margin 0
+    
+    .meta
+      :font-size 90%
+      :margin-top 0
+      :color #796B00
+    
+    .codediff
+      :font 90%/140% "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace
+      :width 100%
+      :border-collapse collapse
+      :margin-bottom 20px
+      
+      th:first-child
+        :-webkit-border-top-left-radius 9px
+      tr:last-child td:last-child
+        :-webkit-border-bottom-right-radius 9px
+      
+      .line-num-cut
+        :background #ccc
+        :border-top 1px dashed #ccc
+        :border-bottom 1px dashed #ccc
+
+      th, .line_numbers
+        :background #F0E342
+      
+      th
+        :text-align left
+        :padding 3px 0
+      
+      td
+        :padding 0 3px
+        &.line_numbers
+          :text-align right
+          :min-width 9px
+                    
+        &.code
+          :white-space pre-wrap
+          :white-space -moz-pre-wrap
+          :white-space -pre-wrap
+          :white-space -o-pre-wrap
+          :word-wrap break-word
+          :background #fff
+
+        &.unwrapped
+          :white-space pre
+
+        &.softwrapped
+          :white-space pre-wrap
+          :white-space -moz-pre-wrap
+          :white-space -pre-wrap
+          :white-space -o-pre-wrap
+          :word-wrap break-word
+
+        &.marked
+          :background #ffc !important
+        
+        &.ins
+          :background #a3ffa3        
+          ins
+            :text-decoration none
+        
+        &.del
+          :background #ffa3a3
+          del
+            :text-decoration none
+  
+  
+%h2#commit_id= @commit.to_s
+
+%p.meta
+  \~
+  = @commit.committed_date.strftime('%a %b %e %I:%M%p').sub(/\b0(\d+):/, '\1:').sub('AM', 'am').sub('PM', 'pm')
+  - unless @commit.committed_date.year == Time.now.year
+    = @commit.committed_date.strftime(' %Y')
+  by
+  %span.author&= @commit.author
+
+%p.message
+  &= @commit.message
+
+- for diff in @commit.diffs
+  - filename, lines = parse_diff(diff)
+  %table.codediff
+    %thead
+      %tr
+        %th
+        %th
+        %th= filename
+    %tbody
+      - for line in lines
+        %tr.changes
+          %td.line_numbers= line.op == DiffHelpers::DIFF_INS ? '' : line.num
+          %td.line_numbers= line.op == DiffHelpers::DIFF_DEL ? '' : line.num
+          %td{:class => diff_op_css_class(line.op)}= html_escape(line.body)
