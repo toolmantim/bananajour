@@ -34,7 +34,6 @@ var banana = {
 		  commit.author_name = commit.author.name;
 		  commit.nice_id = commit.id.substr(0, 7);
 		  var messagePara = utility.substitute(template, commit);
-		  console.log(messagePara)
 		  if(commit.head){
 		    headBranch = $(messagePara);
 		  } else {
