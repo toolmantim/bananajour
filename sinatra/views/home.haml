@@ -1,12 +1,14 @@
 - @page_title = "#{Bananajour.config.name}&rsquo;s Bananajour"
 
+%style{:type => "text/css"}
+  :sass
+    .people
+      :font-size 14px
+      a
+        :color black
+  
 - if @my_repositories.empty?
 
-  %style{:type => "text/css"}
-    :sass
-      h2, pre
-        :margin-left 14px
-    
   %h2 Add a project
   
   %pre
@@ -43,11 +45,6 @@
           :color #000
           :font-weight 700
       
-      .people
-        :font-size 14px
-        a
-          :color black
-        
       .repository
         :clear both
         :background-color white
@@ -185,12 +182,6 @@
             - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
               %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
  
-  .people
-    %p
-      Banana Ring:
-      = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
-
-
   :javascript
     var getData = function() {
       $.getJSON("/index.json", function(data) {
@@ -215,4 +206,8 @@
     };
 
     // $(setInterval(getData, 9000));
-
+  
+.people
+  %p
+    Other bananas:
+    = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
