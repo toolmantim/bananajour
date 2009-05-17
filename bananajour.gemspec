@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bananajour}
-  s.version = "1.2.4"
+  s.version = "1.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Lucas"]
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<json>, ["= 1.1.2"])
       s.add_runtime_dependency(%q<rainbow>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
-      s.add_runtime_dependency(%q<dnssd>, ["= 0.6.0"])
+      s.add_runtime_dependency(%q<dnssd>, ["= 0.7.1"])
       s.add_runtime_dependency(%q<mojombo-grit>, ["= 1.1.1"])
       s.add_runtime_dependency(%q<rack>, ["= 0.9.1"])
     else
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<json>, ["= 1.1.2"])
       s.add_dependency(%q<rainbow>, ["= 1.0.1"])
       s.add_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
-      s.add_dependency(%q<dnssd>, ["= 0.6.0"])
+      s.add_dependency(%q<dnssd>, ["= 0.7.1"])
       s.add_dependency(%q<mojombo-grit>, ["= 1.1.1"])
       s.add_dependency(%q<rack>, ["= 0.9.1"])
     end
@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<json>, ["= 1.1.2"])
     s.add_dependency(%q<rainbow>, ["= 1.0.1"])
     s.add_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
-    s.add_dependency(%q<dnssd>, ["= 0.6.0"])
+    s.add_dependency(%q<dnssd>, ["= 0.7.1"])
     s.add_dependency(%q<mojombo-grit>, ["= 1.1.1"])
     s.add_dependency(%q<rack>, ["= 0.9.1"])
   end
