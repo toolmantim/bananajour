@@ -19,6 +19,24 @@ module Bananajour::Bonjour
     def ==(other)
       self.uri == other.uri
     end
+    
+    def json_uri
+      "#{person.uri}#{name}.json"
+    end
+    
+    def web_uri
+      "#{person.uri}"
+    end
+    
+    def to_hash
+      {
+        "name" => name,
+        "uri" => uri,
+        "json_uri" => json_uri,
+        "web_uri" => web_uri,
+        "person" => person.to_hash
+      }
+    end
   end
   
   class Person
@@ -29,6 +47,10 @@ module Bananajour::Bonjour
     
     def ==(other)
       self.uri == other.uri
+    end
+    
+    def to_hash
+      {"name" => name, "uri" => uri}
     end
   end
   

@@ -107,54 +107,8 @@
           :font-size 12px
           :color #888
         
-        ul.commits
-          :width 100%
-          :margin-top 5px
-        
-        ul.commits li
-          :font-size 12px
-          :line-height 1.5em
-          :padding 8px 0
-          :border 0px solid #ddd
-          :border-top-width 1px
-          :cursor pointer
-          
-          &:first-child
-            :border-top-width 0
-          
-          em.branch
-            :float right
-            :display block
-            :font-size 11px
-            :background-color #e5e5e5
-            :color #666
-            :padding 2px 5px
-            :margin-left 3px
-            :margin-top -3px
-            :font-weight normal
-            :font-style normal
-          
-          p
-            :margin 0
-            :line-height 1em
-            
-          p.message
-            :line-height 1.4em
-            :padding-left 30px
-
-          span.meta
-            :font-size 10px
-            :color #999
-            :line-height 1.5em
-            
-          img.gravatar
-            :margin-top -5px
-            :width 25px
-            :height 25px
-            :float left
-      
       .local .repository
-        :border-color #f1592a
+        :border-color #980
       #remotes
         :margin 20px 0 0 0
         .repository
@@ -192,7 +146,8 @@
           %span>&= branch
 
       %p.network
-        %strong Network:
+        %strong
+          <a href="/#{repository.name}/network-activity">Others</a>:
         - if (network_repositories = Bananajour.network_repositories_similar_to(repository)).empty?
           none
         - for nr in network_repositories

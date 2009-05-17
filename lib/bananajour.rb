@@ -9,7 +9,7 @@ require 'rainbow'
 
 require 'socket'
 
-gem 'dnssd', '0.6.0'
+gem 'dnssd', '0.7.1'
 require 'dnssd'
 
 require 'bananajour/repository'
@@ -76,11 +76,11 @@ module Bananajour
       fork do 
         runner = if Bananajour.env == 'development' 
           gem 'shotgun', '0.3'
-          '/usr/bin/env shotgun'
+          '/usr/bin/env shotgun -o 0.0.0.0'
         else
           '/usr/bin/env ruby'
         end
-        exec "#{runner} #{File.dirname(__FILE__)}/../sinatra/app.rb -o 0.0.0.0 -p #{web_port} -s thin"
+        exec "#{runner} #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -s thin"
       end
       puts "* Started " + web_uri.foreground(:yellow)
     end
