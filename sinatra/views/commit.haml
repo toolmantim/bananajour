@@ -8,9 +8,12 @@
     #commit_id
       :color rgb(153, 136, 0)
       :text-transform uppercase
+      :margin 0
     
     .meta
       :font-size 90%
+      :margin-top 0
+      :color #796B00
     
     .codediff
       :margin-left -42px
@@ -70,12 +73,9 @@
           :background #ffa3a3
           del
             :text-decoration none
-
+  
   
 %h2#commit_id= @commit.to_s
-
-%p.message
-  &= @commit.message
 
 %p.meta
   \~
@@ -84,6 +84,9 @@
     = @commit.committed_date.strftime(' %Y')
   by
   %span.author&= @commit.author
+
+%p.message
+  &= @commit.message
 
 - for diff in @commit.diffs
   - filename, lines = parse_diff(diff)
