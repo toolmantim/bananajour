@@ -181,7 +181,7 @@
     });
 
   :javascript
-    $('.commits li').click(function(event){
+    $('.commits li').live("click", function(event){
       var target = $(event.target);
       var commitLine = target.is('li') ? target : target.parents('li');
       var commitId = commitLine.attr('data-commit-id');
