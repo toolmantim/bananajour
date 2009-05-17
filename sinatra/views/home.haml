@@ -133,7 +133,7 @@
 
       %ul.commits.off
         - for commit in repository.recent_commits
-          %li
+          %li{"data-commit-id" => commit.id}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
             %img.gravatar{:src => commit.author.gravatar_uri}
@@ -164,7 +164,7 @@
     });
 
   :javascript
-    $('.commits li').click(function(event){
+    $('.commits li').live("click", function(event){
       var target = $(event.target);
       var commitLine = target.is('li') ? target : target.parents('li');
       var commitId = commitLine.attr('data-commit-id');
