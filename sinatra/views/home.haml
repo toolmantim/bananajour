@@ -172,13 +172,10 @@
                   ago by
                   &= commit.author
       - else
-        - repos = Bananajour.network_repositories_similar_to(repository)
-        - if repos.length > 1
-          %h3 Network Activity
-          %ul.network
-            - for repo in repos
-              %li.loading{'data-json-uri' => repo.json_uri}
-                %a.name{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.person.name
+        %ul.network
+          - for repo in Bananajour.network_repositories_similar_to(repository)
+            %li.loading{'data-json-uri' => repo.json_uri}
+              %a.name{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.person.name
 
   - if local?
     :javascript
