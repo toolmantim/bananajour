@@ -129,7 +129,7 @@
         - if repository.readme_file
           %a.readme{:href => "/#{repository.name}/readme"} Readme
         - if local?
-          -#%a.toggle_commits{:href => "#"} + More Commits
+          %a.toggle_commits{:href => "#"} Show More Commits
 
       %ul.commits.off
         - for commit in repository.recent_commits
@@ -172,12 +172,20 @@
     = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
 
 :javascript
-  $('.repository .toggle_commits').click(function(event) {
+  $("ul.commits li:not(:first-child)").hide();
+  
+  $('.repository .toggle_commits').live("click", function(event) {
     event.preventDefault();
     var link = $(this);
     var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
-    commits.toggle();
-    commits.is(":visible") ? link.text("- Less Commits") : link.text("+ More Commits");
+    var commitList = link.parents('.repository').find("ul.commits");
+    if (commitList.hasClass("off")) {
+      commitList.removeClass("off");
+    } else {
+      commitList.addClass("off");
+    }
+    commits.toggle();      
+    commits.is(":visible") ? link.text("Show Less Commits") : link.text("Show More Commits");
   });
   
   $('.commits li').live("click", function(event){
