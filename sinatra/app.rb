@@ -64,6 +64,12 @@ get "/:repository/readme" do
   view :readme
 end
 
+get "/:repository/network-activity" do
+  @repository = Bananajour::Repository.for_name(params[:repository])
+  @network_repositories = Bananajour.network_repositories_similar_to(@repository)
+  haml :network_activity
+end
+
 get "/:repository/:commit" do
   @repository = Bananajour::Repository.for_name(params[:repository])
   @commit = @repository.grit_repo.commit(params[:commit])
