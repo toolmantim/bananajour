@@ -5,11 +5,8 @@ require "rubygems"
 gem 'chrislloyd-fancypath', '0.5.8'
 require 'fancypath'
 
-if file = Fancypath(__FILE__).symlink? 
-  require "bananajour"
-else
-  require file.dirname/'../lib/bananajour'
-end
+file = Fancypath(__FILE__)
+require file.symlink? ? "bananajour" : file.dirname/'../lib/bananajour'
 
 Bananajour.check_git!
 
