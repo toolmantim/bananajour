@@ -9,7 +9,7 @@ module Bananajour::Bonjour
     end
     
     def html_friendly_name
-      name.gsub(/^[A-Za-z]+/, '')
+      name.gsub(/[^A-Za-z]/, '')
     end
 
     def person=(hsh)
@@ -19,8 +19,6 @@ module Bananajour::Bonjour
     def ==(other)
       self.uri == other.uri
     end
-    
-    alias_method :bananajour, :person
   end
   
   class Person
@@ -60,7 +58,7 @@ module Bananajour::Bonjour
 
   def uncloned_network_repositories
     local_repo_names = Bananajour.repositories.map { |repo| repo.name }
-    other_network_repositories.select { |remote| !local_repo_names.include? remote.name }.uniq.sort_by { |nr| nr.bananajour.name }
+    other_network_repositories.select { |remote| !local_repo_names.include? remote.name }.uniq.sort_by { |nr| nr.person.name }
   end
 
   def all_people
