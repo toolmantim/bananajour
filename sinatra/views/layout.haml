@@ -49,6 +49,7 @@
         pre
           :overflow auto
     %script{:src => versioned_javascript("jquery-1.3.2.min"), :type => "text/javascript"}
+    %script{:src => versioned_javascript("banana"), :type => "text/javascript"}
   %body{:class => ("local" if local?)}
     - if Bananajour.env == 'development'
       .dev_notice DEV MODE
