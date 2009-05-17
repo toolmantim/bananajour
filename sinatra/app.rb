@@ -1,4 +1,8 @@
 require 'rubygems'
+
+gem 'chrislloyd-fancypath', '0.5.8'
+require 'fancypath'
+
 require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
 gem 'sinatra', '0.9.1.1'
