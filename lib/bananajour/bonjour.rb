@@ -49,7 +49,7 @@ module Bananajour::Bonjour
   end
 
   def self.network_repositories_similar_to(repo)
-    Bananajour.network_repositories.select { |nr| nr.name == repo.name && nr.uri != repo.uri }.uniq.sort_by { |nr| nr.bananajour.name }
+    Bananajour.network_repositories.select { |nr| nr.name == repo.name && nr.uri != repo.uri }.uniq.sort_by { |nr| nr.person.name }
   end
 
   def self.yet_uncloned_network_repositories

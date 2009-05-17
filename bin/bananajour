@@ -68,7 +68,9 @@ when 'network_repositories'
             'uri' => rr.text_record["bjour-uri"]
         }
       }
-      repos << r unless repos.include?(r)
+      next if repos.include?(r)
+      next if r['name'].nil? || r['name'].empty?
+      repos << r
     end
   end
   sleep(0.5)
