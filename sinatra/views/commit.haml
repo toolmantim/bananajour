@@ -3,83 +3,70 @@
 %style{:type => 'text/css'}
   :sass
     table
-      &#codeblob
-        :width 100%
-
-      tr
-        .line-numbers
+      :font 90%/140% "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace
+      :width 100%
+      :border-collapse collapse
+      
+      .line-num-cut
+        :background #ccc
+        :border-top 1px dashed #ccc
+        :border-bottom 1px dashed #ccc
+      
+      th
+        :background #DDCC81
+        :text-align left
+        :padding 3px 0
+        / :padding-left 
+      
+      td
+        :padding 0 3px
+        &.line_numbers
+          :background #DDCC81
           :text-align right
-          :vertical-align top
-          :background #eee
-          :color #555
-          :font-size 92%
-          :padding 0 3px 0 2px
-          :width 35px
-          :border-right 1px solid #ccc
+          
+        &.code
+          / :width 95%
+          :white-space pre-wrap
+          :white-space -moz-pre-wrap
+          :white-space -pre-wrap
+          :white-space -o-pre-wrap
+          :word-wrap break-word
+          :background #fff
 
-        td
-          &.code
-            :width 95%
-            :padding-left 10px
-            :white-space pre-wrap
-            :white-space -moz-pre-wrap
-            :white-space -pre-wrap
-            :white-space -o-pre-wrap
-            :word-wrap break-word
-            :background #fff
-            :font 95%/110% "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace
-            :border-right 1px solid #999
+        &.unwrapped
+          :white-space pre
 
-          &.unwrapped
-            :white-space pre
+        &.softwrapped
+          :white-space pre-wrap
+          :white-space -moz-pre-wrap
+          :white-space -pre-wrap
+          :white-space -o-pre-wrap
+          :word-wrap break-word
 
-          &.softwrapped
-            :white-space pre-wrap
-            :white-space -moz-pre-wrap
-            :white-space -pre-wrap
-            :white-space -o-pre-wrap
-            :word-wrap break-word
+        &.marked
+          :background #ffc !important
+        
+        &.ins
+          :background #a3ffa3        
+          ins
+            :text-decoration none
+        
+        &.del
+          :background #ffa3a3
+          del
+            :text-decoration none
 
-          &.marked
-            :background #ffc !important
 
-      &.codediff
-        :border 1px solid #ccc
-        :width 100%
-        :border-collapse collapse
-        :font 80%/105% "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace
-
-        .line-num-cut
-          :background #ccc
-          :border-top 1px dashed #ccc
-          :border-bottom 1px dashed #ccc
-
-        thead
-          :background #ddd
-
-          .line-numbers
-            :background #ddd
-
-        td
-          &.code
-            :padding-left 2px
-
-          &.del
-            :background #ffa3a3
-
-            del
-              :text-decoration none
-
-          &.ins
-            :background #a3ffa3
-
-            ins
-              :text-decoration none
-
+  
 - for diff in @commit.diffs
   - filename, lines = parse_diff(diff)
-  %p= filename
-  %table.codediff.inline
+  -# %p= filename
+  %table.codediff
+    %thead
+      %tr
+        %th
+        %th
+        %th= filename
     %tbody
       - for line in lines
         %tr.changes
