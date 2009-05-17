@@ -52,7 +52,7 @@ end
 get "/" do
   @my_repositories = Bananajour.repositories
   @uncloned_repositories = Bananajour.uncloned_network_repositories
-  @uncloned_repository_names = @uncloned_repositories.map { |dnr| dnr.name }.uniq.sort
+  
   view :home
 end
 

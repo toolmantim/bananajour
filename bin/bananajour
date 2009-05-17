@@ -95,7 +95,7 @@ when 'people'
       peoples << p unless peoples.include?(p)
     end
   end
-  sleep 0.5
+  sleep(0.5)
   service.stop
   puts YAML.dump(peoples)
 

@@ -75,7 +75,7 @@ module Bananajour::Bonjour
   end
 
   def network_repositories_similar_to(repo)
-    all_network_repositories.select { |nr| nr.name == repo.name && nr.uri != repo.uri }.uniq.sort_by { |nr| nr.person.name }
+    all_network_repositories.select { |nr| nr.name == repo.name }.uniq.sort_by { |nr| nr.person.name }
   end
 
   def uncloned_network_repositories

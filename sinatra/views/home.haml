@@ -59,7 +59,7 @@
           :color #888
         
         h2
-          :margin 0 0 5px 0
+          :margin 0
           :color #333
           :font-size 24px
           
@@ -67,33 +67,60 @@
             :font-size 14px
             :color #666
         
-        h3
-          :font-size 12px
-          :color #666
-          :margin 5px 0
-          
-        p.extra
-          :margin 5px 0
-          :padding 0
-          :font-size 12px
-          &, a
-            :color #888
-          span, a
-            :margin-right 0.5em
-
-        p.network
-          :font-size 12px
-          :margin 5px 0
-          &, a
-            :color #888
-          
-        p.heads
-          :margin-right 10px
-        
         ul, li
           :margin 0
           :padding 0
           :list-style none
+          
+        p.readme
+          :float right
+          :margin 0
+          :text-transform uppercase
+          :font-size 12px
+          :line-height 20px
+          
+        p.uri
+          :color #666
+          :margin 5px 0
+          :font-size 12px
+        
+        h3
+          :margin 10px 0 0 0
+          :font-size 12px
+          :color #999
+          :text-transform uppercase
+        
+        ul.network
+          :margin-top 5px
+          li
+            :line-height 1.2em
+            &.loading
+              :background-color #f00
+            a.name
+              :font-size 12px
+              :font-weight bold
+              :color #000
+              :text-transform uppercase
+            .message
+              :font-size 12px
+              :color #333
+            .meta
+              :font-size 12px
+              
+      .projects, .people
+        :float left
+        :width 48%
+        :background-color #fff
+        :border 4px solid #ff0
+        :-webkit-border-radius 10px
+        :-moz-border-radius 10px
+        
+        h2
+          :margin 0
+          :text-align center
+        
+      .people
+        :margin-left 10px
         
       .local .repository
         :border-color #980
@@ -108,7 +135,7 @@
       .hidden
         :display none
     
-  - if @my_repositories.length > 1
+  - unless @my_repositories.empty?
     %ul.toc
       %li Repos:
       - for repository in @my_repositories
@@ -119,95 +146,76 @@
     - repository_id = repository.html_friendly_name
     .repository{:id => repository_id, 'data-name' => repository.name}
 
+      - if repository.readme_file
+        %p.readme
+          %a{:href => "/#{repository.name}/readme"} Readme
+
       %h2
         %span.name&= repository.name
         %span.branches
-          = repository.grit_repo.heads.collect {|h| h.name}.join(" ")
+          = repository.grit_repo.heads.collect {|h| h.name}.join(", ")
 
-      %p.extra
-        %span.uri&= repository.uri
-        - if repository.readme_file
-          %a.readme{:href => "/#{repository.name}/readme"} Readme
-        - if local?
-          %a.toggle_commits{:href => "#"} + More Commits
+      %p.uri&= repository.uri
 
-      %ul.commits
-        - for commit in repository.recent_commits
-          %li{:class => ("hidden" if commit != repository.recent_commits.first && local?), 'data-commit-id' => commit.id}
-            - if head = commit.head(repository.grit_repo)
-              %em.branch= head.name
-            %img.gravatar{:src => gravatar(commit.author.email)}/
-            %p.message
-              &= commit.short_message
-              %span.meta
-                \~
-                &= time_ago_in_words(commit.committed_date).gsub("about ","")
-                ago by
-                &= commit.author
-                
-      - unless (network_repositories = Bananajour.network_repositories_similar_to(repository)).empty?
-        %p.network
-          %strong
-            Network (<a href="/#{repository.name}/network-activity">monitor</a>):
-          - for nr in network_repositories
-            %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
-  
-  :javascript
-    $('.repository .toggle_commits').click(function(event) {
-      event.preventDefault();
-      var link = $(this);
-      var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
-      commits.toggle();
-      commits.is(":visible") ? link.text("- Less Commits") : link.text("+ More Commits");
-    });
-    
-  :javascript
-    $('.commits li').click(function(event){
-      var target = $(event.target);
-      var commitLine = target.is('li') ? target : target.parents('li');
-      var commitId = commitLine.attr('data-commit-id');
-      var repoName = commitLine.parents('.repository').attr('data-name');
-      window.location = '/' + repoName + '/' + commitId;
-    });
-  
-  - if local?  
-    #remotes
-      %hr
-      - for repository_name in @uncloned_repository_names
-        .repository
-          %h2
-            %span.name&= repository_name
+      - unless local?
+        %ul.commits
+          - for commit in repository.recent_commits
+            %li
+              - if head = commit.head(repository.grit_repo)
+                %em.branch= head.name
+              %img.gravatar{:src => gravatar(commit.author.email)}/
+              %p.message
+                &= commit.short_message
+                %span.meta
+                  \~
+                  &= time_ago_in_words(commit.committed_date).gsub("about ","")
+                  ago by
+                  &= commit.author
+      - else
+        - repos = Bananajour.network_repositories_similar_to(repository)
+        - if repos.length > 1
+          %h3 Network Activity
+          %ul.network
+            - for repo in repos
+              %li.loading{'data-json-uri' => repo.json_uri}
+                %a.name{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.person.name
 
-          %p.network
-            - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
-              %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
- 
-  :javascript
-    var getData = function() {
-      $.getJSON("/index.json", function(data) {
-        $.each(data.repositories, function(i) {
-          $.getJSON("/" + data.repositories[i].name + ".json", function(repository) {
-            ajaxUpdate(repository);
+  - if local?
+    :javascript
+      $(function() {
+        $("ul.network li").each(function() {
+          var repoLi = $(this);
+          $.getJSON(repoLi.attr("data-json-uri") + "?callback=?", function(data) {
+            repoLi.removeClass("loading");
+            var lastCommit = data.recent_commits[0];
+            var lastCommitLink = $("<a/>").appendTo(repoLi);
+            $("<span class='message'/>").text(lastCommit.message).appendTo(lastCommitLink);
+            // if (lastCommit.head) $("<em class='branch' />").text(lastCommit.head).prependTo(lastCommitLink);
+            $("<span class='meta'/>").
+              append(" ~ " + lastCommit.committed_date_pretty + " by " + lastCommit.author.name).
+              appendTo(lastCommitLink);
           });
         });
       });
-    };
-
-    var ajaxUpdate = function(repository) {
-      $.each(repository.recent_commits, function(i) {
-        var commit = repository.recent_commits[i];
-        if (commit.head != null) {
-          var headBranch = $("<em class=\"branch\"/>").append(commit.head);
-        }
-        var messagePara = $("<p class=\"message\"/>").append(commit.message);
-        messagePara.append($("<span class=\"meta\"/>").append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name + " - " + commit.id.substr(0, 7)));
-        $($("#" + repository.html_friendly_name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
-      });      
-    };
-
-    // $(setInterval(getData, 9000));
-  
-.people
-  %p
-    Other bananas:
-    = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
+    
+    .projects
+      %h2 Projects
+      %ul
+        - for repository_name in @uncloned_repository_names
+          %li
+            %h3
+              %span.name&= repository_name
+            %ul
+              - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
+                %li
+                  %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
+    
+    .people
+      %h2 People
+      %ul
+        - for person in Bananajour.other_people
+          %li
+            %h3
+              %a{:href => person.uri}&= person.name
+            %ul
+              - 
