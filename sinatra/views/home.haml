@@ -155,17 +155,17 @@
           %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
 
       - if local?
-        %a.toggle_commits{:href => "#"} More Commits
+        -# %a.toggle_commits{:href => "#"} More Commits
 
       %ul.commits.off
         - for commit in repository.recent_commits
-          %li{:id => commit.id}
+          %li
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
-            %img.gravatar{:src => gravatar(commit.author.email)}/
+            %img.gravatar{:src => commit.author.gravatar_uri}
             %p.message
               &= commit.short_message
-              %span.meta
+              %span.meta{:id => "git#{commit.id}"}
                 \~
                 &= time_ago_in_words(commit.committed_date).gsub("about ","")
                 ago by

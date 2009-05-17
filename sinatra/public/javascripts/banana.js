@@ -10,10 +10,10 @@ var utility = {
 
 var banana = {
   //template for standard row
-  template_standard: '<li class=${is_new}><p class="message"> ${message} <span class="meta"  id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</span></p></li>',
+  template_standard: '<li class=${is_new}><img class="gravatar" src="${gravatar}"><p class="message"> ${message} <span class="meta" id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</span></p></li>',
 
   //template for row with a branch label
-  template_master: '<li class=${is_new}><em class="branch">${head}</em><p class="message"> ${message} <span class="meta" id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</p></li>',
+  template_master: '<li class=${is_new}><em class="branch">${head}</em><img class="gravatar" src="${gravatar}"><p class="message"> ${message} <span class="meta" id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</p></li>',
 
   //fetch the index and use that to fetch json for each repository
   getData : function(){
@@ -39,6 +39,7 @@ var banana = {
     $.each(repository.recent_commits, function(i) {
       var commit = repository.recent_commits[i];
       commit.author_name = commit.author.name;
+      commit.gravatar = commit.author.gravatar;
       commit.nice_id = "git" + commit.id;
       commit.already_exists = banana.not_already_exists(existing_content, commit.nice_id);		  		  
       commit.is_new = (commit.already_exists)?"new":"old";

@@ -73,10 +73,14 @@ module Bananajour
     def to_hash
       recent_commit_details = recent_commits.collect do|c|
         time_ago = time_ago_in_words(Time.parse(c.to_hash["committed_date"]))
-        c.to_hash.merge(
+        commit = c.to_hash.merge(
           "head" => c.head(grit_repo) && c.head(grit_repo).name,
           "committed_date_pretty" => time_ago.gsub("about ","") + " ago"
         )
+        commit['author'].merge!({
+         "gravatar" => c.author.gravatar_uri
+        })
+        commit
       end
       {
         "name" => name,
