@@ -26,7 +26,7 @@ module Bananajour
     include GravatarHelpers
     
     def path
-      Fancypath(File.expand_path("~/.bananajour"))
+      Fancypath("~/.bananajour").expand_path
     end
     
     def repositories_path
