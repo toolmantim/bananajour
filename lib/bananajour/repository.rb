@@ -10,7 +10,7 @@ module Bananajour
       new(Bananajour.repositories_path.join(name + ".git"))
     end
     def self.html_friendly_name(name)
-      name.gsub(/[^A-Za-z]+/, '')
+      name.gsub(/[^A-Za-z]+/, '').downcase
     end
     def initialize(path)
       @path = Fancypath(path)

@@ -41,12 +41,13 @@ var banana = {
       commit.author_name = commit.author.name;
       commit.gravatar = commit.author.gravatar;
       commit.nice_id = "git" + commit.id;
-      commit.already_exists = banana.not_already_exists(existing_content, commit.nice_id);		  		  
-      commit.is_new = (commit.already_exists)?"new":"old";
+      commit.already_exists = banana.not_already_exists(existing_content, commit.nice_id);
+      commit.is_new = (commit.already_exists) ? "new" : "old";
       var template = banana.template_standard;
       if (commit.head) {
         template = banana.template_master;
       }
+      commit.message = commit.message.split("\n")[0];
       var messagePara = utility.substitute(template, commit);
       if(commit.head){
         headBranch = $(messagePara);
