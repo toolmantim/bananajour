@@ -161,7 +161,7 @@
           %li{:id => commit.id}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
-            %img.gravatar{:src => gravatar(commit.author.email)}/
+            %img.gravatar{:src => commit.author.gravatar_uri}
             %p.message
               &= commit.short_message
               %span.meta

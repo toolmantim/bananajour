@@ -44,9 +44,6 @@ helpers do
       Socket.getaddrinfo(request.env["SERVER_NAME"], nil)[0][3]
     ].include? request.env["REMOTE_ADDR"]
   end
-  def gravatar(email)
-    "http://gravatar.com/avatar/#{MD5.md5(email)}.png"
-  end
 end
 
 get "/" do

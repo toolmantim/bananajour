@@ -10,7 +10,7 @@ Grit::Commit.class_eval do
 end
 
 Grit::Actor.class_eval do
-  def gravatar_image
-    "http://www.gravatar.com/avatar/#{MD5.md5(email.downcase)}"
+  def gravatar_uri
+    "http://www.gravatar.com/avatar/#{MD5.md5(email.downcase)}.png"
   end
 end
