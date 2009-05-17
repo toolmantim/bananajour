@@ -64,6 +64,9 @@ module Bananajour
     rescue LoadError
       ""
     end
+    def remove!
+      path.rmtree
+    end
     def to_hash
       {
         "name" => name,

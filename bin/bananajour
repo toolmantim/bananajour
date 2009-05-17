@@ -19,13 +19,26 @@ when "init"
   repo = Bananajour.init!(ARGV[1] || File.expand_path("."))
   repo.advertise!
 
+when "remove", "rm"
+  if ARGV[1].nil? || ARGV[1].empty?
+    abort "You need to specify the name of the repository you'd like to remove:\n#{File.basename($0)} remove <path>"
+  end
+
+  repo = Bananajour::Repository.for_name(ARGV[1])
+  if repo.exists?
+    repo.remove!
+  else
+    abort "#{ARGV[1].inspect} is not a valid repository name"
+  end
+
 when "help", "--help", "-h"
   puts <<-HELP
 Usage: #{File.basename($0)} [<command>]
 
 Commands:
   none               - Start the web, git and bonjour serving
-  init [path]        - Init a new bananajour repo
+  init [path]        - Init a new repo
+  remove <name>      - Remove a repo 
   bananas            - List other members of the exclusive banana ring
   repos [name]       - List other repos on the network
   clone <url> [path] - Clone a remote repo and init it as a new bananajour repo
