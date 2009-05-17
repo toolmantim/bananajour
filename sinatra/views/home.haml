@@ -193,7 +193,7 @@
 
       %ul.commits
         - for commit in repository.recent_commits
-          %li{:class => ("hidden" if commit != repository.recent_commits.first && local?), 'data-commit-id' => commit.id}
+          %li{:class => ("hidden" if commit != repository.recent_commits.first && local?), :id=>commit.id}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
             %p.message
@@ -239,29 +239,6 @@
       Banana Ring:
       = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
 
-
   :javascript
-    var getData = function() {
-      $.getJSON("/index.json", function(data) {
-        $.each(data.repositories, function(i) {
-          $.getJSON("/" + data.repositories[i].name + ".json", function(repository) {
-            ajaxUpdate(repository);
-          });
-        });
-      });
-    };
-
-    var ajaxUpdate = function(repository) {
-      $.each(repository.recent_commits, function(i) {
-        var commit = repository.recent_commits[i];
-        if (commit.head != null) {
-          var headBranch = $("<em class=\"branch\"/>").append(commit.head);
-        }
-        var messagePara = $("<p class=\"message\"/>").append(commit.message);
-        messagePara.append($("<span class=\"meta\"/>").append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name + " - " + commit.id.substr(0, 7)));
-        $($("#" + repository.html_friendly_name + " .commits").children()[i]).replaceWith($("<li/>").prepend(headBranch).append(messagePara));
-      });      
-    };
-
-    $(setInterval(getData, 9000));
+    window.setInterval(banana.getData, 9000);
 
