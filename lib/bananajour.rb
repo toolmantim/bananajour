@@ -110,7 +110,7 @@ module Bananajour
       "git://#{host_name}/"
     end
 
-    def init!(dir)
+    def init!(dir, name = nil)
       dir = Fancypath(dir)
 
       unless dir.join(".git").directory?
@@ -118,10 +118,12 @@ module Bananajour
         exit(1)
       end
 
-      default_name = dir.basename.to_s
-      print "Project Name?".foreground(:yellow) + " [#{default_name}] "
-      name = (STDIN.gets || "").strip
-      name = default_name if name.empty?
+      if name.nil?
+        default_name = dir.basename.to_s
+        print "Project Name?".foreground(:yellow) + " [#{default_name}] "
+        name = (STDIN.gets || "").strip
+        name = default_name if name.empty?
+      end
 
       repo = Repository.for_name(name)
 
@@ -143,6 +145,32 @@ module Bananajour
     
     def plain_init_success_message(repo_dirname)
       "Bananajour repository #{repo_dirname} initialised and remote banana added.\nNext: git push banana master"
+    end
+    
+    def clone!(url, clone_name)
+      dir = clone_name || File.basename(url).chomp('.git')
+
+      if File.exists?(dir)
+        STDERR.puts "Can't clone #{url} to #{dir}, the directory already exists."
+        exit(1)
+      end
+
+      `git clone #{url} #{dir}`
+      if $? != 0
+        STDERR.puts clone_failure_message(url, repo.dirname)
+        exit(1)
+      else
+        puts clone_success_message(url, dir)
+        init!(dir, dir)
+      end
+    end
+    
+    def clone_success_message(source_repo_url, repo_dirname)
+      "Bananajour repository #{source_repo_url} cloned to #{repo_dirname}."
+    end
+    
+    def clone_failure_message(source_repo_url, repo_dirname)
+      "Failed to clone Bananajour repository #{source_repo_url} to #{repo_dirname}."
     end
     
     def repositories
