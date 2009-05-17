@@ -191,7 +191,7 @@
       - if local?
         %a.toggle_commits{:href => "#"} More Commits
 
-      %ul.commits
+      %ul.commits.off
         - for commit in repository.recent_commits
           %li{:class => ("hidden" if commit != repository.recent_commits.first && local?), :id=>commit.id}
             - if head = commit.head(repository.grit_repo)
@@ -203,25 +203,6 @@
                 &= time_ago_in_words(commit.committed_date).gsub("about ","")
                 ago by
                 &= commit.author
-  
-  :javascript
-    $('.repository .toggle_commits').click(function(event) {
-      event.preventDefault();
-      var link = $(this);
-      var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
-      commits.toggle();
-      commits.is(":visible") ? link.text("Less Commits") : link.text("More Commits");
-    });
-    
-  :javascript
-    $('.commits li').click(function(event){
-      var target = $(event.target);
-      var commitLine = target.is('li') ? target : target.parents('li');
-      var commitId = commitLine.attr('data-commit-id');
-      var repoName = commitLine.parents('.repository').attr('data-name');
-      window.location = '/' + repoName + '/' + commitId;
-    });
-  
   - if local?  
     #remotes
       %hr
@@ -241,4 +222,3 @@
 
   :javascript
     window.setInterval(banana.getData, 9000);
-
