@@ -19,10 +19,8 @@ var banana = {
   getData : function(){
     $.getJSON("/index.json", function(data) {
       $.each(data.repositories, function(i) {
-        $.getJSON("/" + data.repositories[i].name + ".json", function(repository) {
-          banana.ajaxUpdate(repository);
-          $(".new").hide().fadeIn();
-        });
+        banana.ajaxUpdate(data.repositories[i]);
+        $(".new").hide().fadeIn();
       });
     }); 
   },
