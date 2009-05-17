@@ -1,6 +1,6 @@
 - @page_title = "#{Bananajour.config.name}&rsquo;s Bananajour"
 
-- if @repositories.empty?
+- if @my_repositories.empty?
 
   %style{:type => "text/css"}
     :sass
@@ -156,14 +156,14 @@
       .hidden
         :display none
     
-  - if @repositories.length > 1
+  - if @my_repositories.length > 1
     %ul.toc
       %li Repos:
-      - for repository in @repositories
+      - for repository in @my_repositories
         %li.repo
           %a{:href => "##{repository.html_friendly_name}"}&= repository.name
 
-  - for repository in @repositories
+  - for repository in @my_repositories
     - repository_id = repository.html_friendly_name
     .repository{:id => repository_id, 'data-name' => repository.name}
 
@@ -183,7 +183,7 @@
 
       %p.network
         %strong Other network copies:
-        - if (network_repositories = Bananajour::Bonjour.network_repositories_similar_to(repository)).empty?
+        - if (network_repositories = Bananajour.network_repositories_similar_to(repository)).empty?
           none
         - for nr in network_repositories
           %a{:href => "#{nr.bananajour.uri}##{nr.html_friendly_name}"}= nr.bananajour.name
@@ -225,14 +225,13 @@
   - if local?  
     #remotes
       %hr
-      - yet_uncloned_network_repositories = Bananajour::Bonjour.yet_uncloned_network_repositories
-      - for repo_name in yet_uncloned_network_repositories.map { |dnr| dnr.name }.uniq.sort
+      - for repository_name in @uncloned_repository_names
         .repository
           %h2
-            %span.name&= repo_name
+            %span.name&= repository_name
 
           %p.network
-            - for nr in yet_uncloned_network_repositories.select { |dnr| dnr.name == repo_name }
+            - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
               %a{:href => "#{nr.bananajour.uri}##{nr.html_friendly_name}"}= nr.bananajour.name
  
   .people

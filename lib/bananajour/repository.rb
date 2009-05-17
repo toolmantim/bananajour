@@ -36,7 +36,7 @@ module Bananajour
       @grit_repo ||= Grit::Repo.new(path)
     end
     def recent_commits
-      grit_repo.commits(nil, 10)
+      @commits ||= grit_repo.commits(nil, 10)
     end
     def advertise!
       tr = DNSSD::TextRecord.new
