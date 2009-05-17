@@ -24,7 +24,7 @@ module Bananajour
     include Bonjour
     
     def path
-      Fancypath(File.expand_path("~/.bananajour"))
+      Fancypath("~/.bananajour").expand_path
     end
     
     def env
