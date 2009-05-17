@@ -10,7 +10,7 @@ var utility = {
 
 var banana = {
   //template for standard row
-  template_standard: '<li class=${is_new}><p class="message"> ${message} <span class="meta"  id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</span></p></li>',
+  template_standard: '<li class=${is_new}><p class="message"> ${message} <span class="meta" id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</span></p></li>',
 
   //template for row with a branch label
   template_master: '<li class=${is_new}><em class="branch">${head}</em><p class="message"> ${message} <span class="meta" id="${nice_id}">~ ${committed_date_pretty} by ${author_name}</p></li>',
