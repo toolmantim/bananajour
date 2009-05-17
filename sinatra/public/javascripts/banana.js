@@ -20,7 +20,8 @@ var banana = {
     $.getJSON("/index.json", function(data) {
       $.each(data.repositories, function(i) {
         banana.ajaxUpdate(data.repositories[i]);
-        $(".new").hide().fadeIn();
+        $("ul.commits.off li:not(:first-child)").hide();
+        $(".new").fadeIn();
       });
     }); 
   },
