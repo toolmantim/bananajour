@@ -9,7 +9,7 @@ module Bananajour::Bonjour
     end
     
     def html_friendly_name
-      name.gsub(/[^A-Za-z]/, '')
+      Bananajour::Repository.html_friendly_name(name)
     end
 
     def person=(hsh)
