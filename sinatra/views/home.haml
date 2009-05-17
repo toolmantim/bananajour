@@ -203,7 +203,7 @@
 
       %ul.commits.off
         - for commit in repository.recent_commits
-          %li{:class => ("hidden" if commit != repository.recent_commits.first && local?), :id=>commit.id}
+          %li{:id => commit.id}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
             %img.gravatar{:src => gravatar(commit.author.email)}/
