@@ -154,24 +154,6 @@
           - for nr in network_repositories
             %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
 
-  :javascript
-    $('.repository .toggle_commits').click(function(event) {
-      event.preventDefault();
-      var link = $(this);
-      var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
-      commits.toggle();
-      commits.is(":visible") ? link.text("- Less Commits") : link.text("+ More Commits");
-    });
-
-  :javascript
-    $('.commits li').live("click", function(event){
-      var target = $(event.target);
-      var commitLine = target.is('li') ? target : target.parents('li');
-      var commitId = commitLine.attr('data-commit-id');
-      var repoName = commitLine.parents('.repository').attr('data-name');
-      window.location = '/' + repoName + '/' + commitId;
-    });
-
   - if local?  
     #remotes
       %hr
@@ -188,3 +170,22 @@
   %p
     Other bananas:
     = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
+
+:javascript
+  $('.repository .toggle_commits').click(function(event) {
+    event.preventDefault();
+    var link = $(this);
+    var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
+    commits.toggle();
+    commits.is(":visible") ? link.text("- Less Commits") : link.text("+ More Commits");
+  });
+  
+  $('.commits li').live("click", function(event){
+    var target = $(event.target);
+    var commitLine = target.is('li') ? target : target.parents('li');
+    var commitId = commitLine.attr('data-commit-id');
+    var repoName = commitLine.parents('.repository').attr('data-name');
+    window.location = '/' + repoName + '/' + commitId;
+  });
+  
+  $(setInterval(banana.getData, 9000));
