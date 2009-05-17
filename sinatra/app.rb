@@ -69,5 +69,5 @@ end
 get "/:repository.json" do
   response = Bananajour::Repository.for_name(params[:repository]).to_hash
   response["recent_commits"].map! { |c| c["committed_date_pretty"] = time_ago_in_words(Time.parse(c["committed_date"])).gsub("about ","") + " ago"; c }
-  response.to_json
+  json response.to_json
 end
