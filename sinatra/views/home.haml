@@ -205,7 +205,7 @@
                 ago by
                 &= commit.author
                 \-
-                &= commit.id_abbrev
+                %a{:href => "/#{repository.name}/#{commit}"}= commit.id_abbrev
   
   :javascript
     $('.repository .toggle_commits').click(function(event) {
@@ -228,7 +228,7 @@
           %p.network
             - for nr in yet_uncloned_network_repositories.select { |dnr| dnr.name == repo_name }
               %a{:href => "#{nr.bananajour.uri}##{nr.html_friendly_name}"}= nr.bananajour.name
-  
+ 
   .people
     %p
       Banana Ring:

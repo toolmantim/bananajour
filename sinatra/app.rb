@@ -18,7 +18,8 @@ disable :logging
 set :environment, Bananajour.env
 
 load "#{File.dirname(__FILE__)}/lib/date_helpers.rb"
-helpers DateHelpers
+load "#{File.dirname(__FILE__)}/lib/diff_helpers.rb"
+helpers DateHelpers, DiffHelpers
 
 helpers do
   def json(body)
@@ -53,6 +54,12 @@ get "/:repository/readme" do
   @rendered_readme = @repository.rendered_readme
   @plain_readme = readme_file.data
   view :readme
+end
+
+get "/:repository/:commit" do
+  @repository = Bananajour::Repository.for_name(params[:repository])
+  @commit = @repository.grit_repo.commit(params[:commit])
+  haml :commit
 end
 
 get "/index.json" do
