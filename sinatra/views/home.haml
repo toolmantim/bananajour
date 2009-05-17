@@ -159,7 +159,7 @@
 
       %ul.commits.off
         - for commit in repository.recent_commits
-          %li
+          %li{"data-commit-id" => commit.id}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
             %img.gravatar{:src => commit.author.gravatar_uri}
