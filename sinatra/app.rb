@@ -11,10 +11,7 @@ require 'sinatra'
 gem 'json', '1.1.2'
 require 'json'
 
-require 'digest/md5'
-
-require 'pp'
-
+require 'md5'
 
 disable :logging
 set :environment, Bananajour.env
@@ -46,6 +43,9 @@ helpers do
       "127.0.0.1",
       Socket.getaddrinfo(request.env["SERVER_NAME"], nil)[0][3]
     ].include? request.env["REMOTE_ADDR"]
+  end
+  def gravatar(email)
+    "http://gravatar.com/avatar/#{MD5.md5(email)}.png"
   end
 end
 

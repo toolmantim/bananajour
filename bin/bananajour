@@ -30,10 +30,11 @@ when "help", "--help", "-h"
 Usage: #{File.basename($0)} [<command>]
 
 Commands:
-  none         - Start the web, git and bonjour serving
-  init [path]  - Init a new bananajour repository
-  bananas      - List other members of the exclusive banana ring
-  repos [name] - List other repos on the network
+  none               - Start the web, git and bonjour serving
+  init [path]        - Init a new bananajour repo
+  bananas            - List other members of the exclusive banana ring
+  repos [name]       - List other repos on the network
+  clone <url> [path] - Clone a remote repo and init it as a new bananajour repo
 HELP
 
 when 'repos'
@@ -55,6 +56,15 @@ when 'bananas'
   Bananajour.other_people.sort_by { |nr| nr.name }.each do |p|
     puts p.name + ' - ' + p.uri
   end
+
+when "clone"
+  if ARGV[1].nil? || ARGV[1].empty?
+    STDERR.puts "You need to specify the path to the repository you'd like to clone:"
+    STDERR.puts "$ bananajour clone <path>"
+    exit(1)
+  end
+  repo = Bananajour.clone!(ARGV[1], ARGV[2])
+  repo.advertise!
 
 when 'network_repositories'
   repos = []
