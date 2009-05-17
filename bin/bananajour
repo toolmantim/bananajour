@@ -25,12 +25,29 @@ when "help", "--help", "-h"
 Usage: #{File.basename($0)} [<command>]
 
 Commands:
-  none       - Start the web, git and bonjour serving
-  init [path] - Inits a new bananajour repository
+  none         - Start the web, git and bonjour serving
+  init [path]  - Init a new bananajour repository
+  bananas      - List other members of the exclusive banana ring
+  repos [name] - List other repos on the network
 HELP
 
-when 'others'
-  Bananajour.people.each do |p|
+when 'repos'
+  repos = Bananajour.network_repositories(false).sort_by { |nr| nr.name }
+  column_widths = repos.inject([0,0]) do |l,r|
+    [
+      r.name.length > l[0] ? r.name.length : l[0],
+      r.person.name.length > l[1] ? r.person.name.length : l[1]
+    ]
+  end
+  repos.each do |nr|
+    if (!ARGV[1] || ARGV[1] == nr.name)
+      puts nr.name.ljust(column_widths[0]+2, ' ') +
+          nr.person.name.ljust(column_widths[1]+2, ' ') + nr.uri
+    end
+  end
+
+when 'bananas'
+  Bananajour.people(false).sort_by { |nr| nr.name }.each do |p|
     puts p.name + ' - ' + p.uri
   end
 
