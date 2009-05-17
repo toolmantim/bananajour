@@ -119,6 +119,9 @@
           :border-top-width 1px
           :cursor pointer
           
+          &:first-child
+            :border-top-width 0
+          
           em.branch
             :float right
             :display block
@@ -137,11 +140,18 @@
             
           p.message
             :line-height 1.4em
+            :padding-left 30px
 
           span.meta
             :font-size 10px
             :color #999
             :line-height 1.5em
+            
+          img.gravatar
+            :margin-top -5px
+            :width 25px
+            :height 25px
+            :float left
       
       .local .repository
         :border-color #f1592a
@@ -196,6 +206,7 @@
           %li{:class => ("hidden" if commit != repository.recent_commits.first && local?), 'data-commit-id' => commit.id}
             - if head = commit.head(repository.grit_repo)
               %em.branch= head.name
+            %img.gravatar{:src => gravatar(commit.author.email)}/
             %p.message
               &= commit.short_message
               %span.meta
