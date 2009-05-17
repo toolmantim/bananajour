@@ -59,7 +59,7 @@ module Bananajour::Bonjour
     end
 
     def to_hash
-      {"name" => name, "email" => email, "uri" => uri}
+      {"name" => name, "email" => email, "uri" => uri, "gravatar" => Bananajour.gravatar(email)}
     end
   end
   
