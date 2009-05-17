@@ -37,7 +37,7 @@ Commands:
 HELP
 
 when 'repos'
-  repos = Bananajour.network_repositories(false).sort_by { |nr| nr.name }
+  repos = Bananajour.other_network_repositories.sort_by { |nr| nr.name }
   column_widths = repos.inject([0,0]) do |l,r|
     [
       r.name.length > l[0] ? r.name.length : l[0],
@@ -52,7 +52,7 @@ when 'repos'
   end
 
 when 'bananas'
-  Bananajour.people(false).sort_by { |nr| nr.name }.each do |p|
+  Bananajour.other_people.sort_by { |nr| nr.name }.each do |p|
     puts p.name + ' - ' + p.uri
   end
 

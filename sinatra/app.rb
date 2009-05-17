@@ -17,6 +17,11 @@ require 'digest/md5'
 disable :logging
 set :environment, Bananajour.env
 
+if Bananajour.env == "development"
+  require 'rack/contrib'
+  use Rack::Profiler, :printer => RubyProf::FlatPrinter
+end
+
 load "#{File.dirname(__FILE__)}/lib/date_helpers.rb"
 load "#{File.dirname(__FILE__)}/lib/diff_helpers.rb"
 helpers DateHelpers, DiffHelpers
@@ -43,8 +48,9 @@ helpers do
 end
 
 get "/" do
-  @repositories = Bananajour.repositories
-  @network_repositories = Bananajour.network_repositories
+  @my_repositories = Bananajour.repositories
+  @uncloned_repositories = Bananajour.uncloned_network_repositories
+  @uncloned_repository_names = @uncloned_repositories.map { |dnr| dnr.name }.uniq.sort
   view :home
 end
 
