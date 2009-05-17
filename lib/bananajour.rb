@@ -4,9 +4,6 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'yaml'
 require 'ostruct'
 
-gem 'chrislloyd-fancypath', '0.5.8'
-require 'fancypath'
-
 gem 'rainbow', '1.0.1'
 require 'rainbow'
 
