@@ -27,7 +27,7 @@ var banana = {
 		}); 
 	},
 	
-	already_exists: function(content, search_id){
+	not_already_exists: function(content, search_id){
 	  return (content.indexOf(search_id)<0);
 	},
 
@@ -42,7 +42,7 @@ var banana = {
 		  var commit = repository.recent_commits[i];
 		  commit.author_name = commit.author.name;
 		  commit.nice_id = commit.id.substr(0, 7);
-		  commit.already_exists = banana.already_exists(existing_content, commit.nice_id);		  		  
+		  commit.already_exists = banana.not_already_exists(existing_content, commit.nice_id);		  		  
 		  commit.is_new = (commit.already_exists)?"new":"old";
 		  var template = banana.template_standard;
 		  if (commit.head) {
