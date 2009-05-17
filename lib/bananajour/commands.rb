@@ -51,14 +51,6 @@ module Bananajour::Commands
     end
   end
   
-  def serve_git!
-    if env == 'production'
-      fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
-      puts "* Started " + "#{git_uri}".foreground(:yellow)
-    else
-      puts "* Not starting git server for development mode"
-    end
-  end
   def init!(dir, name = nil)
     dir = Fancypath(dir)
 

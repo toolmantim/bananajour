@@ -35,6 +35,7 @@ Commands:
   bananas            - List other members of the exclusive banana ring
   repos [name]       - List other repos on the network
   clone <url> [path] - Clone a remote repo and init it as a new bananajour repo
+  remove <name>      - Remove a repository from Bananajour
 HELP
 
 when 'repos'
@@ -65,6 +66,21 @@ when "clone"
   end
   repo = Bananajour.clone!(ARGV[1], ARGV[2])
   repo.advertise!
+
+when "remove", "rm"
+  if ARGV[1].nil? || ARGV[1].empty?
+    STDERR.puts "You need to specify the name of the repository you'd like to remove:"
+    STDERR.puts "$ bananajour remove <path>"
+    exit(1)
+  end
+  
+  repo = Bananajour::Repository.for_name(ARGV[1])
+  if repo.exists?
+    repo.remove!
+  else
+    STDERR.puts "#{ARGV[1].inspect} is not a valid repository name"
+    exit(1)
+  end
 
 when 'network_repositories'
   repos = []
