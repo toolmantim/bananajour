@@ -11,6 +11,9 @@ require 'sinatra'
 gem 'json', '1.1.2'
 require 'json'
 
+gem 'activesupport', '2.3.2'
+require 'active_support/core_ext/enumerable'
+
 require 'md5'
 
 disable :logging
@@ -30,10 +33,9 @@ helpers do
     content_type "application/json"
     params[:callback] ? "#{params[:callback]}(#{body});" : body
   end
-  def view(view)
-    haml view, :options => {:format => :html5,
-                              :attr_wrapper => '"'}
-  end
+  # def view(view)
+  #   haml view, :options => {:format => :html5, :attr_wrapper => '"'}
+  # end
   def versioned_javascript(js)
     "/javascripts/#{js}.js?" + File.mtime(File.join(Sinatra::Application.public, "javascripts", "#{js}.js")).to_i.to_s
   end
@@ -51,9 +53,12 @@ end
 
 get "/" do
   @my_repositories = Bananajour.repositories
-  @uncloned_repositories = Bananajour.uncloned_network_repositories
-  
-  view :home
+  @projects = Bananajour.all_network_repositories
+  @people   = Bananajour.all_people
+  # network_repositories = Bananajour.all_network_repositories
+  # @projects = network_repositories.sort_by {|r| r.name}.group_by {|r| r.name}
+  # @people   = network_repositories.sort_by {|r| r.person.name}.group_by {|r| r.person}
+  haml :home
 end
 
 get "/:repository/readme" do
@@ -61,7 +66,7 @@ get "/:repository/readme" do
   readme_file = @repository.readme_file
   @rendered_readme = @repository.rendered_readme
   @plain_readme = readme_file.data
-  view :readme
+  haml :readme
 end
 
 get "/:repository/network-activity" do

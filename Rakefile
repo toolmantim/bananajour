@@ -10,7 +10,7 @@ require "./lib/bananajour/version"
 runtime_deps = {
   :sinatra => '0.9.1.1', :json => "1.1.2", "chrislloyd-fancypath" => '0.5.8',
   :rainbow => '1.0.1', 'mojombo-grit' => '1.1.1', :dnssd => '0.7.1', :rack => "0.9.1",
-  :thin => "1.0.0", :haml => "2.0.9"
+  :thin => "1.0.0", :haml => "2.0.9", "activesupport" => "2.3.2"
 }
  
 gem = Gem::Specification.new do |gem|

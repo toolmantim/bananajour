@@ -118,6 +118,11 @@
         h2
           :margin 0
           :text-align center
+          :font-size 16px
+          :line-height 28px
+          :background-color #ff0
+          :color #960
+          :text-transform uppercase
         
       .people
         :margin-left 10px
@@ -196,23 +201,30 @@
       });
     
     .projects
-      %h2 Projects
+      %h2
+        = @projects.length
+        Projects
       %ul
-        - for repository_name in @uncloned_repository_names
-          %li
-            %h3
-              %span.name&= repository_name
-            %ul
-              - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
-                %li
-                  %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
-    
+        &= @projects.inspect
+        -# - @projects.each do |name, repos|
+        -#   %li
+        -#     %h3
+        -#       %span.name&= name
+        -#     %ul
+        -#       - for repo in repos
+        -#         %li
+        -#           %a{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.person.name
     .people
-      %h2 People
+      %h2
+        = @people.length
+        People
       %ul
-        - for person in Bananajour.other_people
-          %li
-            %h3
-              %a{:href => person.uri}&= person.name
-            %ul
-              - 
+        &= @people.inspect
+        -# - @people.each do |person, repos|
+        -#   %li
+        -#     %h3
+        -#       %a{:href => person.uri}&= person.name
+        -#     %ul
+        -#       - for repo in repos
+        -#         %li
+        -#           %a{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.name

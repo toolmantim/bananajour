@@ -28,6 +28,10 @@ module Bananajour::Bonjour
       "#{person.uri}"
     end
     
+    def hash
+      to_hash
+    end
+    
     def to_hash
       {
         "name" => name,
@@ -47,6 +51,10 @@ module Bananajour::Bonjour
     
     def ==(other)
       self.uri == other.uri
+    end
+
+    def hash
+      to_hash.hash
     end
     
     def to_hash
@@ -76,11 +84,6 @@ module Bananajour::Bonjour
 
   def network_repositories_similar_to(repo)
     all_network_repositories.select { |nr| nr.name == repo.name }.uniq.sort_by { |nr| nr.person.name }
-  end
-
-  def uncloned_network_repositories
-    local_repo_names = Bananajour.repositories.map { |repo| repo.name }
-    other_network_repositories.select { |remote| !local_repo_names.include? remote.name }.uniq.sort_by { |nr| nr.person.name }
   end
 
   def all_people
