@@ -153,25 +153,27 @@
             ):
           - for nr in network_repositories
             %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
+  - unless (@uncloned_repository_names == [])
+    - if local?  
+      #remotes
+        %hr
+        - for repository_name in @uncloned_repository_names
+          .repository
+            %h2
+              %span.name&= repository_name
 
-  - if local?  
-    #remotes
-      %hr
-      - for repository_name in @uncloned_repository_names
-        .repository
-          %h2
-            %span.name&= repository_name
-
-          %p.network
-            - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
-              %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
-
-- if (Bananajour.other_people != [])
+            %p.network
+              - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
+                %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
+      
   .people
-    %p
-      Other bananas:
-      = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
-
+    - unless (Bananajour.other_people == [])
+      %p
+        Other bananas:
+        = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
+    - else
+      %p There is no one else sharing bananas on this network.
+  
 :javascript
   $("ul.commits li:not(:first-child)").hide();
   
