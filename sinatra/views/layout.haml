@@ -3,7 +3,8 @@
   %head
     %meta{:charset => "UTF-8"}
     %title= @page_title
-
+    
+    
     %style{:type => "text/css"}
       :sass
         body
@@ -46,6 +47,25 @@
               :font-weight bold
               :text-transform uppercase
               :color #fff
+    
+        #pbjt
+          :width 54px
+          :height 93px
+          :position absolute
+          :bottom 0
+          :right -250px
+          
+          &:hover
+            :background-image url(peanut.png)
+        
+        embed
+          :position fixed
+          :top 0
+          :left 0
+          :height 100%
+          :width 100%
+          :display none
+        
         pre
           :overflow auto
           
@@ -94,8 +114,15 @@
             :width 25px
             :height 25px
             :float left
-      
+          
+
     %script{:src => versioned_javascript("jquery-1.3.2.min"), :type => "text/javascript"}
+
+      
+      
+      
+      
+
   %body{:class => ("local" if local?)}
     - if Bananajour.env == 'development'
       .dev_notice DEV MODE
@@ -107,4 +134,10 @@
           == #{Bananajour.config.name}&rsquo;s
         Bananajour
     = yield
+    #pbjt
+    %embed{ :name => "pbjt", :bgcolor => "#000000", :src => "pbjt.swf", :allowFullScreen => "true", :type => "application/x-shockwave-flash", :pluginspage => "http://www.adobe.com/go/getflashplayer", :allowScriptAccess => "sameDomain", :fullscreen => true, :height => "400", :quality => "high", :align => "middle", :width => "550" }
   
+:javascript
+  $("#pbjt:hover").bind("click", function(){ 
+    $("embed").show(); 
+  });
