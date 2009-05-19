@@ -66,7 +66,7 @@ module Bananajour::Commands
       name = default_name if name.empty?
     end
 
-    repo = Repository.for_name(name)
+    repo = Bananajour::Repository.for_name(name)
 
     if repo.exists?
       STDERR.puts "You've already a project #{repo}."
