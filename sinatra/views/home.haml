@@ -165,11 +165,12 @@
           %p.network
             - for nr in @uncloned_repositories.select { |dnr| dnr.name == repository_name }
               %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
-  
-.people
-  %p
-    Other bananas:
-    = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
+
+- if (Bananajour.other_people != [])
+  .people
+    %p
+      Other bananas:
+      = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
 
 :javascript
   $("ul.commits li:not(:first-child)").hide();
