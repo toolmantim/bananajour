@@ -20,7 +20,7 @@ var banana = {
     $.getJSON("/index.json", function(data) {
       $.each(data.repositories, function(i) {
         banana.ajaxUpdate(data.repositories[i]);
-        $("ul.commits.off li:not(:first-child)").hide();
+        $(".local ul.commits.off li:not(:first-child)").hide();
         $(".new").fadeIn();
       });
     }); 

@@ -167,7 +167,7 @@
                 %a{:href => "#{nr.person.uri}##{nr.html_friendly_name}"}= nr.person.name
       
   .people
-    - unless (Bananajour.other_people == [])
+    - if (Bananajour.other_people != [])
       %p
         Other bananas:
         = Bananajour.other_people.map { |p| "<a href=\"#{p.uri}\">#{p.name}</a>" }.join(', ')
@@ -175,12 +175,12 @@
       %p There is no one else sharing bananas on this network.
   
 :javascript
-  $("ul.commits li:not(:first-child)").hide();
+  $(".local ul.commits li:not(:first-child)").hide();
   
-  $('.repository .toggle_commits').live("click", function(event) {
+  $('.local .repository .toggle_commits').live("click", function(event) {
     event.preventDefault();
     var link = $(this);
-    var commits = link.parents('.repository').find("ul.commits li:not(:first-child)");
+    var commits = link.parents('.repository').find(".local ul.commits li:not(:first-child)");
     var commitList = link.parents('.repository').find("ul.commits");
     if (commitList.hasClass("off")) {
       commitList.removeClass("off");
