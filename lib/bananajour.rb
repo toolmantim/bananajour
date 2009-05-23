@@ -80,7 +80,7 @@ module Bananajour
         else
           '/usr/bin/env ruby'
         end
-        exec "#{runner} #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -s thin"
+        exec "#{runner} #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port}"
       end
       puts "* Started " + web_uri.foreground(:yellow)
     end

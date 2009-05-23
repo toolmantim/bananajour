@@ -4,6 +4,8 @@ __DIR__ = File.dirname(__FILE__)
 
 require "#{__DIR__}/../lib/bananajour"
 
+Bananajour.require_gem 'rack'
+
 # Must require 'sinatra' from this file for Sinatra's magic to pick up lots of free stuff
 Bananajour::GemDependencies.for_name('sinatra').require_gem
 require 'sinatra'
@@ -13,8 +15,9 @@ Bananajour.require_gem 'json'
 Bananajour.require_gem 'activesupport', 'active_support/core_ext/enumerable'
 
 set :environment, Bananajour.env
+set :server, 'thin' # Things go weird with anything else - let's lock it down to thin
 set :haml, {:format => :html5, :attr_wrapper => '"'}
-disable :logging
+set :logging, false
 
 load "#{__DIR__}/lib/diff_helpers.rb"
 helpers DiffHelpers
