@@ -73,11 +73,23 @@
           :list-style none
           
         p.readme
-          :float right
           :margin 0
-          :text-transform uppercase
-          :font-size 12px
-          :line-height 20px
+          a
+            :float right
+            :margin 0
+            :text-transform uppercase
+            :font-size 10px
+            :font-weight bold
+            :color #999
+            :background-color #eee
+            :line-height 20px
+            :padding 0 5px
+            :text-decoration none
+            :-webkit-border-radius 2px
+            :-moz-border-radius 2px
+            &:hover
+              :color #666
+              :background-color #ddd
           
         p.uri
           :color #666
@@ -206,25 +218,9 @@
         Projects
       %ul
         &= @projects.inspect
-        -# - @projects.each do |name, repos|
-        -#   %li
-        -#     %h3
-        -#       %span.name&= name
-        -#     %ul
-        -#       - for repo in repos
-        -#         %li
-        -#           %a{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.person.name
     .people
       %h2
         = @people.length
         People
       %ul
         &= @people.inspect
-        -# - @people.each do |person, repos|
-        -#   %li
-        -#     %h3
-        -#       %a{:href => person.uri}&= person.name
-        -#     %ul
-        -#       - for repo in repos
-        -#         %li
-        -#           %a{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.name
