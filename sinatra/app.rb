@@ -1,28 +1,25 @@
 require 'rubygems'
-
-gem 'chrislloyd-fancypath', '0.5.8'
-require 'fancypath'
-
-require "#{File.dirname(__FILE__)}/../lib/bananajour"
-
-gem 'sinatra', '0.9.1.1'
-require 'sinatra'
-
-gem 'json', '1.1.2'
-require 'json'
-
-gem 'activesupport', '2.3.2'
-require 'active_support/core_ext/enumerable'
-
 require 'md5'
 
-disable :logging
+__DIR__ = File.dirname(__FILE__)
+
+require "#{__DIR__}/../lib/bananajour"
+
+# Must require 'sinatra' from this file for Sinatra's magic to pick up lots of free stuff
+Bananajour::GemDependencies.for_name('sinatra').require_gem
+require 'sinatra'
+
+Bananajour.require_gem 'haml'
+Bananajour.require_gem 'json'
+Bananajour.require_gem 'activesupport', 'active_support/core_ext/enumerable'
+
 set :environment, Bananajour.env
-
 set :haml, {:format => :html5, :attr_wrapper => '"'}
+disable :logging
 
-load "#{File.dirname(__FILE__)}/lib/date_helpers.rb"
-load "#{File.dirname(__FILE__)}/lib/diff_helpers.rb"
+load "#{__DIR__}/lib/date_helpers.rb"
+load "#{__DIR__}/lib/diff_helpers.rb"
+
 helpers DateHelpers, DiffHelpers
 
 helpers do

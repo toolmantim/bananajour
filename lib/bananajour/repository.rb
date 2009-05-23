@@ -1,5 +1,4 @@
-gem 'mojombo-grit', '1.1.1'
-require 'grit'
+Bananajour.require_gem 'mojombo-grit', 'grit'
 
 module Bananajour
   class Repository

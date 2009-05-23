@@ -1,3 +1,3 @@
 module Bananajour
-  VERSION = '1.2.6'
+  VERSION = '1.4.0'
 end

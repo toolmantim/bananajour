@@ -3,19 +3,17 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'yaml'
 require 'ostruct'
-
-gem 'rainbow', '1.0.1'
-require 'rainbow'
-
 require 'socket'
 
-gem 'dnssd', '0.7.1'
-require 'dnssd'
-
+require 'bananajour/gem_dependencies'
 require 'bananajour/repository'
 require 'bananajour/grit_extensions'
 require 'bananajour/version'
 require 'bananajour/bonjour'
+
+Bananajour.require_gem 'rainbow'
+Bananajour.require_gem 'dnssd'
+Bananajour.require_gem 'chrislloyd-fancypath', 'fancypath'
 
 module Bananajour
   

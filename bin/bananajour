@@ -1,12 +1,7 @@
 #!/usr/bin/env ruby
 
 require "rubygems"
-
-gem 'chrislloyd-fancypath', '0.5.8'
-require 'fancypath'
-
-file = Fancypath(__FILE__)
-require file.symlink? ? "bananajour" : file.dirname/'../lib/bananajour'
+require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
 Bananajour.check_git!
 Bananajour.check_git_config!
