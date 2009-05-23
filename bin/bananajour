@@ -9,8 +9,7 @@ file = Fancypath(__FILE__)
 require file.symlink? ? "bananajour" : file.dirname/'../lib/bananajour'
 
 Bananajour.check_git!
-
-Bananajour.setup! unless Bananajour.setup?
+Bananajour.check_git_config!
 
 case ARGV.first
 

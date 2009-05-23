@@ -3,7 +3,7 @@ module Bananajour::Bonjour
   # methods that call Bonjour, and little model wrappers for the response packets
   
   class Repo
-    attr_accessor :name, :uri, :person 
+    attr_accessor :name, :email, :uri, :person 
     def initialize(hsh)
       hsh.each { |k,v| self.send("#{k}=", v) }
     end
@@ -20,6 +20,10 @@ module Bananajour::Bonjour
       self.uri == other.uri
     end
     
+    def hash
+      to_hash.hash
+    end
+    
     def json_uri
       "#{person.uri}#{name}.json"
     end
@@ -28,13 +32,10 @@ module Bananajour::Bonjour
       "#{person.uri}"
     end
     
-    def hash
-      to_hash
-    end
-    
     def to_hash
       {
         "name" => name,
+        "email" => email,
         "uri" => uri,
         "json_uri" => json_uri,
         "web_uri" => web_uri,
@@ -44,7 +45,7 @@ module Bananajour::Bonjour
   end
   
   class Person
-    attr_accessor :name, :uri 
+    attr_accessor :name, :email, :uri 
     def initialize(hsh)
       hsh.each { |k,v| self.send("#{k}=", v) }
     end
@@ -52,13 +53,13 @@ module Bananajour::Bonjour
     def ==(other)
       self.uri == other.uri
     end
-
+    
     def hash
       to_hash.hash
     end
-    
+
     def to_hash
-      {"name" => name, "uri" => uri}
+      {"name" => name, "email" => email, "uri" => uri}
     end
   end
   
@@ -68,6 +69,7 @@ module Bananajour::Bonjour
     tr = DNSSD::TextRecord.new
     tr["uri"] = web_uri
     tr["name"] = Bananajour.config.name
+    tr["email"] = Bananajour.config.email
     DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
   end
   

@@ -31,18 +31,23 @@ module Bananajour
       ENV['BANANA_ENV'] || 'production'
     end
     
-    def config_path
-      path/"config.yml"
-    end
-    
     def repositories_path
       path/"repositories"
     end
-    
-    def config
-      OpenStruct.new(YAML.load(config_path.read))
+
+    def get_git_global_config(key)
+      `git config --global #{key}`.strip
     end
     
+    def config
+      @config ||= begin
+        OpenStruct.new({
+          :name => get_git_global_config("user.name"),
+          :email => get_git_global_config("user.email")
+        })
+      end
+    end
+
     def check_git!
       if (version = `git --version`.strip) =~ /git version 1\.[12345]/
         STDERR.puts "You have #{version}, you need at least 1.6"
@@ -50,23 +55,16 @@ module Bananajour
       end
     end
     
-    def setup?
-      config_path.exists?
-    end
-    
-    def setup!
-      path.create_dir
-      repositories_path.create_dir
-      puts "Holy bananarama! I don't think we've met."
-      puts
-      default_name = `git config user.name`.strip
-      print "Your Name?".foreground(:yellow) + " [#{default_name}] "
-      name = (STDIN.gets || "").strip
-      name = default_name if name.empty?
-      config_path.write({"name" => name}.to_yaml)
-      puts
-      puts "Nice to meet you #{name}, I'm Bananajour. Add a project with " + "bananajour init".foreground(:yellow)
-      puts
+    def check_git_config!
+      config_message = lambda {|key, example| "You haven't set your #{key} in your git config yet. To set it: git config --global #{key} '#{example}'"}
+      if config.name.empty?
+        STDERR.puts config_message["user.name", "My Name"]
+        exit(1)
+      end
+      if config.email.empty?
+        STDERR.puts config_message["user.email", "name@domain.com"] 
+        exit(1)
+      end
     end
     
     def serve_web!
@@ -184,6 +182,7 @@ module Bananajour
     def to_hash
       {
         "name" => config.name,
+        "email" => config.email,
         "uri"  => web_uri,
         "git-uri" => git_uri,
         "repositories" => repositories.collect do |r|

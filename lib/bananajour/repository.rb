@@ -46,6 +46,7 @@ module Bananajour
       tr["uri"] = uri
       tr["name"] = name
       tr["bjour-name"] = Bananajour.config.name
+      tr["bjour-email"] = Bananajour.config.email
       tr["bjour-uri"] = Bananajour.web_uri
       DNSSD.register(name, "_git._tcp", nil, 9418, tr) {}
     end
