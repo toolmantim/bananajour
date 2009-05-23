@@ -16,7 +16,7 @@ module Bananajour::Commands
     if repositories.empty?
       STDERR.puts "Warning: you don't have any bananajour repositories. Use: bananajour init"
     end
-    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -e production" }
+    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production" }
     puts "* Started " + web_uri.foreground(:yellow)
   end
 
@@ -26,12 +26,8 @@ module Bananajour::Commands
   end
   
   def serve_git!
-    if env == 'production'
-      fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
-      puts "* Started " + "#{git_uri}".foreground(:yellow)
-    else
-      puts "* Not starting git server for development mode"
-    end
+    fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
+    puts "* Started " + "#{git_uri}".foreground(:yellow)
   end
   def init!(dir, name = nil)
     dir = Fancypath(dir)
