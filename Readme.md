@@ -1,16 +1,18 @@
 Bananajour - Local git publication and collaboration
 ====================================================
 
-Local git repository hosting with a sexy web interface and Bonjour discovery. It's like adhoc, local, network-aware githubs!
+Local git repository hosting with a sexy web interface and Bonjour discovery. It's like a bunch of adhoc, local, network-aware githubs!
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories. You can publish projects from any directory and each will be shown in the same hot web interface.
 
-Bananajour was developed by [Tim Lucas](http://toolmantim.com/).
-
-You'll need at least git version 1.6
+Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan) and [Lachlan Hardy](http://github.com/lachlanhardy); and smaller railscamp additions by [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1) and [Tony Issakov](https://github.com/tissak). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/).
 
 Installation and usage
 ----------------------
+
+You'll need at least [git version 1.6](http://git-scm.com/). Run `git --version` if you're unsure.
+
+Install it:
 
     gem install bananajour
 
@@ -47,11 +49,6 @@ If you want to hack on the sinatra app alongside a running bananjour just load t
 If you want code reloading use [shotgun](http://github.com/rtomayko/shotgun) instead:
 
     shotgun sinatra/app.rb -s thin
-
-Props
------
-
-[Carla Hackett](http://carlahackettdesign.com/) for the rad logo.
 
 License
 -------
