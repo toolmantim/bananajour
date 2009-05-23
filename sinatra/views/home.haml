@@ -28,23 +28,6 @@
 
   %style{:type => "text/css"}
     :sass
-      ul.toc
-        :float right
-        :font-size 14px
-        :line-height 1.3
-        :margin -30px 0 0.3em 13em
-        :opacity 0.5
-        :text-align right
-        :width auto
-          
-      ul.toc li
-        :display inline
-        :list-style-type none
-         
-        a
-          :color #000
-          :font-weight 700
-      
       .repository
         :clear both
         :background-color white
@@ -150,13 +133,6 @@
       .hidden
         :display none
     
-  - unless @my_repositories.empty?
-    %ul.toc
-      %li Repos:
-      - for repository in @my_repositories
-        %li.repo
-          %a{:href => "##{repository.html_friendly_name}"}&= repository.name
-
   - for repository in @my_repositories
     - repository_id = repository.html_friendly_name
     .repository{:id => repository_id, 'data-name' => repository.name}
@@ -176,7 +152,7 @@
             %li
               - if head = commit.head(repository.grit_repo)
                 %em.branch= head.name
-              %img.gravatar{:src => gravatar(commit.author.email)}/
+              %img.gravatar{:src => commit.gravatar_uri}/
               %p.message
                 &= commit.short_message
                 %span.meta

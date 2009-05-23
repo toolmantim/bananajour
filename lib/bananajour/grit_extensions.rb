@@ -11,6 +11,6 @@ end
 
 Grit::Actor.class_eval do
   def gravatar_uri
-    Bananajour.gravatar(email)
+    Bananajour.gravatar_uri(email)
   end
 end

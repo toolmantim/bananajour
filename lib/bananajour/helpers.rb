@@ -1,6 +1,9 @@
 module Bananajour
   module GravatarHelpers
-    def gravatar(email)
+    def gravatar
+      gravatar_uri(self.config.email)
+    end
+    def gravatar_uri(email)
       "http://gravatar.com/avatar/#{MD5.md5(email)}.png"
     end
   end

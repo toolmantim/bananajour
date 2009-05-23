@@ -72,6 +72,7 @@ module Bananajour
         "name" => name,
         "html_friendly_name" => html_friendly_name,
         "uri" => uri,
+        "gravatar" => Bananajour.gravatar,
         "recent_commits" => recent_commits.collect do |c|
           c.to_hash.merge(
             "head" => c.head(grit_repo) && c.head(grit_repo).name,
