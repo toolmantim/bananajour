@@ -16,7 +16,7 @@ case ARGV.first
 when nil
   Bananajour.serve_web!
   Bananajour.serve_git!
-  Bananajour.advertise! unless Bananajour.env == "development"
+  Bananajour.advertise!
   Bananajour.repositories.each {|r| r.advertise!}
   Process.wait
 

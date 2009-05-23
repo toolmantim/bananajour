@@ -42,6 +42,7 @@ module Bananajour
       @commits ||= grit_repo.commits(nil, 10)
     end
     def advertise!
+      return if Bananajour.env == "development"
       tr = DNSSD::TextRecord.new
       tr["uri"] = uri
       tr["name"] = name
