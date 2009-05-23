@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'md5'
 
 __DIR__ = File.dirname(__FILE__)
 
@@ -17,10 +16,11 @@ set :environment, Bananajour.env
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 disable :logging
 
-load "#{__DIR__}/lib/date_helpers.rb"
 load "#{__DIR__}/lib/diff_helpers.rb"
+helpers DiffHelpers
 
-helpers DateHelpers, DiffHelpers
+require "bananajour/helpers"
+helpers Bananajour::GravatarHelpers, Bananajour::DateHelpers
 
 helpers do
   def json(body)
@@ -33,9 +33,6 @@ helpers do
       "127.0.0.1",
       Socket.getaddrinfo(request.env["SERVER_NAME"], nil)[0][3]
     ].include? request.env["REMOTE_ADDR"]
-  end
-  def gravatar(email)
-    "http://gravatar.com/avatar/#{MD5.md5(email)}.png"
   end
 end
 

@@ -4,12 +4,14 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'yaml'
 require 'ostruct'
 require 'socket'
+require 'md5'
 
 require 'bananajour/gem_dependencies'
 require 'bananajour/repository'
 require 'bananajour/grit_extensions'
 require 'bananajour/version'
 require 'bananajour/bonjour'
+require 'bananajour/helpers'
 
 Bananajour.require_gem 'rainbow'
 Bananajour.require_gem 'dnssd'
@@ -20,6 +22,8 @@ module Bananajour
   class << self
     
     include Bonjour
+    include DateHelpers
+    include GravatarHelpers
     
     def path
       Fancypath(File.expand_path("~/.bananajour"))

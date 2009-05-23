@@ -58,14 +58,17 @@
         a
           :color #888
         
-        h2
+        h2, p.uri
           :margin 0
+          :display inline
+
+        h2
           :color #333
           :font-size 24px
-          
-          span.branches
-            :font-size 14px
-            :color #666
+        p.uri
+          :color #666
+          :margin 5px 0
+          :font-size 12px
         
         ul, li
           :margin 0
@@ -91,11 +94,6 @@
               :color #666
               :background-color #ddd
           
-        p.uri
-          :color #666
-          :margin 5px 0
-          :font-size 12px
-        
         h3
           :margin 10px 0 0 0
           :font-size 12px
@@ -168,9 +166,7 @@
           %a{:href => "/#{repository.name}/readme"} Readme
 
       %h2
-        %span.name&= repository.name
-        %span.branches
-          = repository.grit_repo.heads.collect {|h| h.name}.join(", ")
+        &= repository.name
 
       %p.uri&= repository.uri
 
