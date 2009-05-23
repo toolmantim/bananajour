@@ -19,10 +19,7 @@ require 'md5'
 disable :logging
 set :environment, Bananajour.env
 
-if Bananajour.env == "development"
-  require 'rack/contrib'
-  use Rack::Profiler, :printer => RubyProf::FlatPrinter
-end
+set :haml, {:format => :html5, :attr_wrapper => '"'}
 
 load "#{File.dirname(__FILE__)}/lib/date_helpers.rb"
 load "#{File.dirname(__FILE__)}/lib/diff_helpers.rb"
@@ -32,12 +29,6 @@ helpers do
   def json(body)
     content_type "application/json"
     params[:callback] ? "#{params[:callback]}(#{body});" : body
-  end
-  # def view(view)
-  #   haml view, :options => {:format => :html5, :attr_wrapper => '"'}
-  # end
-  def versioned_javascript(js)
-    "/javascripts/#{js}.js?" + File.mtime(File.join(Sinatra::Application.public, "javascripts", "#{js}.js")).to_i.to_s
   end
   def local?
     [
@@ -55,9 +46,6 @@ get "/" do
   @my_repositories = Bananajour.repositories
   @projects = Bananajour.all_network_repositories
   @people   = Bananajour.all_people
-  # network_repositories = Bananajour.all_network_repositories
-  # @projects = network_repositories.sort_by {|r| r.name}.group_by {|r| r.name}
-  # @people   = network_repositories.sort_by {|r| r.person.name}.group_by {|r| r.person}
   haml :home
 end
 

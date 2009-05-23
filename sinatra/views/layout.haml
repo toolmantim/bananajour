@@ -48,24 +48,6 @@
               :text-transform uppercase
               :color #fff
     
-        #pbjt
-          :width 54px
-          :height 93px
-          :position absolute
-          :bottom 0
-          :right -250px
-          
-          &:hover
-            :background-image url(peanut.png)
-        
-        embed
-          :position fixed
-          :top 0
-          :left 0
-          :height 100%
-          :width 100%
-          :display none
-        
         pre
           :overflow auto
           
@@ -114,14 +96,20 @@
             :width 25px
             :height 25px
             :float left
-          
-
-    %script{:src => versioned_javascript("jquery-1.3.2.min"), :type => "text/javascript"}
-
+        
+        .clear
+          :clear both
+        
+        #pbjt
+          :width 54px
+          :height 93px
+          :position absolute
+          :bottom 0
+          :right -100px
+          &:hover
+            :background-image url(/peanut.png)
       
-      
-      
-      
+    %script{:src => "/javascripts/jquery-1.3.2.min.js", :type => "text/javascript"}
 
   %body{:class => ("local" if local?)}
     - if Bananajour.env == 'development'
@@ -133,11 +121,14 @@
         %span.owner
           == #{Bananajour.config.name}&rsquo;s
         Bananajour
+
     = yield
+
     #pbjt
-    %embed{ :name => "pbjt", :bgcolor => "#000000", :src => "pbjt.swf", :allowFullScreen => "true", :type => "application/x-shockwave-flash", :pluginspage => "http://www.adobe.com/go/getflashplayer", :allowScriptAccess => "sameDomain", :fullscreen => true, :height => "400", :quality => "high", :align => "middle", :width => "550" }
-  
-:javascript
-  $("#pbjt:hover").bind("click", function(){ 
-    $("embed").show(); 
-  });
+
+    .clear
+
+    :javascript
+      $("#pbjt").bind("click", function(){ 
+        $("<embed bgcolor='#000000' height='400' width='550' name='pbjt' pluginspage='http://www.adobe.com/go/getflashplayer' quality='high' src='/pbjt.swf' style='position:fixed;top:0;left:0;width:100%;height:100%' type='application/x-shockwave-flash' />").appendTo($("body"));
+      });
