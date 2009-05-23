@@ -53,9 +53,7 @@ when 'bananas'
 
 when "clone"
   if ARGV[1].nil? || ARGV[1].empty?
-    STDERR.puts "You need to specify the path to the repository you'd like to clone:"
-    STDERR.puts "$ bananajour clone <path>"
-    exit(1)
+    abort "You need to specify the path to the repository you'd like to clone:\n$ bananajour clone <path>"
   end
   repo = Bananajour.clone!(ARGV[1], ARGV[2])
   repo.advertise!
@@ -105,6 +103,5 @@ when 'puller' # testing only
   end
 
 else
-  STDERR.puts "Say what? Try: #{File.basename($0)} help"
-  exit(1)
+  abort "Say what? Try: #{File.basename($0)} help"
 end

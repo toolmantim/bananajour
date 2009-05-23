@@ -52,26 +52,19 @@ module Bananajour
 
     def check_git!
       if (version = `git --version`.strip) =~ /git version 1\.[12345]/
-        STDERR.puts "You have #{version}, you need at least 1.6"
-        exit(1)
+        abort "You have #{version}, you need at least 1.6"
       end
     end
     
     def check_git_config!
       config_message = lambda {|key, example| "You haven't set your #{key} in your git config yet. To set it: git config --global #{key} '#{example}'"}
-      if config.name.empty?
-        STDERR.puts config_message["user.name", "My Name"]
-        exit(1)
-      end
-      if config.email.empty?
-        STDERR.puts config_message["user.email", "name@domain.com"] 
-        exit(1)
-      end
+      abort(config_message["user.name", "My Name"]) if config.name.empty?
+      abort(config_message["user.email", "name@domain.com"]) if config.email.empty?
     end
     
     def serve_web!
       if repositories.empty?
-        STDERR.puts "Warning: you don't have any bananajour repositories. See: bananajour init"
+        STDERR.puts "Warning: you don't have any bananajour repositories. Use: bananajour init"
       end
       fork do 
         runner = if Bananajour.env == 'development' 
@@ -114,8 +107,7 @@ module Bananajour
       dir = Fancypath(dir)
 
       unless dir.join(".git").directory?
-        STDERR.puts "Can't init project #{dir}, no .git directory found."
-        exit(1)
+        abort "Can't init project #{dir}, no .git directory found."
       end
 
       if name.nil?
@@ -128,8 +120,7 @@ module Bananajour
       repo = Repository.for_name(name)
 
       if repo.exists?
-        STDERR.puts "You've already a project #{repo}."
-        exit(1)
+        abort "You've already a project #{repo}."
       end
 
       repo.init!
@@ -151,14 +142,12 @@ module Bananajour
       dir = clone_name || File.basename(url).chomp('.git')
 
       if File.exists?(dir)
-        STDERR.puts "Can't clone #{url} to #{dir}, the directory already exists."
-        exit(1)
+        abort "Can't clone #{url} to #{dir}, the directory already exists."
       end
 
       `git clone #{url} #{dir}`
       if $? != 0
-        STDERR.puts clone_failure_message(url, repo.dirname)
-        exit(1)
+        abort clone_failure_message(url, repo.dirname)
       else
         puts clone_success_message(url, dir)
         init!(dir, dir)
