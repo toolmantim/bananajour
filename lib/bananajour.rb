@@ -29,10 +29,6 @@ module Bananajour
       Fancypath(File.expand_path("~/.bananajour"))
     end
     
-    def env
-      ENV['BANANA_ENV'] || 'production'
-    end
-    
     def repositories_path
       path/"repositories"
     end
@@ -66,20 +62,12 @@ module Bananajour
       if repositories.empty?
         STDERR.puts "Warning: you don't have any bananajour repositories. Use: bananajour init"
       end
-      fork do 
-        runner = if Bananajour.env == 'development' 
-          gem 'shotgun', '0.3'
-          '/usr/bin/env shotgun -o 0.0.0.0'
-        else
-          '/usr/bin/env ruby'
-        end
-        exec "#{runner} #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port}"
-      end
+      fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../sinatra/app.rb -p #{web_port} -e production" }
       puts "* Started " + web_uri.foreground(:yellow)
     end
     
     def web_port
-      env == 'production' ? 9331 : 1339
+      9331
     end
     
     def web_uri
@@ -87,12 +75,8 @@ module Bananajour
     end
     
     def serve_git!
-      if env == 'production'
-        fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
-        puts "* Started " + "#{git_uri}".foreground(:yellow)
-      else
-        puts "* Not starting git server for development mode"
-      end
+      fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
+      puts "* Started " + "#{git_uri}".foreground(:yellow)
     end
     
     def host_name

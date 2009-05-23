@@ -64,10 +64,7 @@ module Bananajour::Bonjour
   end
   
   def advertise!
-    return if Bananajour.env == "development"
-
     puts "* Advertising on bonjour"
-
     tr = DNSSD::TextRecord.new
     tr["uri"] = web_uri
     tr["name"] = Bananajour.config.name

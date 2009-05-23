@@ -14,7 +14,6 @@ Bananajour.require_gem 'haml'
 Bananajour.require_gem 'json'
 Bananajour.require_gem 'activesupport', 'active_support/core_ext/enumerable'
 
-set :environment, Bananajour.env
 set :server, 'thin' # Things go weird with anything else - let's lock it down to thin
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false

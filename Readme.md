@@ -7,11 +7,6 @@ Unlike Gitjour, the repositories you're serving are not your working git reposit
 
 Bananajour was developed by [Tim Lucas](http://toolmantim.com/).
 
-Requirements and Support
-------------------------
-
-So far it's only been tested with Mac OS 10.5 and Ruby 1.8.6. Any feedback and help to support linux and windows platforms would be much appreciated!
-
 You'll need at least git version 1.6
 
 Installation and usage
@@ -37,15 +32,21 @@ Fire up [http://localhost:9331/](http://localhost:9331/) to check it out.
 If somebody starts sharing a Bananajour repository with the same name on the
 network, it'll automatically show up in the network thanks to the wonder that is Bonjour.
 
-Requirements and Support
-------------------------
-
-So far it's only been tested with Mac OS 10.5 and Ruby 1.8.6. Any feedback and help to support Linux and Windows platforms would be much appreciated!
-
 Official repository and support
 -------------------------------
 
 [http://github.com/toolmantim/bananajour](http://github.com/toolmantim/bananajour) is where Bananajour lives along with all of its support issues.
+
+Developing
+----------
+
+If you want to hack on the sinatra app alongside a running bananjour just load the sinatra app directly (it won't broadcast itself onto the network):
+
+    ruby sinatra/app.rb -s thin
+
+If you want code reloading use [shotgun](http://github.com/rtomayko/shotgun) instead:
+
+    shotgun sinatra/app.rb -s thin
 
 Props
 -----
