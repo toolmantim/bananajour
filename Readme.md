@@ -5,7 +5,7 @@ Local git repository hosting with a sexy web interface and Bonjour discovery. It
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories. You can publish projects from any directory and each will be shown in the same hot web interface.
 
-Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan) and [Lachlan Hardy](http://github.com/lachlanhardy); and smaller railscamp additions by [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1) and [Tony Issakov](https://github.com/tissak). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/).
+Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan) and [Lachlan Hardy](http://github.com/lachlanhardy); and smaller railscamp additions by [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1), [Tony Issakov](https://github.com/tissak) and [Josh Bassett](http://github.com/nullobject). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/).
 
 Installation and usage
 ----------------------
