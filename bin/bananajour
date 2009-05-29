@@ -20,16 +20,15 @@ when "init"
   repo.advertise!
 
 when "remove", "rm"
-  if ARGV[1].nil? || ARGV[1].empty?
+  name = ARGV[1]
+
+  if !name || name.empty?
     abort "You need to specify the name of the repository you'd like to remove:\n#{File.basename($0)} remove <path>"
+  elsif !(repo = Bananajour::Repository.for_name(name))
+    abort "#{name.inspect} is not a valid repository name"
   end
 
-  repo = Bananajour::Repository.for_name(ARGV[1])
-  if repo.exists?
-    repo.remove!
-  else
-    abort "#{ARGV[1].inspect} is not a valid repository name"
-  end
+  repo.remove!
 
 when "help", "--help", "-h"
   puts <<-HELP
