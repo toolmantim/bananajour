@@ -152,7 +152,7 @@
             %li
               - if head = commit.head(repository.grit_repo)
                 %em.branch= head.name
-              %img.gravatar{:src => commit.gravatar_uri}/
+              %img.gravatar{:src => commit.author.gravatar_uri}/
               %p.message
                 &= commit.short_message
                 %span.meta
