@@ -85,7 +85,7 @@ when 'network_repositories'
       next if repos.include?(r)
       next if r['name'].nil? || r['name'].empty?
       repos << r
-    end
+    end if (DNSSD::Flags::Add & reply.flags.to_i) != 0
   end
   sleep(0.5)
   s.stop
@@ -97,7 +97,7 @@ when 'people'
     DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
       p = { :name => rr.text_record["name"], :uri => rr.text_record["uri"] }
       peoples << p unless peoples.include?(p)
-    end
+    end if (DNSSD::Flags::Add & reply.flags.to_i) != 0
   end
   sleep(0.5)
   service.stop
