@@ -72,7 +72,7 @@ when "clone"
 
 when 'network_repositories'
   repos = []
-  s = DNSSD.browse("_git._tcp") do |reply|
+  s = DNSSD.browse("_bananajour._git._tcp") do |reply|
     DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
       r = {
         'uri' => rr.text_record["uri"], 
