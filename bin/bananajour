@@ -108,10 +108,11 @@ when 'puller' # testing only
   loop do 
     hosts = []
     puts "####{i+=1}"
-    Bananajour.network_repositories.each do |r|
+    Bananajour.all_network_repositories.each do |r|
       # puts r["name"] + ' - ' + r['person']['name']
       puts r.name + ' - ' + r.person.name
     end
+    sleep 1.0
   end
 
 else
