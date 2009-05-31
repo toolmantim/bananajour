@@ -69,7 +69,7 @@ module Bananajour::Bonjour
     tr["uri"] = web_uri
     tr["name"] = Bananajour.config.name
     tr["email"] = Bananajour.config.email
-    DNSSD.register("#{config.name}'s bananajour", "_bananajour._tcp", nil, web_port, tr) {}
+    DNSSD.register("#{config.name}'s bananajour", "_http._tcp,_bananajour", nil, web_port, tr) {}
   end
   
   def all_network_repositories

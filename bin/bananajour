@@ -93,7 +93,7 @@ when 'network_repositories'
 
 when 'people'
   peoples = []
-  service = DNSSD.browse("_bananajour._tcp") do |reply|
+  service = DNSSD.browse("_bananajour._http._tcp") do |reply|
     DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
       p = { :name => rr.text_record["name"], :uri => rr.text_record["uri"] }
       peoples << p unless peoples.include?(p)
