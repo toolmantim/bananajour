@@ -18,7 +18,7 @@ set :server, 'thin' # Things go weird with anything else - let's lock it down to
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
 
-require "#{__DIR__}/lib/browser"
+require "#{__DIR__}/lib/browser" # to prevent reloading
 before do
   @bananajour_browser = BANANAJOUR_BROWSER
   @repository_browser = REPO_BROWSER
