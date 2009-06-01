@@ -12,12 +12,10 @@ when nil
   Bananajour.serve_web!
   Bananajour.serve_git!
   Bananajour.advertise!
-  Bananajour.repositories.each {|r| r.advertise!}
   Process.wait
 
-when "init"
+when "init", "add"
   repo = Bananajour.init!(ARGV[1] || File.expand_path("."))
-  repo.advertise!
 
 when "remove", "rm"
   name = ARGV[1]
@@ -30,6 +28,12 @@ when "remove", "rm"
 
   repo.remove!
 
+when "clone"
+  if ARGV[1].nil? || ARGV[1].empty?
+    abort "You need to specify the path to the repository you'd like to clone:\n$ bananajour clone <path>"
+  end
+  repo = Bananajour.clone!(ARGV[1], ARGV[2])
+
 when "help", "--help", "-h"
   puts <<-HELP
 Usage: #{File.basename($0)} [<command>]
@@ -38,82 +42,13 @@ Commands:
   none               - Start the web, git and bonjour serving
   init [path]        - Init a new repo
   remove <name>      - Remove a repo 
-  bananas            - List other members of the exclusive banana ring
-  repos [name]       - List other repos on the network
   clone <url> [path] - Clone a remote repo and init it as a new bananajour repo
+  help
+  version
 HELP
 
-when 'repos'
-  repos = Bananajour.other_network_repositories.sort_by { |nr| nr.name }
-  column_widths = repos.inject([0,0]) do |l,r|
-    [
-      r.name.length > l[0] ? r.name.length : l[0],
-      r.person.name.length > l[1] ? r.person.name.length : l[1]
-    ]
-  end
-  repos.each do |nr|
-    if (!ARGV[1] || ARGV[1] == nr.name)
-      puts nr.name.ljust(column_widths[0]+2, ' ') +
-          nr.person.name.ljust(column_widths[1]+2, ' ') + nr.uri
-    end
-  end
-
-when 'bananas'
-  Bananajour.other_people.sort_by { |nr| nr.name }.each do |p|
-    puts p.name + ' - ' + p.uri
-  end
-
-when "clone"
-  if ARGV[1].nil? || ARGV[1].empty?
-    abort "You need to specify the path to the repository you'd like to clone:\n$ bananajour clone <path>"
-  end
-  repo = Bananajour.clone!(ARGV[1], ARGV[2])
-  repo.advertise!
-
-when 'network_repositories'
-  repos = []
-  s = DNSSD.browse("_bananajour._git._tcp") do |reply|
-    DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
-      r = {
-        'uri' => rr.text_record["uri"], 
-        'name' => rr.text_record["name"], 
-        'person' => {
-            'name' => rr.text_record["bjour-name"], 
-            'uri' => rr.text_record["bjour-uri"]
-        }
-      }
-      next if repos.include?(r)
-      next if r['name'].nil? || r['name'].empty?
-      repos << r
-    end if (DNSSD::Flags::Add & reply.flags.to_i) != 0
-  end
-  sleep(0.5)
-  s.stop
-  puts YAML.dump(repos)
-
-when 'people'
-  peoples = []
-  service = DNSSD.browse("_bananajour._http._tcp") do |reply|
-    DNSSD.resolve(reply.name, reply.type, reply.domain) do |rr|
-      p = { :name => rr.text_record["name"], :uri => rr.text_record["uri"] }
-      peoples << p unless peoples.include?(p)
-    end if (DNSSD::Flags::Add & reply.flags.to_i) != 0
-  end
-  sleep(0.5)
-  service.stop
-  puts YAML.dump(peoples)
-
-when 'puller' # testing only
-  i = 0
-  loop do 
-    hosts = []
-    puts "####{i+=1}"
-    Bananajour.all_network_repositories.each do |r|
-      # puts r["name"] + ' - ' + r['person']['name']
-      puts r.name + ' - ' + r.person.name
-    end
-    sleep 1.0
-  end
+when "version", "--version", "-v"
+  puts "bananajour version #{Bananajour::VERSION}"
 
 else
   abort "Say what? Try: #{File.basename($0)} help"

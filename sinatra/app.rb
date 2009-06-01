@@ -18,6 +18,12 @@ set :server, 'thin' # Things go weird with anything else - let's lock it down to
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
 
+require "#{__DIR__}/lib/browser"
+before do
+  @bananajour_browser = BANANAJOUR_BROWSER
+  @repository_browser = REPO_BROWSER
+end
+
 load "#{__DIR__}/lib/diff_helpers.rb"
 helpers DiffHelpers
 
@@ -40,28 +46,22 @@ end
 
 get "/" do
   @my_repositories = Bananajour.repositories
-  @projects = Bananajour.all_network_repositories
-  @people   = Bananajour.all_people
+  @projects        = @repository_browser.repositories
+  @people          = @bananajour_browser.bananajours
   haml :home
 end
 
 get "/:repository/readme" do
-  @repository = Bananajour::Repository.for_name(params[:repository])
-  readme_file = @repository.readme_file
+  @repository      = Bananajour::Repository.for_name(params[:repository])
+  readme_file      = @repository.readme_file
   @rendered_readme = @repository.rendered_readme
-  @plain_readme = readme_file.data
+  @plain_readme    = readme_file.data
   haml :readme
-end
-
-get "/:repository/network-activity" do
-  @repository = Bananajour::Repository.for_name(params[:repository])
-  @network_repositories = Bananajour.network_repositories_similar_to(@repository)
-  haml :network_activity
 end
 
 get "/:repository/:commit" do
   @repository = Bananajour::Repository.for_name(params[:repository])
-  @commit = @repository.grit_repo.commit(params[:commit])
+  @commit     = @repository.grit_repo.commit(params[:commit])
   haml :commit
 end
 

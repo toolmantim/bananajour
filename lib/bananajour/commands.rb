@@ -29,6 +29,11 @@ module Bananajour::Commands
     fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
     puts "* Started " + "#{git_uri}".foreground(:yellow)
   end
+  
+  def advertise!
+    fork { Bananajour::Bonjour::Advertiser.new.go! }
+  end
+  
   def init!(dir, name = nil)
     dir = Fancypath(dir)
 

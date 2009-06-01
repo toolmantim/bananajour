@@ -11,6 +11,9 @@ module Bananajour
     def initialize(path)
       @path = Fancypath(path)
     end
+    def ==(other)
+      other.respond_to?(:path) && self.path == other.path
+    end
     attr_reader :path
     def exists?
       path.exists?
@@ -39,15 +42,6 @@ module Bananajour
     end
     def recent_commits
       @commits ||= grit_repo.commits(nil, 10)
-    end
-    def advertise!
-      tr = DNSSD::TextRecord.new
-      tr["uri"] = uri
-      tr["name"] = name
-      tr["bjour-name"] = Bananajour.config.name
-      tr["bjour-email"] = Bananajour.config.email
-      tr["bjour-uri"] = Bananajour.web_uri
-      DNSSD.register(name, "_git._tcp,_bananajour", nil, 9418, tr) {}
     end
     def readme_file
       grit_repo.tree.contents.find {|c| c.name =~ /readme/i}
