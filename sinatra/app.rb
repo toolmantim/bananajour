@@ -12,7 +12,10 @@ require 'sinatra'
 
 Bananajour.require_gem 'haml'
 Bananajour.require_gem 'json'
-Bananajour.require_gem 'activesupport', 'active_support/core_ext/enumerable'
+
+Bananajour.gem 'activesupport'
+require 'active_support/core_ext/enumerable'
+require 'active_support/core_ext/array'
 
 set :server, 'thin' # Things go weird with anything else - let's lock it down to thin
 set :haml, {:format => :html5, :attr_wrapper => '"'}
@@ -42,12 +45,16 @@ helpers do
       Socket.getaddrinfo(request.env["SERVER_NAME"], nil)[0][3]
     ].include? request.env["REMOTE_ADDR"]
   end
+  def pluralize(number, singular, plural)
+    "#{number} #{number == 1 ? singular : plural}"
+  end
 end
 
 get "/" do
-  @my_repositories = Bananajour.repositories
-  @projects        = @repository_browser.repositories
-  @people          = @bananajour_browser.bananajours
+  @my_repositories     = Bananajour.repositories
+  @repos_by_person_uri = @repository_browser.other_repositories.group_by {|r| r.person.uri}
+  @repos_by_name       = @repository_browser.other_repositories.group_by {|r| r.name}
+  @people              = @bananajour_browser.other_bananajours
   haml :home
 end
 

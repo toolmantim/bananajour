@@ -78,6 +78,7 @@ module Bananajour
         "email" => config.email,
         "uri"  => web_uri,
         "git-uri" => git_uri,
+        "gravatar" => Bananajour.gravatar,
         "repositories" => repositories.collect do |r|
           {"name" => r.name, "uri" => r.uri}
         end

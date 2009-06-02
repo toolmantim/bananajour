@@ -10,9 +10,14 @@ class BananajourBrowser
       Person.new(
         reply.text_record["name"],
         reply.text_record["email"],
-        reply.text_record["uri"]
+        reply.text_record["uri"],
+        reply.text_record["gravatar"]
       )
     end
+  end
+  
+  def other_bananajours
+    bananajours.reject {|b| b.uri == Bananajour.web_uri}
   end
   
 end

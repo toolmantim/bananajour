@@ -23,7 +23,7 @@ class Bananajour::Bonjour::Repository
   end
   
   def web_uri
-    "#{person.uri}"
+    "#{person.uri}##{html_friendly_name}"
   end
   
   def to_hash

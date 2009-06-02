@@ -28,7 +28,7 @@ class Bananajour::Bonjour::Browser
     def watch!
       DNSSD.browse(@service) do |br|
         begin
-          Timeout.timeout(10) do
+          Timeout.timeout(5) do
             DNSSD.resolve(br.name, br.type, br.domain) do |rr|
               begin
                 @mutex.synchronize do

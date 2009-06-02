@@ -13,10 +13,15 @@ class RepositoryBrowser
         Person.new(
           reply.text_record["bjour-name"],
           reply.text_record["bjour-email"],
-          reply.text_record["bjour-uri"]
+          reply.text_record["bjour-uri"],
+          reply.text_record["bjour-gravatar"]
         )
       )
     end
+  end
+  
+  def other_repositories
+    repositories.reject {|r| r.person.uri == Bananajour.web_uri}
   end
   
   def repositories_similar_to(repository)

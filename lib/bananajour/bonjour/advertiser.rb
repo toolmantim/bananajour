@@ -13,6 +13,7 @@ class Bananajour::Bonjour::Advertiser
       tr["name"] = Bananajour.config.name
       tr["email"] = Bananajour.config.email
       tr["uri"] = Bananajour.web_uri
+      tr["gravatar"] = Bananajour.gravatar
       DNSSD.register("#{Bananajour.config.name}'s bananajour", "_http._tcp,_bananajour", nil, Bananajour.web_port, tr) {}
     end
     def register_repos
@@ -41,6 +42,7 @@ class Bananajour::Bonjour::Advertiser
         tr["bjour-name"] = Bananajour.config.name
         tr["bjour-email"] = Bananajour.config.email
         tr["bjour-uri"] = Bananajour.web_uri
+        tr["bjour-gravatar"] = Bananajour.gravatar
         service = DNSSD.register(new_repo.name, "_git._tcp,_bananajour", nil, 9418, tr) {}
         service.class.instance_eval { attr_accessor(:repository) }
         service.repository = new_repo
