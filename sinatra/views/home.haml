@@ -181,16 +181,16 @@
       });
     
     .projects
-      - if @repos_by_name.empty?
+      - if @other_repos_by_name.empty?
         %h2 No other projects
       - else
-        %h2= pluralize @repos_by_name.length, "Other Project", "Other Projects"
+        %h2= pluralize @other_repos_by_name.length, "Other Project", "Other Projects"
         %ul
-          - for repo_name in @repos_by_name.keys.sort
+          - for repo_name in @other_repos_by_name.keys.sort
             %li
               &= repo_name
               %ul
-                - for repo in @repos_by_name[repo_name].sort_by {|r| r.person.name}
+                - for repo in @other_repos_by_name[repo_name].sort_by {|r| r.person.name}
                   %li
                     %img.gravatar{:src => repo.person.gravatar}
                     &= repo.person.name
@@ -205,6 +205,6 @@
               %img.gravatar{:src => person.gravatar}
               &= person.name
               %ul
-                - for repo in @repos_by_person_uri[person.uri]
+                - for repo in @repository_browser.repositories_for(person)
                   %li
                     %a{:href => repo.web_uri}&= repo.name

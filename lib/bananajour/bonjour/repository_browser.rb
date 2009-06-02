@@ -28,5 +28,9 @@ class RepositoryBrowser
     repositories.select {|r| r.name == repository.name}
   end
   
+  def repositories_for(person)
+    repositories.select {|r| r.person == person}
+  end
+  
 end
 end

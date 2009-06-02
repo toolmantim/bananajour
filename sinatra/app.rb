@@ -52,8 +52,7 @@ end
 
 get "/" do
   @my_repositories     = Bananajour.repositories
-  @repos_by_person_uri = @repository_browser.other_repositories.group_by {|r| r.person.uri}
-  @repos_by_name       = @repository_browser.other_repositories.group_by {|r| r.name}
+  @other_repos_by_name = @repository_browser.other_repositories.group_by {|r| r.name}
   @people              = @bananajour_browser.other_bananajours
   haml :home
 end
