@@ -1,6 +1,9 @@
 Bananajour.require_gem 'dnssd'
 
 require 'thread'
+require 'timeout'
+
+Thread.abort_on_exception = true
 
 # Generic bonjour browser
 #
@@ -24,16 +27,25 @@ class Bananajour::Bonjour::Browser
   private
     def watch!
       DNSSD.browse(@service) do |br|
-        DNSSD.resolve(br.name, br.type, br.domain) do |rr|
-          @mutex.synchronize do
-            if (DNSSD::Flags::Add & br.flags.to_i) != 0
-              @replies << rr
-            else
-              @replies.delete_if do |existing_rr|
-                existing_rr.target == rr.target && existing_rr.fullname == rr.fullname
+        begin
+          Timeout.timeout(10) do
+            DNSSD.resolve(br.name, br.type, br.domain) do |rr|
+              begin
+                @mutex.synchronize do
+                  rr_exists = Proc.new {|existing_rr| existing_rr.target == rr.target && existing_rr.fullname == rr.fullname}
+                  if (DNSSD::Flags::Add & br.flags.to_i) != 0
+                    @replies << rr unless @replies.any?(&rr_exists)
+                  else
+                    @replies.delete_if(&rr_exists)
+                  end
+                end
+              ensure
+                rr.service.stop
               end
             end
           end
+        rescue Timeout::Error
+          # Do nothing
         end
       end
     end
