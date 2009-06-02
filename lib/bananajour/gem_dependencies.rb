@@ -24,8 +24,11 @@ module Bananajour
     end
   end
 
-  def self.require_gem(name, lib=nil)
+  def self.gem(name)
     Bananajour::GemDependencies.for_name(name).require_gem
+  end
+  def self.require_gem(name, lib=nil)
+    self.gem(name)
     Kernel.require(lib || name)
   end
 end
