@@ -59,7 +59,7 @@
           :list-style none
           
         p.readme
-          :margin 0
+          :margin 0 -5px 0 0
           a
             :float right
             :margin 0
@@ -180,6 +180,8 @@
     
   - for repository in @my_repositories
     - repository_id = repository.html_friendly_name
+    - heads = repository.grit_repo.heads
+    
     .repository{:id => repository_id, 'data-name' => repository.name}
 
       - if repository.readme_file && !local?
@@ -195,12 +197,13 @@
         %ul.commits
           - for commit in repository.recent_commits
             %li
-              - if head = commit.head(repository.grit_repo)
-                %em.branch= head.name
               %img.gravatar{:src => commit.author.gravatar_uri}
               %p.message
-                &= commit.short_message
+                %a{:href => "/#{repository.html_friendly_name}/#{commit.id}"}&= commit.short_message
                 %span.meta
+                  - if head = heads.find {|h| h.commit == commit}
+                    \-
+                    %em.branch= head.name
                   \~
                   &= time_ago_in_words(commit.committed_date).gsub("about ","")
                   ago by
@@ -224,7 +227,7 @@
               $("<a/>").attr("href", data.bananajour.uri + data.html_friendly_name + "/" + lastCommit.id).text(lastCommit.message)
             ).appendTo(repoLi).append(
               $("<span class='meta'/>")
-                .append(" - " + lastCommit.head)
+                .append($("<em/>").text(" - " + lastCommit.head))
                 .append(" ~ " + lastCommit.committed_date_pretty + " by " + lastCommit.author.name)
                 .appendTo(repoLi)
             )

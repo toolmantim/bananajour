@@ -37,6 +37,9 @@ module Bananajour
     def uri
       Bananajour.git_uri + dirname
     end
+    def web_uri
+      Bananajour.web_uri + "#" + html_friendly_name
+    end
     def grit_repo
       @grit_repo ||= Grit::Repo.new(path)
     end

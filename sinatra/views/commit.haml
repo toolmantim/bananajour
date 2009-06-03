@@ -6,14 +6,18 @@
       :margin-left 0
     
     #commit_id
-      :color rgb(153, 136, 0)
       :text-transform uppercase
       :margin 0
+      &, a
+        :color rgb(153, 136, 0)
+      a:hover
+        :color #760
     
-    .meta
-      :font-size 90%
-      :margin-top 0
-      :color #796B00
+    p.message
+      .meta
+        :font-size 90%
+        :margin-top 0
+        :color #796B00
     
     .codediff
       :font 90%/140% "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace
@@ -76,18 +80,21 @@
             :text-decoration none
   
   
-%h2#commit_id= @commit.to_s
-
-%p.meta
-  \~
-  = @commit.committed_date.strftime('%a %b %e %I:%M%p').sub(/\b0(\d+):/, '\1:').sub('AM', 'am').sub('PM', 'pm')
-  - unless @commit.committed_date.year == Time.now.year
-    = @commit.committed_date.strftime(' %Y')
-  by
-  %span.author&= @commit.author
+%h2#commit_id
+  Commit
+  = @commit.id_abbrev
+  to
+  %a{:href => @repository.web_uri}= @repository.name
 
 %p.message
   &= @commit.message
+  %span.meta
+    \~
+    = @commit.committed_date.strftime('%a %b %e %I:%M%p').sub(/\b0(\d+):/, '\1:').sub('AM', 'am').sub('PM', 'pm')
+    - unless @commit.committed_date.year == Time.now.year
+      = @commit.committed_date.strftime(' %Y')
+    by
+    %span.author&= @commit.author
 
 - for diff in @commit.diffs
   - filename, lines = parse_diff(diff)
