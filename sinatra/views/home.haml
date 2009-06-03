@@ -105,9 +105,25 @@
             span.branches
               :font-size 12px
               :color #999
+            span.more
+              :float right
+              :width 15px
+              :height 15px
+              :color #fff
+              :background-color #ccc
+              :font-size 12px
+              :line-height 15px
+              :font-weight bold
+              :-webkit-border-radius 2px
+              :-moz-border-radius 2px
+              :text-align center
+              :cursor pointer
+              &:hover
+                :background-color #aaa
+                :color #fff
             p.message
               :font-size 12px
-              :margin 0 0 0 1px
+              :margin 2px 0 5px 1px
               a
                 :color #333
                 :text-decoration none
@@ -116,6 +132,10 @@
               span.meta
                 :font-size 10px
                 :color #999
+              em.branch
+                :font-weight bold
+                :font-style normal
+                :color #666
             img.gravatar
               :float left
               :margin-left -30px
@@ -231,17 +251,33 @@
           var repoLi = $(this);
           $.getJSON(repoLi.attr("data-json-uri") + "?callback=?", function(data) {
             repoLi.removeClass("loading");
-            var lastCommit = data.recent_commits[0];
             $("<img class='gravatar'/>").attr("src", data.bananajour.gravatar).prependTo(repoLi);
             $("<span class='branches' />").text(data.heads.join(", ")).appendTo(repoLi);
-            $("<p class='message'/>").html(
-              $("<a/>").attr("href", data.bananajour.uri + data.html_friendly_name + "/" + lastCommit.id).text(lastCommit.message)
-            ).appendTo(repoLi).append(
-              $("<span class='meta'/>")
-                .append($("<em/>").text(" - " + lastCommit.head))
-                .append(" ~ " + lastCommit.committed_date_pretty + " by " + lastCommit.author.name)
-                .appendTo(repoLi)
-            )
+            $('<span class="more">+</span>')
+              .click(function() {
+                if ($(this).text() == "+") {
+                  repoLi.find(".message").show();
+                  $(this).text("-");
+                } else {
+                  repoLi.find(".message").each(function(i) {
+                    if (i != 0) $(this).hide();
+                  });
+                  $(this).text("+");
+                }
+              })
+              .appendTo(repoLi);
+            $(data.recent_commits).each(function(i) {
+              var commit = this;
+              var message = $("<p class='message'/>").html(
+                $("<a/>").attr("href", data.bananajour.uri + data.html_friendly_name + "/" + commit.id).text(commit.message)
+              ).appendTo(repoLi).append(
+                $("<span class='meta'/>")
+                  .append($("<em class='branch'/>").text(commit.head && (" - " + commit.head)))
+                  .append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name)
+                  .appendTo(repoLi)
+              )
+              if (i != 0) message.hide();
+            });
           });
         });
       });
