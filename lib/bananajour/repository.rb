@@ -65,13 +65,15 @@ module Bananajour
       path.rmtree
     end
     def to_hash
+      heads = grit_repo.heads
       {
         "name" => name,
         "html_friendly_name" => html_friendly_name,
         "uri" => uri,
+        "heads" => heads.map {|h| h.name},
         "recent_commits" => recent_commits.collect do |c|
           c.to_hash.merge(
-            "head" => c.head(grit_repo) && c.head(grit_repo).name,
+            "head" => (head = heads.find {|h| h.commit == c}) && head.name,
             "gravatar" => c.author.gravatar_uri
           )
         end,

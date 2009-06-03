@@ -53,6 +53,10 @@
           :margin 5px 0
           :font-size 12px
         
+        p.branches
+          :margin 5px 0
+          :font-size 12px
+        
         ul, li
           :margin 0
           :padding 0
@@ -98,6 +102,9 @@
               :color #666
               :text-transform uppercase
               :text-decoration none
+            span.branches
+              :font-size 12px
+              :color #999
             p.message
               :font-size 12px
               :margin 0 0 0 1px
@@ -194,6 +201,9 @@
       %p.uri&= repository.uri
 
       - unless local?
+        %p.branches
+          %strong Branches:
+          = heads.map {|h| h.name}.join(", ")
         %ul.commits
           - for commit in repository.recent_commits
             %li
@@ -223,6 +233,7 @@
             repoLi.removeClass("loading");
             var lastCommit = data.recent_commits[0];
             $("<img class='gravatar'/>").attr("src", data.bananajour.gravatar).prependTo(repoLi);
+            $("<span class='branches' />").text(data.heads.join(", ")).appendTo(repoLi);
             $("<p class='message'/>").html(
               $("<a/>").attr("href", data.bananajour.uri + data.html_friendly_name + "/" + lastCommit.id).text(lastCommit.message)
             ).appendTo(repoLi).append(
