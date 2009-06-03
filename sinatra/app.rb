@@ -24,6 +24,7 @@ set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
 
 require "#{__DIR__}/lib/browsers" # to prevent reloading
+require "#{__DIR__}/lib/mock_browsers" if Sinatra::Application.development?
 before do
   @bananajour_browser = BANANAJOUR_BROWSER
   @repository_browser = REPO_BROWSER
