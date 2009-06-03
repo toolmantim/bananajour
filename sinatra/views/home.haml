@@ -86,21 +86,33 @@
         ul.network
           :margin-top 5px
           li
-            :line-height 1.2em
+            :line-height 1em
             :min-height 16px
+            :padding-left 30px
+            :margin 10px 0
             &.loading
-              :background transparent url('/loader.gif') no-repeat right center
+              :background transparent url('/loader.gif') no-repeat 4px center
             a.name
               :font-size 12px
               :font-weight bold
-              :color #000
+              :color #666
               :text-transform uppercase
-            .message
+              :text-decoration none
+            p.message
               :font-size 12px
-              :color #333
-            .meta
-              :font-size 12px
-              :color #999
+              :margin 0 0 0 1px
+              a
+                :color #333
+                :text-decoration none
+                &:hover
+                  :text-decoration underline
+              span.meta
+                :font-size 10px
+                :color #999
+            img.gravatar
+              :float left
+              :margin-left -30px
+              :margin-top 2px
       
       img.gravatar
         :width 20px
@@ -123,6 +135,24 @@
           :background-color #ff0
           :color #960
           :text-transform uppercase
+
+        h3
+          :margin 5px 0
+          
+        ul, li
+          :margin 0
+          :padding 0
+          :list-style none
+
+        > ul
+          :font-size 14px
+          :margin 10px
+          > li
+            :margin-top 10px
+          li li
+            :margin-right 0.2em
+          a
+            :color #000
         
       .people
         :margin-left 10px
@@ -172,10 +202,14 @@
             repoLi.removeClass("loading");
             var lastCommit = data.recent_commits[0];
             $("<img class='gravatar'/>").attr("src", data.bananajour.gravatar).prependTo(repoLi);
-            $("<span class='message'/>").text(lastCommit.message).appendTo(repoLi);
-            $("<span class='meta'/>").
-              append(" ~ " + lastCommit.committed_date_pretty + " by " + lastCommit.author.name).
-              appendTo(repoLi);
+            $("<p class='message'/>").html(
+              $("<a/>").attr("href", data.bananajour.uri + data.html_friendly_name + "/" + lastCommit.id).text(lastCommit.message)
+            ).appendTo(repoLi).append(
+              $("<span class='meta'/>")
+                .append(" - " + lastCommit.head)
+                .append(" ~ " + lastCommit.committed_date_pretty + " by " + lastCommit.author.name)
+                .appendTo(repoLi)
+            )
           });
         });
       });
@@ -188,12 +222,11 @@
         %ul
           - for repo_name in @other_repos_by_name.keys.sort
             %li
-              &= repo_name
+              %h3&= repo_name
               %ul
                 - for repo in @other_repos_by_name[repo_name].sort_by {|r| r.person.name}
                   %li
-                    %img.gravatar{:src => repo.person.gravatar}
-                    &= repo.person.name
+                    %a{:href => repo.web_uri}&= repo.person.name
     .people
       - if @people.empty?
         %h2 No other bananas
@@ -202,9 +235,6 @@
         %ul
           - for person in @people
             %li
-              %img.gravatar{:src => person.gravatar}
-              &= person.name
-              %ul
-                - for repo in @repository_browser.repositories_for(person)
-                  %li
-                    %a{:href => repo.web_uri}&= repo.name
+              %a{:href => person.uri}
+                %img.gravatar{:src => person.gravatar}
+                &= person.name
