@@ -45,8 +45,8 @@ helpers do
     [
       "0.0.0.0",
       "127.0.0.1",
-      Socket.getaddrinfo(request.env["SERVER_NAME"], nil)[0][3]
-    ].include? request.env["REMOTE_ADDR"]
+      Socket.getaddrinfo(request.env["SERVER_NAME"], nil).map {|a| a[3]}
+    ].flatten.include? request.env["REMOTE_ADDR"]
   end
   def pluralize(number, singular, plural)
     "#{number} #{number == 1 ? singular : plural}"
