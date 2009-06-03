@@ -3,6 +3,8 @@
 require "rubygems"
 require "#{File.dirname(__FILE__)}/../lib/bananajour"
 
+Thread.abort_on_exception = true
+
 Bananajour.check_git!
 Bananajour.check_git_config!
 
