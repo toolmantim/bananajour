@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "rubygems"
-require "bananajour"
+require (File.symlink?(__FILE__) ? "bananajour" : File.join(File.dirname(__FILE__), "/../lib/bananajour"))
 
 Thread.abort_on_exception = true
 
