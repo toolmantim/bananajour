@@ -16,7 +16,7 @@ Install it from github via gems:
 
     gem install toolmantim-bananajour
 
-(you might to do a `gem sources -a http://gems.github.com` beforehand!)
+(you might need to do a `gem sources -a http://gems.github.com` beforehand!)
 
 Start it up:
 
