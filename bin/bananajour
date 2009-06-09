@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "rubygems"
-require "#{File.dirname(__FILE__)}/../lib/bananajour"
+require "bananajour"
 
 Thread.abort_on_exception = true
 
