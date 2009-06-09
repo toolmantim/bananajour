@@ -27,6 +27,14 @@ module Bananajour
     include GravatarHelpers
     include Commands
     
+    def setup?
+      repositories_path.exists?
+    end
+    
+    def setup!
+      repositories_path.create_dir
+    end
+    
     def path
       Fancypath("~/.bananajour").expand_path
     end
