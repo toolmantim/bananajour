@@ -5,7 +5,7 @@ Local git repository hosting with a sexy web interface and Bonjour discovery. It
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories, they're served from `~/.bananajour/repositories`. You can push to your bananajour repositories from your working copies just like you do with github.
 
-Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan) and [Lachlan Hardy](http://github.com/lachlanhardy); and smaller railscamp additions by [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1), [Tony Issakov](https://github.com/tissak), [Josh Bassett](http://github.com/nullobject) and [Mark Bennett](http://github.com/MarkBennett). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/).
+Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan), [Lachlan Hardy](http://github.com/lachlanhardy), [Josh Bassett](http://github.com/nullobject), [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1), [Tony Issakov](https://github.com/tissak), and [Mark Bennett](http://github.com/MarkBennett). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/).
 
 Installation and usage
 ----------------------
