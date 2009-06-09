@@ -12,9 +12,11 @@ Installation and usage
 
 You'll need at least [git version 1.6](http://git-scm.com/). Run `git --version` if you're unsure.
 
-Install it:
+Install it from github via gems:
 
-    gem install bananajour
+    gem install toolmantim-bananajour
+
+(you might to do a `gem sources -a http://gems.github.com` beforehand!)
 
 Start it up:
 
