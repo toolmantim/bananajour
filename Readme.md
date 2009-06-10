@@ -45,7 +45,9 @@ For a list of all the commands:
 Official repository and support
 -------------------------------
 
-[http://github.com/toolmantim/bananajour](http://github.com/toolmantim/bananajour) is where Bananajour lives along with all of its support issues.
+The official repo and support issues/tickets live at [github.com/toolmantim/bananajour](http://github.com/toolmantim/bananajour).
+
+Feature and support discussions live at [groups.google.com/group/bananajour](http://groups.google.com/group/bananajour).
 
 Developing
 ----------
