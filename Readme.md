@@ -7,6 +7,8 @@ Unlike Gitjour, the repositories you're serving are not your working git reposit
 
 Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan), [Lachlan Hardy](http://github.com/lachlanhardy), [Josh Bassett](http://github.com/nullobject), [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1), [Tony Issakov](https://github.com/tissak), and [Mark Bennett](http://github.com/MarkBennett). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/).
 
+![Screenshot of local view of Bananajour 2.1.3](http://cloud.github.com/downloads/toolmantim/bananajour/screenshot.png)
+
 Installation and usage
 ----------------------
 
@@ -35,6 +37,10 @@ Fire up [http://localhost:9331/](http://localhost:9331/) to check it out.
 
 If somebody starts sharing a Bananajour repository with the same name on the
 network, it'll automatically show up in the network thanks to the wonder that is Bonjour.
+
+For a list of all the commands:
+
+    bananajour help
 
 Official repository and support
 -------------------------------
