@@ -70,19 +70,11 @@ module Bananajour::Commands
 
     `git clone #{url} #{dir}`
     if $? != 0
-      abort clone_failure_message(url, repo.dirname)
+      abort "Failed to clone bananajour repository #{url} to #{dir}."
     else
-      puts clone_success_message(url, dir)
+      puts "Bananajour repository #{url} cloned to #{dir}."
       add!(dir, dir)
     end
-  end
-  
-  def clone_success_message(source_repo_url, repo_dirname)
-    "Bananajour repository #{source_repo_url} cloned to #{repo_dirname}."
-  end
-  
-  def clone_failure_message(source_repo_url, repo_dirname)
-    "Failed to clone Bananajour repository #{source_repo_url} to #{repo_dirname}."
   end
 
 end
