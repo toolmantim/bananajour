@@ -87,6 +87,7 @@ module Bananajour
         "uri"  => web_uri,
         "git-uri" => git_uri,
         "gravatar" => Bananajour.gravatar,
+        "version" => Bananajour::VERSION,
         "repositories" => repositories.collect do |r|
           {"name" => r.name, "uri" => r.uri}
         end
