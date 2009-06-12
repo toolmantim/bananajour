@@ -8,7 +8,7 @@ class Bananajour::Bonjour::Advertiser
   end
   private
     def register_app
-      STDERR.puts "Registering #{Bananajour.web_uri}"
+      STDOUT.puts "Registering #{Bananajour.web_uri}"
       tr = DNSSD::TextRecord.new
       tr["name"] = Bananajour.config.name
       tr["email"] = Bananajour.config.email
@@ -26,7 +26,7 @@ class Bananajour::Bonjour::Advertiser
     end
     def stop_old_services
       old_services.each do |old_service|
-        STDERR.puts "Unregistering #{old_service.repository.uri}"
+        STDOUT.puts "Unregistering #{old_service.repository.uri}"
         old_service.stop
         @services.delete(old_service)
       end
@@ -36,7 +36,7 @@ class Bananajour::Bonjour::Advertiser
     end
     def register_new_repositories
       new_repositories.each do |new_repo|
-        STDERR.puts "Registering #{new_repo.uri}"
+        STDOUT.puts "Registering #{new_repo.uri}"
         tr = DNSSD::TextRecord.new
         tr["name"] = new_repo.name
         tr["uri"] = new_repo.uri

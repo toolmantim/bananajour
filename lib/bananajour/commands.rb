@@ -14,7 +14,7 @@ module Bananajour::Commands
   
   def serve_web!
     if repositories.empty?
-      STDERR.puts "Warning: you don't have any bananajour repositories. Use: bananajour init"
+      STDOUT.puts "Warning: you don't have any bananajour repositories. Use: bananajour init"
     end
     fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production" }
     puts "* Started " + web_uri.foreground(:yellow)
