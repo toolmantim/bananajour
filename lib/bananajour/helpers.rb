@@ -1,3 +1,5 @@
+require 'md5'
+
 module Bananajour
   module GravatarHelpers
     def gravatar

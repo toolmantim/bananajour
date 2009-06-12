@@ -1,5 +1,3 @@
-require 'md5'
-
 Grit::Commit.class_eval do
   def ==(other)
     self.id == other.id
