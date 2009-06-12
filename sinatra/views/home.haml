@@ -204,10 +204,9 @@
       :border-color #980
   
 - for repository in @my_repositories
-  - repository_id = repository.html_friendly_name
   - heads = repository.grit_repo.heads
   
-  .repository{:id => repository_id, 'data-name' => repository.name}
+  .repository{:id => repository.html_friendly_name, 'data-name' => repository.name}
 
     - if repository.readme_file && !local?
       %p.readme
@@ -227,7 +226,7 @@
           %li
             %img.gravatar{:src => commit.author.gravatar_uri}
             %p.message
-              %a{:href => "/#{repository.html_friendly_name}/#{commit.id}"}&= commit.short_message
+              %a{:href => "/#{URI.escape(repository.name)}/#{commit.id}"}&= commit.short_message
               %span.meta
                 - if head = heads.find {|h| h.commit == commit}
                   \-
@@ -267,7 +266,7 @@
           $(data.recent_commits).each(function(i) {
             var commit = this;
             var message = $("<p class='message'/>").html(
-              $("<a/>").attr("href", data.bananajour.uri + data.html_friendly_name + "/" + commit.id).text(commit.message)
+              $("<a/>").attr("href", data.bananajour.uri + encodeURIComponent(data.name) + "/" + commit.id).text(commit.message)
             ).appendTo(repoLi).append(
               $("<span class='meta'/>")
                 .append($("<em class='branch'/>").text(commit.head && (" - " + commit.head)))
