@@ -25,11 +25,6 @@ module Bananajour::Commands
     puts "* Started " + "#{git_uri}".foreground(:yellow)
   end
   
-  def serve_git!
-    fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
-    puts "* Started " + "#{git_uri}".foreground(:yellow)
-  end
-  
   def advertise!
     fork { Bananajour::Bonjour::Advertiser.new.go! }
   end
