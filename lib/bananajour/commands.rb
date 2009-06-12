@@ -26,7 +26,7 @@ module Bananajour::Commands
     fork { Bananajour::Bonjour::Advertiser.new.go! }
   end
   
-  def init!(dir, name = nil)
+  def add!(dir, name = nil)
     dir = Fancypath(dir)
 
     unless dir.join(".git").directory?
@@ -73,7 +73,7 @@ module Bananajour::Commands
       abort clone_failure_message(url, repo.dirname)
     else
       puts clone_success_message(url, dir)
-      init!(dir, dir)
+      add!(dir, dir)
     end
   end
   

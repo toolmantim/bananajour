@@ -24,10 +24,10 @@ Start it up:
 
     bananajour
     
-Initialize a new Bananajour repository:
+Go into an existing project and add it to bananajour:
 
     cd ~/code/myproj
-    bananajour init
+    bananajour add
 
 Publish your codez:
 
@@ -36,7 +36,7 @@ Publish your codez:
 Fire up [http://localhost:9331/](http://localhost:9331/) to check it out.
 
 If somebody starts sharing a Bananajour repository with the same name on the
-network, it'll automatically show up in the network thanks to the wonder that is Bonjour.
+network it'll automatically show up in the network thanks to the wonder that is Bonjour.
 
 For a list of all the commands:
 

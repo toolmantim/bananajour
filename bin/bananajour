@@ -17,8 +17,8 @@ when nil
   Bananajour.advertise!
   Process.wait
 
-when "init", "add"
-  repo = Bananajour.init!(ARGV[1] || File.expand_path("."))
+when "add", "init"
+  repo = Bananajour.add!(ARGV[1] || File.expand_path("."))
 
 when "remove", "rm"
   name = ARGV[1]
@@ -43,9 +43,9 @@ Usage: #{File.basename($0)} [<command>]
 
 Commands:
   none               - Start the web, git and bonjour serving
-  init [path]        - Init a new repo
+  add [path]         - Add an existing git repo to bananajour
   remove <name>      - Remove a repo 
-  clone <url> [path] - Clone a remote repo and init it as a new bananajour repo
+  clone <url> [path] - Clone a remote repo and add it to bananajour
   help
   version
 HELP
