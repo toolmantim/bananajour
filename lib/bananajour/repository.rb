@@ -5,7 +5,7 @@ module Bananajour
     def self.for_name(name)
       new(Bananajour.repositories_path.join(name + ".git"))
     end
-    def self.html_friendly_name(name)
+    def self.html_id(name)
       name.gsub(/[^A-Za-z-]+/, '').downcase
     end
     def initialize(path)
@@ -25,8 +25,8 @@ module Bananajour
     def name
       dirname.sub(".git",'')
     end
-    def html_friendly_name
-      self.class.html_friendly_name(name)
+    def html_id
+      self.class.html_id(name)
     end
     def dirname
       path.split.last.to_s
@@ -38,7 +38,7 @@ module Bananajour
       Bananajour.git_uri + dirname
     end
     def web_uri
-      Bananajour.web_uri + "#" + html_friendly_name
+      Bananajour.web_uri + "#" + html_id
     end
     def grit_repo
       @grit_repo ||= Grit::Repo.new(path)
@@ -68,7 +68,8 @@ module Bananajour
       heads = grit_repo.heads
       {
         "name" => name,
-        "html_friendly_name" => html_friendly_name,
+        "html_friendly_name" => html_id, # TODO: Deprecate in v3. Renamed to html_id since 2.1.4
+        "html_id" => html_id,
         "uri" => uri,
         "heads" => heads.map {|h| h.name},
         "recent_commits" => recent_commits.collect do |c|

@@ -6,8 +6,8 @@ class Bananajour::Bonjour::Repository
     @name, @uri, @person = name, uri, person
   end
   
-  def html_friendly_name
-    Bananajour::Repository.html_friendly_name(name)
+  def html_id
+    Bananajour::Repository.html_id(name)
   end
 
   def ==(other)
@@ -23,7 +23,7 @@ class Bananajour::Bonjour::Repository
   end
   
   def web_uri
-    "#{person.uri}##{html_friendly_name}"
+    "#{person.uri}##{html_id}"
   end
   
   def to_hash

@@ -206,7 +206,7 @@
 - for repository in @my_repositories
   - heads = repository.grit_repo.heads
   
-  .repository{:id => repository.html_friendly_name, 'data-name' => repository.name}
+  .repository{:id => repository.html_id, 'data-name' => repository.name}
 
     - if repository.readme_file && !local?
       %p.readme
@@ -239,7 +239,7 @@
       %ul.network
         - for repo in @repository_browser.repositories_similar_to(repository)
           %li.loading{'data-json-uri' => repo.json_uri}
-            %a.name{:href => "#{repo.person.uri}##{repo.html_friendly_name}"}= repo.person.name
+            %a.name{:href => "#{repo.person.uri}##{repo.html_id}"}= repo.person.name
 
 - if local?
   :javascript
