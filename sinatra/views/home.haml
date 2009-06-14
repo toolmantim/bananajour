@@ -250,7 +250,7 @@
           repoLi.removeClass("loading");
           $("<img class='gravatar'/>").attr("src", data.bananajour.gravatar).prependTo(repoLi);
           $("<span class='branches' />").text(data.heads.join(", ")).appendTo(repoLi);
-          $('<span class="more">+</span>')
+          if(data.recent_commits.length > 1) $('<span class="more">+</span>')
             .click(function() {
               if ($(this).text() == "+") {
                 repoLi.find(".message").show();
