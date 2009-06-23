@@ -42,6 +42,13 @@ For a list of all the commands:
 
     bananajour help
 
+Linux support
+-------------
+
+To install the dnssd gem on linux you'll need [avahi](http://avahi.org/). For Ubunutu peeps this means:
+
+    sudo apt-get install libavahi-compat-libdnssd-dev
+
 Official repository and support
 -------------------------------
 
