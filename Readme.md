@@ -49,6 +49,11 @@ To install the dnssd gem on linux you'll need [avahi](http://avahi.org/). For Ub
 
     sudo apt-get install libavahi-compat-libdnssd-dev
 
+Using with Ginatra
+------------------
+
+Rumour has it [ginatra](http://github.com/lenary/ginatra) can be used to provide richer gitweb-like browsing of your bananajour repositories. Symlink ginatra's `repos` directory to `~/.bananajour/repositories` to serve up your bananajour repositories.
+
 Official repository and support
 -------------------------------
 
