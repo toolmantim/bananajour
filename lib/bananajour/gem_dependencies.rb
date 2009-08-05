@@ -3,7 +3,7 @@ module Bananajour
   module GemDependencies
     DEPENDENCIES = [
       %w( sinatra              0.9.2 ),
-      %w( json                 1.1.2 ),
+      %w( json                 1.1.7 ),
       %w( chrislloyd-fancypath 0.5.8 ),
       %w( rainbow              1.0.1 ),
       %w( mojombo-grit         1.1.1 ),

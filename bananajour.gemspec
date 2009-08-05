@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bananajour}
-  s.version = "2.1.5"
+  s.version = "2.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Lucas"]
-  s.date = %q{2009-06-13}
+  s.date = %q{2009-08-05}
   s.default_executable = %q{bananajour}
   s.description = %q{Local git repository hosting with a sexy web interface and bonjour discovery. It's like your own little adhoc, network-aware github!}
   s.email = %q{t.lucas@toolmantim.com}
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sinatra>, ["= 0.9.2"])
-      s.add_runtime_dependency(%q<json>, ["= 1.1.2"])
+      s.add_runtime_dependency(%q<json>, ["= 1.1.7"])
       s.add_runtime_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
       s.add_runtime_dependency(%q<rainbow>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<mojombo-grit>, ["= 1.1.1"])
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, ["= 2.3.2"])
     else
       s.add_dependency(%q<sinatra>, ["= 0.9.2"])
-      s.add_dependency(%q<json>, ["= 1.1.2"])
+      s.add_dependency(%q<json>, ["= 1.1.7"])
       s.add_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
       s.add_dependency(%q<rainbow>, ["= 1.0.1"])
       s.add_dependency(%q<mojombo-grit>, ["= 1.1.1"])
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<sinatra>, ["= 0.9.2"])
-    s.add_dependency(%q<json>, ["= 1.1.2"])
+    s.add_dependency(%q<json>, ["= 1.1.7"])
     s.add_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
     s.add_dependency(%q<rainbow>, ["= 1.0.1"])
     s.add_dependency(%q<mojombo-grit>, ["= 1.1.1"])
