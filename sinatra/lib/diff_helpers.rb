@@ -8,10 +8,22 @@ module DiffHelpers
   def parse_diff(diff)
     raw_diff = diff.diff.split(/\n/)
 
-    filename = parse_filename(raw_diff[0..1])
-    first_line_num = parse_first_line_num(raw_diff[2])
-    lines = parse_lines(raw_diff[3..-1], first_line_num)
-
+    if diff.a_blob.nil?
+      filename = diff.b_blob.name
+      line_num = 1
+      lines = diff.b_blob.data.split(/\n/).map do |line|
+        line_num += 1
+        OpenStruct.new(
+          :body => line[0..-1],
+          :op   => DIFF_INS,
+           :num  => line_num - 1
+         )
+       end
+     else
+        filename = parse_filename(raw_diff[0..1])
+        first_line_num = parse_first_line_num(raw_diff[2])
+        lines = parse_lines(raw_diff[3..-1], first_line_num)
+    end
     [filename, lines]
   end
 
