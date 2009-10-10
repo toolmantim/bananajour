@@ -44,7 +44,7 @@ class Bananajour::Bonjour::Browser
                   end
                 end
               ensure
-                rr.service.stop
+                rr.service.stop unless rr.service.stopped?
               end
             end
           end
