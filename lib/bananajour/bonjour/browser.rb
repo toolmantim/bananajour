@@ -17,12 +17,16 @@ Thread.abort_on_exception = true
 #
 # Probably gem-worthy
 class Bananajour::Bonjour::Browser
-  attr_reader :replies
   def initialize(service)
     @service = service
     @mutex = Mutex.new
     @replies = []
     watch!
+  end
+  def replies
+    @mutex.synchronize do
+      @replies.clone
+    end
   end
   private
     def watch!
