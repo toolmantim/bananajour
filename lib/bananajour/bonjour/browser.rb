@@ -8,8 +8,8 @@ Thread.abort_on_exception = true
 # Generic bonjour browser
 #
 # Example use:
-# 
-#   browser = BonjourBrowser.new("_bananajour._git._tcp")
+#
+#   browser = BonjourBrowser.new("_git._tcp,_bananajour")
 #   loop do
 #     sleep(1)
 #     pp browser.replies.map {|r| r.name}

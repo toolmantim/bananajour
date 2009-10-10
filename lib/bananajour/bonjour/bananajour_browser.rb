@@ -2,9 +2,9 @@ module Bananajour::Bonjour
 class BananajourBrowser
 
   def initialize
-    @browser = Browser.new('_bananajour._http._tcp')
+    @browser = Browser.new('_http._tcp,_bananajour')
   end
-  
+
   def bananajours
     @browser.replies.map do |reply|
       Person.new(

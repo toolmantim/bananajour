@@ -2,9 +2,9 @@ module Bananajour::Bonjour
 class RepositoryBrowser
 
   def initialize
-    @browser = Browser.new('_bananajour._git._tcp')
+    @browser = Browser.new('_git._tcp,_bananajour')
   end
-  
+
   def repositories
     @browser.replies.map do |reply|
       Repository.new(
