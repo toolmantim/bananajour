@@ -33,7 +33,7 @@ class Bananajour::Bonjour::Browser
       DNSSD.browse(@service) do |br|
         begin
           Timeout.timeout(5) do
-            DNSSD.resolve(br.name, br.type, br.domain) do |rr|
+            DNSSD.resolve(br) do |rr|
               begin
                 @mutex.synchronize do
                   rr_exists = Proc.new {|existing_rr| existing_rr.target == rr.target && existing_rr.fullname == rr.fullname}
