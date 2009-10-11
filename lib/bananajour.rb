@@ -65,7 +65,12 @@ module Bananajour
     end
     
     def host_name
-      Socket.gethostname
+      hn = Socket.gethostname
+      if hn =~ /\.local$/
+        hn
+      else
+        hn + ".local"
+      end
     end
     
     def git_uri
