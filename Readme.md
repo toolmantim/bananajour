@@ -49,6 +49,8 @@ To install the dnssd gem on linux you'll need [avahi](http://avahi.org/). For Ub
 
     sudo apt-get install libavahi-compat-libdnssd-dev
 
+On Linux, if you kill bananajour with kill -9 it doesn't get a chance to unregister the Bonjour services, and when it is restarted it will die with DNSSD::AlreadyRegisteredError.  Although not ideal, you can work around this my restarting avahi-daemon first.
+
 Using with Ginatra
 ------------------
 
