@@ -43,11 +43,15 @@ class Bananajour::Bonjour::Browser
                     @replies.delete_if(&rr_exists)
                   end
                 end
+              rescue DNSSD::UnknownError
+                $stderr.puts "unknown error occurred in dnssd: #{$!.message}"
               ensure
                 rr.service.stop unless rr.service.stopped?
               end
             end
           end
+        rescue DNSSD::UnknownError
+          $stderr.puts "unknown error occurred in dnssd: #{$!.message}"
         rescue Timeout::Error
           # Do nothing
         end
