@@ -2,8 +2,6 @@ Thread.abort_on_exception = true
 
 __DIR__ = File.dirname(__FILE__)
 
-require 'rubygems'
-
 require "#{__DIR__}/../lib/bananajour"
 
 Bananajour.require_gem 'rack'

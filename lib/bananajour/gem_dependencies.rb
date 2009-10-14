@@ -1,3 +1,5 @@
+require 'rubygems'
+
 module Bananajour
   # DRYs version number dependencies and provides a simple way require them
   module GemDependencies
