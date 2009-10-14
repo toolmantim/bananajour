@@ -4,7 +4,7 @@ module Bananajour
   # DRYs version number dependencies and provides a simple way require them
   module GemDependencies
     DEPENDENCIES = [
-      %w( sinatra              0.9.2 ),
+      %w( sinatra              0.9.4 ),
       %w( json                 1.1.7 ),
       %w( fancypath            0.5.13 ),
       %w( rainbow              1.0.1 ),
