@@ -66,6 +66,11 @@ module Bananajour
     
     def host_name
       hn = Socket.gethostname
+
+      # if there is more than one period in the hostname then assume it's a FQDN
+      # and the user knows what they're doing
+      return hn if hn.count('.') > 1
+
       if hn =~ /\.local$/
         hn
       else
