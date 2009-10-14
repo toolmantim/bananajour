@@ -6,13 +6,13 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Lucas"]
-  s.date = %q{2009-10-11}
+  s.date = %q{2009-10-14}
   s.default_executable = %q{bananajour}
   s.description = %q{Local git repository hosting with a sexy web interface and bonjour discovery. It's like your own little adhoc, network-aware github!}
   s.email = %q{t.lucas@toolmantim.com}
   s.executables = ["bananajour"]
   s.extra_rdoc_files = ["Readme.md"]
-  s.files = ["Readme.md", "Rakefile", "bin/bananajour", "lib/bananajour", "lib/bananajour/bonjour", "lib/bananajour/bonjour/browser.rb", "lib/bananajour/bonjour/bananajour_browser.rb", "lib/bananajour/bonjour/repository.rb", "lib/bananajour/bonjour/person.rb", "lib/bananajour/bonjour/repository_browser.rb", "lib/bananajour/bonjour/advertiser.rb", "lib/bananajour/commands.rb", "lib/bananajour/bonjour.rb", "lib/bananajour/grit_extensions.rb", "lib/bananajour/repository.rb", "lib/bananajour/version.rb", "lib/bananajour/helpers.rb", "lib/bananajour/gem_dependencies.rb", "lib/bananajour.rb", "sinatra/views", "sinatra/views/readme.haml", "sinatra/views/layout.haml", "sinatra/views/home.haml", "sinatra/views/commit.haml", "sinatra/public", "sinatra/public/loader.gif", "sinatra/public/peanut.png", "sinatra/public/jquery-1.3.2.min.js", "sinatra/public/logo.png", "sinatra/public/pbjt.swf", "sinatra/lib", "sinatra/lib/mock_browsers.rb", "sinatra/lib/browsers.rb", "sinatra/lib/diff_helpers.rb", "sinatra/app.rb"]
+  s.files = ["Readme.md", "Rakefile", "bin/bananajour", "lib/bananajour", "lib/bananajour/bonjour", "lib/bananajour/bonjour/advertiser.rb", "lib/bananajour/bonjour/bananajour_browser.rb", "lib/bananajour/bonjour/browser.rb", "lib/bananajour/bonjour/person.rb", "lib/bananajour/bonjour/repository.rb", "lib/bananajour/bonjour/repository_browser.rb", "lib/bananajour/bonjour.rb", "lib/bananajour/commands.rb", "lib/bananajour/gem_dependencies.rb", "lib/bananajour/grit_extensions.rb", "lib/bananajour/helpers.rb", "lib/bananajour/repository.rb", "lib/bananajour/version.rb", "lib/bananajour.rb", "sinatra/app.rb", "sinatra/lib", "sinatra/lib/browsers.rb", "sinatra/lib/diff_helpers.rb", "sinatra/lib/mock_browsers.rb", "sinatra/public", "sinatra/public/jquery-1.3.2.min.js", "sinatra/public/loader.gif", "sinatra/public/logo.png", "sinatra/public/pbjt.swf", "sinatra/public/peanut.png", "sinatra/views", "sinatra/views/commit.haml", "sinatra/views/home.haml", "sinatra/views/layout.haml", "sinatra/views/readme.haml"]
   s.homepage = %q{http://github.com/toolmantim/bananajour}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
       s.add_runtime_dependency(%q<rainbow>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<mojombo-grit>, ["= 1.1.1"])
-      s.add_runtime_dependency(%q<dnssd>, ["= 1.3"])
+      s.add_runtime_dependency(%q<dnssd>, ["= 1.3.1"])
       s.add_runtime_dependency(%q<rack>, ["= 1.0.0"])
       s.add_runtime_dependency(%q<thin>, ["= 1.0.0"])
       s.add_runtime_dependency(%q<haml>, ["= 2.0.9"])
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
       s.add_dependency(%q<rainbow>, ["= 1.0.1"])
       s.add_dependency(%q<mojombo-grit>, ["= 1.1.1"])
-      s.add_dependency(%q<dnssd>, ["= 1.3"])
+      s.add_dependency(%q<dnssd>, ["= 1.3.1"])
       s.add_dependency(%q<rack>, ["= 1.0.0"])
       s.add_dependency(%q<thin>, ["= 1.0.0"])
       s.add_dependency(%q<haml>, ["= 2.0.9"])
@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<chrislloyd-fancypath>, ["= 0.5.8"])
     s.add_dependency(%q<rainbow>, ["= 1.0.1"])
     s.add_dependency(%q<mojombo-grit>, ["= 1.1.1"])
-    s.add_dependency(%q<dnssd>, ["= 1.3"])
+    s.add_dependency(%q<dnssd>, ["= 1.3.1"])
     s.add_dependency(%q<rack>, ["= 1.0.0"])
     s.add_dependency(%q<thin>, ["= 1.0.0"])
     s.add_dependency(%q<haml>, ["= 2.0.9"])
