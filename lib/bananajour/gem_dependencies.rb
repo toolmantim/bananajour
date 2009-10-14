@@ -4,9 +4,9 @@ module Bananajour
     DEPENDENCIES = [
       %w( sinatra              0.9.2 ),
       %w( json                 1.1.7 ),
-      %w( chrislloyd-fancypath 0.5.8 ),
+      %w( fancypath            0.5.13 ),
       %w( rainbow              1.0.1 ),
-      %w( mojombo-grit         1.1.1 ),
+      %w( grit                 1.1.1 ),
       %w( dnssd                1.3.1 ),
       %w( rack                 1.0.0 ),
       %w( thin                 1.0.0 ),

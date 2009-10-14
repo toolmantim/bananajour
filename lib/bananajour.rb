@@ -10,7 +10,7 @@ require 'bananajour/gem_dependencies'
 
 Bananajour.require_gem 'rainbow'
 Bananajour.require_gem 'dnssd'
-Bananajour.require_gem 'chrislloyd-fancypath', 'fancypath'
+Bananajour.require_gem 'fancypath'
 
 require 'bananajour/repository'
 require 'bananajour/grit_extensions'
