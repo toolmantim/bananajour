@@ -5,7 +5,6 @@ Local git repository hosting with a sexy web interface and Bonjour discovery. It
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories, they're served from `~/.bananajour/repositories`. You can push to your bananajour repositories from your working copies just like you do with github.
 
-Bananajour is the baby of [Tim Lucas](http://toolmantim.com/) with much railscamp hackage by [Nathan de Vries](http://github.com/atnan), [Lachlan Hardy](http://github.com/lachlanhardy), [Josh Bassett](http://github.com/nullobject), [Myles Byrne](http://github.com/quackingduck), [Ben Hoskings](http://github.com/benhoskings), [Brett Goulder](http://github.com/brettgo1), [Tony Issakov](https://github.com/tissak), and [Mark Bennett](http://github.com/MarkBennett). The rad logo was by [Carla Hackett](http://carlahackettdesign.com/). Other various fixes and contributions by [Travis Swicegood](http://github.com/tswicegood) and [Nate Haas](http://github.com/natehaas).
 
 ![Screenshot of local view of Bananajour 2.1.3](http://cloud.github.com/downloads/toolmantim/bananajour/screenshot.png)
 
@@ -14,11 +13,11 @@ Installation and usage
 
 You'll need at least [git version 1.6](http://git-scm.com/). Run `git --version` if you're unsure.
 
-Install it from github via gems:
+Install it from [gemcutter](http://gemcutter.org/) via gems:
 
-    gem install toolmantim-bananajour
+    gem install bananajour
 
-(you might need to do a `gem sources -a http://gems.github.com` beforehand!)
+(you might need to do a `gem sources -a http://gemcutter.org` beforehand!)
 
 Start it up:
 
@@ -77,6 +76,22 @@ If you want code reloading use [shotgun](http://github.com/rtomayko/shotgun) ins
 If you then want to run your working copy as your public bananajour rebuild and install it as a gem:
 
     sudo rake gem:install
+
+Contributors
+------------
+
+* [Carla Hackett](http://carlahackettdesign.com/) (logo)
+* [Nathan de Vries](http://github.com/atnan)
+* [Lachlan Hardy](http://github.com/lachlanhardy)
+* [Josh Bassett](http://github.com/nullobject)
+* [Myles Byrne](http://github.com/quackingduck)
+* [Ben Hoskings](http://github.com/benhoskings)
+* [Brett Goulder](http://github.com/brettgo1)
+* [Tony Issakov](https://github.com/tissak)
+* [Mark Bennett](http://github.com/MarkBennett)
+* [Travis Swicegood](http://github.com/tswicegood)
+* [Nate Haas](http://github.com/natehaas)
+* [James Sadler](http://github.com/freshtonic)
 
 License
 -------
