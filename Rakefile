@@ -1,9 +1,7 @@
-require "rubygems"
-
 $:.unshift "#{File.dirname(__FILE__)}/lib"
 
-require "bananajour/version"
 require "bananajour/gem_dependencies"
+require "bananajour/version"
 
 gem = Gem::Specification.new do |gem|
   gem.name             = "bananajour"
