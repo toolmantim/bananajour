@@ -5,6 +5,7 @@ Local git repository hosting with a sexy web interface and Bonjour discovery. It
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories, they're served from `~/.bananajour/repositories`. You can push to your bananajour repositories from your working copies just like you do with github.
 
+Follow [@bananajour](http://twitter.com/bananajour) on twitter for all release updates.
 
 ![Screenshot of local view of Bananajour 2.1.3](http://cloud.github.com/downloads/toolmantim/bananajour/screenshot.png)
 
@@ -92,6 +93,7 @@ Contributors
 * [Travis Swicegood](http://github.com/tswicegood)
 * [Nate Haas](http://github.com/natehaas)
 * [James Sadler](http://github.com/freshtonic)
+* [Jason King](http://github.com/JasonKing)
 
 License
 -------
