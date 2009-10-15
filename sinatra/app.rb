@@ -4,10 +4,7 @@ __DIR__ = File.dirname(__FILE__)
 
 require "#{__DIR__}/../lib/bananajour"
 
-Bananajour.require_gem 'rack'
-
-# Must require 'sinatra' from this file for Sinatra's magic to pick up lots of free stuff
-Bananajour::GemDependencies.for_name('sinatra').require_gem
+Bananajour.gem 'sinatra'
 require 'sinatra'
 
 Bananajour.require_gem 'haml'
