@@ -1,7 +1,12 @@
 Bananajour - Local git publication and collaboration
 ====================================================
 
-Local git repository hosting with a sexy web interface and Bonjour discovery. It's like a bunch of adhoc, local, network-aware githubs!
+Via the [best reddit comment ever written](http://www.reddit.com/r/programming/comments/9txsd/git_bonjour_bananajour_version_22_released/c0efrxz):
+
+> The logo is the fucking business. The mustache just bring[s] it to a whole
+> other level.
+
+Bananajour is local git repository hosting with a sexy web interface and Bonjour discovery. It's like a bunch of adhoc, local, network-aware githubs!
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories, they're served from `~/.bananajour/repositories`. You can push to your bananajour repositories from your working copies just like you do with github.
 
