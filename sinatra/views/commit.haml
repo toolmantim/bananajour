@@ -87,7 +87,9 @@
   %a{:href => @repository.web_uri}= @repository.name
 
 %p.message
-  &= @commit.message
+  - @commit.message.split(/\n/).each do |m|
+    &= m
+    %br/
   %span.meta
     \~
     = @commit.committed_date.strftime('%a %b %e %I:%M%p').sub(/\b0(\d+):/, '\1:').sub('AM', 'am').sub('PM', 'pm')
