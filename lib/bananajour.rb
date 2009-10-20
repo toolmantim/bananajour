@@ -65,6 +65,11 @@ module Bananajour
     end
     
     def host_name
+      hn = get_git_global_config("bananajour.hostname")
+      unless hn.nil? or hn.empty?
+        return hn
+      end
+
       hn = Socket.gethostname
 
       # if there is more than one period in the hostname then assume it's a FQDN

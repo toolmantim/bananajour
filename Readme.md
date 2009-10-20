@@ -47,6 +47,12 @@ For a list of all the commands:
 
     bananajour help
 
+Optional configuration: you can override the hostname by setting a global git config option like so:
+
+    git config --global bananajour.hostname foobar
+
+If you set this setting, then bananajour will assume that you know precisely what you're doing, it will not append .local, it will not check this hostname is valid, or do anything to it.  If you set this, then you're on your own.
+
 Linux support
 -------------
 
