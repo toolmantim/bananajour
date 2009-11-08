@@ -9,13 +9,22 @@ Bananajour.setup! if !Bananajour.setup?
 Bananajour.check_git!
 Bananajour.check_git_config!
 
+pids = []
+
+["INT", "TERM", "HUP"].each do |sig|
+  Signal.trap sig do
+    pids.each{|pid| Process.kill "TERM", pid rescue nil}
+    exit 0
+  end
+end
+
 case ARGV.first
 
 when nil
-  Bananajour.serve_web!
-  Bananajour.serve_git!
-  Bananajour.advertise!
-  Process.wait
+  pids << Bananajour.serve_web!
+  pids << Bananajour.serve_git!
+  pids << Bananajour.advertise!
+  Process.waitall
 
 when "add", "init"
   repo = Bananajour.add!(ARGV[1] || File.expand_path("."))
