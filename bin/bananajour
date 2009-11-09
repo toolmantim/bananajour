@@ -9,12 +9,14 @@ Bananajour.setup! if !Bananajour.setup?
 Bananajour.check_git!
 Bananajour.check_git_config!
 
+parent_process_pid = Process.pid
 pids = []
-
-["INT", "TERM", "HUP"].each do |sig|
-  Signal.trap sig do
-    pids.each{|pid| Process.kill "TERM", pid rescue nil}
-    exit 0
+at_exit do 
+  if Process.pid == parent_process_pid
+    pids.each do |pid| 
+      Process.kill("TERM", pid) rescue nil
+      sleep 0.2
+    end
   end
 end
 
