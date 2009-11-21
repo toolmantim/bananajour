@@ -11,7 +11,7 @@ module Bananajour
       %w( grit                 1.1.1 ),
       %w( dnssd                1.3.1 ),
       %w( rack                 1.0.1 ),
-      %w( thin                 1.0.0 ),
+      %w( thin                 1.2.4 ),
       %w( haml                 2.0.9 ),
       %w( activesupport        2.3.2 )
     ]
