@@ -17,12 +17,10 @@ require 'active_support/core_ext/array'
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
 
-require "#{__DIR__}/lib/browsers" # to prevent reloading
 require "#{__DIR__}/lib/mock_browsers" if Sinatra::Application.development?
-before do
-  @bananajour_browser = BANANAJOUR_BROWSER
-  @repository_browser = REPO_BROWSER
-end
+
+set :bananajour_browser, Bananajour::Bonjour::BananajourBrowser.new
+set :repository_browser, Bananajour::Bonjour::RepositoryBrowser.new
 
 load "#{__DIR__}/lib/diff_helpers.rb"
 helpers DiffHelpers
@@ -31,6 +29,8 @@ require "bananajour/helpers"
 helpers Bananajour::GravatarHelpers, Bananajour::DateHelpers
 
 helpers do
+  def bananajour_browser() options.bananajour_browser end
+  def repository_browser() options.repository_browser end
   def json(body)
     content_type "application/json"
     params[:callback] ? "#{params[:callback]}(#{body});" : body
@@ -49,8 +49,8 @@ end
 
 get "/" do
   @my_repositories     = Bananajour.repositories
-  @other_repos_by_name = @repository_browser.other_repositories.group_by {|r| r.name}
-  @people              = @bananajour_browser.other_bananajours
+  @other_repos_by_name = repository_browser.other_repositories.group_by {|r| r.name}
+  @people              = bananajour_browser.other_bananajours
   haml :home
 end
 

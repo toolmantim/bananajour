@@ -237,7 +237,7 @@
                 &= commit.author
     - else
       %ul.network
-        - for repo in @repository_browser.repositories_similar_to(repository)
+        - for repo in repository_browser.repositories_similar_to(repository)
           %li.loading{'data-json-uri' => repo.json_uri}
             %a.name{:href => "#{repo.person.uri}##{repo.html_id}"}= repo.person.name
 
