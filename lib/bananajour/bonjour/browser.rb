@@ -51,7 +51,7 @@ class Bananajour::Bonjour::Browser
                 end
               end
             end
-          rescue DNSSD::UnknownError
+          rescue DNSSD::UnknownError, DNSSD::BadParamError
             $stderr.puts "unknown error in DNSSD: '#{$!.message}'"
           end
           sleep 5
