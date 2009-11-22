@@ -215,7 +215,7 @@
     %h2
       &= repository.name
 
-    %p.uri&= repository.uri
+    %p.uri&= "TODO"
 
     - unless local?
       %p.branches
@@ -238,7 +238,7 @@
     - else
       %ul.network
         - for repo in repository_browser.repositories_similar_to(repository)
-          %li.loading{'data-json-uri' => repo.json_uri}
+          %li.loading{'data-json-uri' => repo.json_uri, 'data-person-uri' => repo.person.uri}
             %a.name{:href => "#{repo.person.uri}##{repo.html_id}"}= repo.person.name
 
 - if local?
@@ -266,7 +266,7 @@
           $(data.recent_commits).each(function(i) {
             var commit = this;
             var message = $("<p class='message'/>").html(
-              $("<a/>").attr("href", data.bananajour.uri + encodeURIComponent(data.name) + "/" + commit.id).text(commit.message)
+              $("<a/>").attr("href", repoLi.attr("data-person-uri") + encodeURIComponent(data.name) + "/" + commit.id).text(commit.message)
             ).appendTo(repoLi).append(
               $("<span class='meta'/>")
                 .append($("<em class='branch'/>").text(commit.head && (" - " + commit.head)))

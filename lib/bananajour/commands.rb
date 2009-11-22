@@ -14,12 +14,12 @@ module Bananajour::Commands
   
   def serve_web!
     fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production" }
-    puts "* Started " + web_uri.foreground(:yellow)
+    puts "* Started web interface".foreground(:yellow)
   end
 
   def serve_git!
     fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
-    puts "* Started " + "#{git_uri}".foreground(:yellow)
+    puts "* Started git daemon".foreground(:yellow)
   end
   
   def advertise!

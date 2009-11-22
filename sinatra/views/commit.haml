@@ -84,7 +84,7 @@
   Commit
   = @commit.id_abbrev
   to
-  %a{:href => @repository.web_uri}= @repository.name
+  %a{:href => "#"+@repository.html_id}= @repository.name
 
 %p.message
   - @commit.message.split(/\n/).each do |m|

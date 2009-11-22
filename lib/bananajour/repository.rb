@@ -34,12 +34,6 @@ module Bananajour
     def to_s
       name
     end
-    def uri
-      Bananajour.git_uri + dirname
-    end
-    def web_uri
-      Bananajour.web_uri + "#" + html_id
-    end
     def grit_repo
       @grit_repo ||= Grit::Repo.new(path)
     end
@@ -68,9 +62,7 @@ module Bananajour
       heads = grit_repo.heads
       {
         "name" => name,
-        "html_friendly_name" => html_id, # TODO: Deprecate in v3. Renamed to html_id since 2.1.4
         "html_id" => html_id,
-        "uri" => uri,
         "heads" => heads.map {|h| h.name},
         "recent_commits" => recent_commits.collect do |c|
           c.to_hash.merge(

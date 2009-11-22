@@ -2,18 +2,18 @@ module Bananajour::Bonjour
 class RepositoryBrowser
 
   def initialize
-    @browser = Browser.new('_git._tcp,_bananajour')
+    @browser = Browser.new("_git._tcp,#{Bananajour.service_id}")
   end
 
   def repositories
     @browser.replies.map do |reply|
+      
       Repository.new(
         reply.text_record["name"],
-        reply.text_record["uri"],
         Person.new(
           reply.text_record["bjour-name"],
           reply.text_record["bjour-email"],
-          reply.text_record["bjour-uri"],
+          reply.target,
           reply.text_record["bjour-gravatar"]
         )
       )

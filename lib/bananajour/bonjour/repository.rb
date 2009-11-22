@@ -1,9 +1,9 @@
 class Bananajour::Bonjour::Repository
 
-  attr_accessor :name, :uri, :person 
+  attr_accessor :name, :person 
 
-  def initialize(name, uri, person)
-    @name, @uri, @person = name, uri, person
+  def initialize(name, person)
+    @name, @person = name, person
   end
   
   def html_id
@@ -16,6 +16,10 @@ class Bananajour::Bonjour::Repository
   
   def hash
     to_hash.hash
+  end
+  
+  def uri
+    "#{person.uri}#{name}.git"
   end
   
   def json_uri

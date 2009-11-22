@@ -1,13 +1,17 @@
 class Bananajour::Bonjour::Person
 
-  attr_accessor :name, :email, :uri , :gravatar
+  attr_accessor :name, :email, :host , :gravatar
 
-  def initialize(name, email, uri, gravatar)
-    @name, @email, @uri, @gravatar = name, email, uri, gravatar
+  def initialize(name, email, host, gravatar)
+    @name, @email, @host, @gravatar = name, email, host, gravatar
+  end
+  
+  def uri
+    "http://#{host}:#{Bananajour.web_port}/"
   end
   
   def ==(other)
-    self.uri == other.uri
+    self.host == other.host
   end
   
   def hash

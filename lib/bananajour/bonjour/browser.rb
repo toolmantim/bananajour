@@ -9,7 +9,7 @@ Thread.abort_on_exception = true
 #
 # Example use:
 #
-#   browser = BonjourBrowser.new("_git._tcp,_bananajour")
+#   browser = BonjourBrowser.new("_git._tcp,_bananajour_3")
 #   loop do
 #     sleep(1)
 #     pp browser.replies.map {|r| r.name}
@@ -32,21 +32,24 @@ class Bananajour::Bonjour::Browser
         begin
           DNSSD.browse!(service) do |reply|
             Thread.new(reply, replies, mutex) do |reply, replies, mutex|
-              DNSSD.resolve!(reply.name, reply.type, reply.domain) do |resolve_reply|
-                mutex.synchronize do
-                  if reply.flags.add?
-                    replies[reply.fullname] = resolve_reply
-                  else
-                    replies.delete(reply.fullname)
+              begin
+                DNSSD.resolve!(reply.name, reply.type, reply.domain) do |resolve_reply|
+                  mutex.synchronize do
+                    if reply.flags.add?
+                      replies[reply.fullname] = resolve_reply
+                    else
+                      replies.delete(reply.fullname)
+                    end
                   end
+                  resolve_reply.service.stop unless resolve_reply.service.stopped?
                 end
-                resolve_reply.service.stop unless resolve_reply.service.stopped?
+              rescue DNSSD::BadParamError
+                # Ignore
               end
             end
           end
         rescue DNSSD::BadParamError
-          STDERR.puts "#{$!} on #{reply.inspect}"
-          # Ignore em
+          # Ignore
         end
       end
     end

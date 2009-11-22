@@ -2,7 +2,7 @@ module Bananajour::Bonjour
 class BananajourBrowser
 
   def initialize
-    @browser = Browser.new('_http._tcp,_bananajour')
+    @browser = Browser.new("_http._tcp,#{Bananajour.service_id}")
   end
 
   def bananajours
@@ -10,14 +10,10 @@ class BananajourBrowser
       Person.new(
         reply.text_record["name"],
         reply.text_record["email"],
-        reply.text_record["uri"],
+        reply.target,
         reply.text_record["gravatar"]
       )
     end
-  end
-  
-  def other_bananajours
-    bananajours.reject {|b| b.uri == Bananajour.web_uri}
   end
   
 end

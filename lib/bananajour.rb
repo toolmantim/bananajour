@@ -60,33 +60,6 @@ module Bananajour
       9331
     end
     
-    def web_uri
-      "http://#{host_name}:#{web_port}/"
-    end
-    
-    def host_name
-      hn = get_git_global_config("bananajour.hostname")
-      unless hn.nil? or hn.empty?
-        return hn
-      end
-
-      hn = Socket.gethostname
-
-      # if there is more than one period in the hostname then assume it's a FQDN
-      # and the user knows what they're doing
-      return hn if hn.count('.') > 1
-
-      if hn =~ /\.local$/
-        hn
-      else
-        hn + ".local"
-      end
-    end
-    
-    def git_uri
-      "git://#{host_name}/"
-    end
-
     def repositories
       repositories_path.children.map {|r| Repository.new(r)}.sort_by {|r| r.name}
     end
@@ -95,16 +68,18 @@ module Bananajour
       repositories.find {|r| r.name == name}
     end
     
+    def service_id
+      "_bananajour_3"
+    end
+    
     def to_hash
       {
         "name" => config.name,
         "email" => config.email,
-        "uri"  => web_uri,
-        "git-uri" => git_uri,
         "gravatar" => Bananajour.gravatar,
         "version" => Bananajour::VERSION,
         "repositories" => repositories.collect do |r|
-          {"name" => r.name, "uri" => r.uri}
+          {"name" => r.name}
         end
       }
     end
