@@ -44,12 +44,12 @@ class Bananajour::Bonjour::Browser
                   resolve_reply.service.stop unless resolve_reply.service.stopped?
                 end
               rescue DNSSD::BadParamError
-                # Ignore
+                # Ignore em
               end
             end
           end
         rescue DNSSD::BadParamError
-          # Ignore
+          # Ignore em
         end
       end
     end

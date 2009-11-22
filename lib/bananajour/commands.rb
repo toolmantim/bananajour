@@ -11,15 +11,16 @@ module Bananajour::Commands
     abort(config_message["user.name", "My Name"]) if config.name.empty?
     abort(config_message["user.email", "name@domain.com"]) if config.email.empty?
   end
-  
+
+  # Start sinatra app.
   def serve_web!
+    puts "* Starting web interface ".foreground(:yellow)
     fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production" }
-    puts "* Started web interface".foreground(:yellow)
   end
 
   def serve_git!
-    fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
     puts "* Started git daemon".foreground(:yellow)
+    fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
   end
   
   def advertise!
