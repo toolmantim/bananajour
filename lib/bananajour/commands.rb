@@ -13,9 +13,9 @@ module Bananajour::Commands
   end
 
   # Start sinatra app.
-  def serve_web!(log)
+  def serve_web!
     puts "* Starting " + web_uri.foreground(:yellow)
-    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production #{log}" }
+    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production" }
   end
 
   def serve_git!
