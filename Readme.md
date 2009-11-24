@@ -65,23 +65,23 @@ Linux support
 
 To install the dnssd gem on Linux you'll need [avahi](http://avahi.org/). For Ubunutu peeps this means:
 
-  sudo apt-get install libavahi-compat-libdnssd-dev libavahi-discover
+    sudo apt-get install libavahi-compat-libdnssd-dev libavahi-discover
 
 You can debug whether or not Avahi can see Bananajour and git-daemon Bonjour statuses using the command 'avahi-browse'.  This command can be found in the package 'avahi-utils'.
 
 The following command will show you all of the Bonjour services running on your local network:
 
-  avahi-browse --all
+    avahi-browse --all
 
 If you kill bananajour with kill -9 it doesn't get a chance to unregister the Bonjour services, and when it is restarted it will die with DNSSD::AlreadyRegisteredError.  Although not ideal, you can work around this my restarting avahi-daemon first.
 
 You will also need to uncomment the following line in your /etc/avahi/avahi-daemon.conf.
 
-  domain-name=local
+    domain-name=local
 
 And then restart the Avahi service:
 
-  sudo service avahi-daemon restart
+    sudo service avahi-daemon restart
 
 Note: You might have to restart the avahi-daemon sometimes if you are having problems seeing other bananajours.
 
