@@ -128,6 +128,7 @@ Contributors
 * [Nate Haas](http://github.com/natehaas)
 * [James Sadler](http://github.com/freshtonic)
 * [Jason King](http://github.com/JasonKing)
+* [Michael Pope](http://github.com/map7)
 
 License
 -------
