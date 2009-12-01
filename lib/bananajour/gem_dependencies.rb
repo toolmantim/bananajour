@@ -11,7 +11,8 @@ module Bananajour
       %w( grit                 1.1.1 ),
       %w( dnssd                1.3.1 ),
       %w( haml                 2.0.9 ),
-      %w( activesupport        2.3.2 )
+      %w( activesupport        2.3.2 ),
+      %w( thin                 1.0.0 )
     ]
     class Dependency < Struct.new(:name, :version)
       def require_gem; gem name, version end
