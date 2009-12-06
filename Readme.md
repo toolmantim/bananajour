@@ -85,11 +85,6 @@ And then restart the Avahi service:
 
 Note: You might have to restart the avahi-daemon sometimes if you are having problems seeing other bananajours.
 
-Using with Ginatra
-------------------
-
-Rumour has it [ginatra](http://github.com/lenary/ginatra) can be used to provide richer gitweb-like browsing of your bananajour repositories. Symlink ginatra's `repos` directory to `~/.bananajour/repositories` to serve up your bananajour repositories.
-
 Official repository and support
 -------------------------------
 
