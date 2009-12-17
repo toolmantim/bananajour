@@ -1,4 +1,4 @@
-require 'md5'
+require 'digest/md5'
 
 module Bananajour
   module GravatarHelpers
@@ -6,7 +6,7 @@ module Bananajour
       gravatar_uri(self.config.email)
     end
     def gravatar_uri(email)
-      "http://gravatar.com/avatar/#{MD5.md5(email)}.png"
+      "http://gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}.png"
     end
   end
   

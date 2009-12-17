@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'yaml'
 require 'ostruct'
 require 'socket'
-require 'md5'
+require 'digest/md5'
 
 require 'rainbow'
 require 'dnssd'
