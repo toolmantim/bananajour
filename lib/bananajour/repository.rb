@@ -1,4 +1,4 @@
-Bananajour.require_gem 'grit'
+require 'grit'
 
 module Bananajour
   class Repository

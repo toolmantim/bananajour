@@ -15,7 +15,13 @@ module Bananajour::Commands
   # Start sinatra app.
   def serve_web!
     puts "* Starting " + web_uri.foreground(:yellow)
-    fork { exec "/usr/bin/env ruby #{File.dirname(__FILE__)}/../../sinatra/app.rb -p #{web_port} -e production" }
+    fork do
+      ENV["RACK_ENV"] = "production"
+      require "bananajour/../../sinatra/app"
+      Sinatra::Application.set :port, web_port
+      Sinatra::Application.set :server, "thin"
+      Sinatra::Application.run!
+    end
   end
 
   def serve_git!

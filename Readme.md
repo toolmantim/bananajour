@@ -88,17 +88,8 @@ Feature and support discussions live at [groups.google.com/group/bananajour](htt
 Developing
 ----------
 
-If you want to hack on the sinatra app then do so from a local clone but run your actual bananjour from the gem version. Running the sinatra app directly won't broadcast it onto the network and it'll run on a different port:
-
-    ruby sinatra/app.rb -s thin
-
-If you want code reloading use [shotgun](http://github.com/rtomayko/shotgun) instead:
-
-    shotgun sinatra/app.rb -s thin
-
-If you then want to run your working copy as your public bananajour rebuild and install it as a gem:
-
-    sudo rake gem:install
+    bundle install
+    rake -T
 
 Contributors
 ------------

@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 
-require "rubygems"
-require (File.symlink?(__FILE__) ? "bananajour" : File.join(File.dirname(__FILE__), "/../lib/bananajour"))
+lib = File.expand_path('../../lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
+
+require 'bananajour'
 
 Thread.abort_on_exception = true
 

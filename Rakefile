@@ -1,64 +1,25 @@
-$:.unshift "#{File.dirname(__FILE__)}/lib"
+lib = File.expand_path('../lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
 
-require "bananajour/gem_dependencies"
+desc "Boot up the web interface"
+task :web do
+  exec "bundle exec ruby -I#{lib} sinatra/app.rb -p 4567 -s thin"
+end
+
+desc "Boot up the web interface with shotgun"
+task :shotgun do
+  exec "bundle exec shotgun sinatra/app.rb -s thin"
+end
+
 require "bananajour/version"
-
-gem = Gem::Specification.new do |gem|
-  gem.name             = "bananajour"
-  gem.version          = Bananajour::VERSION
-  gem.platform         = Gem::Platform::RUBY
-  gem.extra_rdoc_files = ["Readme.md"]
-  gem.summary          = "Local git repository hosting with a sexy web interface and bonjour discovery. It's like your own little adhoc, network-aware github!"
-  gem.description      = gem.summary
-  gem.authors          = ["Tim Lucas"]
-  gem.email            = "t.lucas@toolmantim.com"
-  gem.homepage         = "http://github.com/toolmantim/bananajour"
-  gem.require_path     = "lib"
-  gem.files            = %w(Readme.md Rakefile) + Dir.glob("{bin,lib,sinatra}/**/*")
-  gem.has_rdoc         = false
-  gem.bindir           = 'bin'
-  gem.executables      = [ 'bananajour' ]
-  Bananajour::GemDependencies.all.each {|dep| gem.add_runtime_dependency( dep.name, dep.version ) }
-end
-
-task :clean do
-  FileUtils.rm_rf Dir['*.gem', '*.gemspec']
-end
+gem_file_name = "bananajour-#{Bananajour::VERSION}"
  
-namespace :gem do
+desc "Build the gem"
+task :build do
+  exec "gem build bananajour.gemspec"
+end
 
-  desc "Rebuild and install bananajour as a gem"
-  task :install => :package do
-    require 'rubygems/installer'
-    Dir['*.gem'].each do |gem|
-      Gem::Installer.new(gem).install
-    end
-  end
-
-  desc "Create the gem"
-  task :package => [:clean, "spec:generate"] do
-    require 'rubygems/builder'
-    Gem::Builder.new( gem ).build
-  end
-
-  namespace :spec do
-
-    desc "Update #{gem.name}.gemspec"
-    task :generate do
-      File.open("#{gem.name}.gemspec", "w") do |f|
-        f.puts(gem.to_ruby)
-      end
-    end
-
-    desc "Test spec in github cleanroom"
-    task :test => :generate do
-      require 'rubygems/specification'
-      data = File.read("#{gem.name}.gemspec")
-      spec = nil
-      Thread.new { spec = eval("$SAFE = 3\n#{data}") }.join
-      puts "#{spec} - Good to go!"
-    end
-
-  end
-  
+desc "Release gem"
+task :release => :build do
+  exec "gem push #{gem_file_name}"
 end

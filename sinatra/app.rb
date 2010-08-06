@@ -2,21 +2,16 @@ Thread.abort_on_exception = true
 
 __DIR__ = File.dirname(__FILE__)
 
-require "#{__DIR__}/../lib/bananajour"
+require "bananajour"
 
-Bananajour.gem 'sinatra'
 require 'sinatra'
+require 'haml'
+require 'json'
 
-Bananajour.require_gem 'haml'
-Bananajour.require_gem 'json'
-
-Bananajour.gem 'activesupport'
 require 'active_support/core_ext/enumerable'
 require 'active_support/core_ext/array'
 
-require 'forwardable' # Fix for issue #8 - Thin borking on uninitialized constant Forwardable
-
-set :server, 'thin' # Things go weird with anything else - let's lock it down to thin
+set :server, 'thin'
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
 

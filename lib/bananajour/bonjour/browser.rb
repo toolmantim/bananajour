@@ -1,4 +1,4 @@
-Bananajour.require_gem 'dnssd'
+require 'dnssd'
 
 require 'thread'
 require 'timeout'
