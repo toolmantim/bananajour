@@ -16,10 +16,10 @@ gem_file_name = "bananajour-#{Bananajour::VERSION}"
  
 desc "Build the gem"
 task :build do
-  exec "gem build bananajour.gemspec"
+  system "gem build bananajour.gemspec"
 end
 
 desc "Release gem"
 task :release => :build do
-  exec "gem push #{gem_file_name}"
+  system "gem push #{gem_file_name}"
 end
