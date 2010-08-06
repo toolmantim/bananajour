@@ -53,13 +53,6 @@ Optional configuration: you can override the hostname by setting a global git co
 
 If you set this setting, then bananajour will assume that you know precisely what you're doing, it will not append .local, it will not check this hostname is valid, or do anything to it.  If you set this, then you're on your own.
 
-Make sure you have these ports open on your firewall:
-9417 - git - bigbananajour
-9418 - git - bananajour
-9331 - bananajour
-9332 - bigbananajour
-
-
 Linux support
 -------------
 
