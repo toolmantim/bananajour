@@ -21,5 +21,5 @@ end
 
 desc "Release gem"
 task :release => :build do
-  system "gem push #{gem_file_name}"
+  system "gem push #{gem_file_name}.gem"
 end
