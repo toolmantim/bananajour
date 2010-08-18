@@ -1,21 +1,16 @@
 libdir = File.dirname(__FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
-require 'yaml'
-require 'ostruct'
-require 'socket'
-require 'digest/md5'
-
-require 'rainbow'
-require 'dnssd'
-require 'fancypath'
-
 require 'bananajour/repository'
 require 'bananajour/grit_extensions'
 require 'bananajour/version'
 require 'bananajour/bonjour'
 require 'bananajour/helpers'
 require 'bananajour/commands'
+
+require 'ostruct'
+require 'socket'
+require 'fancypath'
 
 module Bananajour
   

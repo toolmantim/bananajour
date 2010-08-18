@@ -1,3 +1,6 @@
+require 'rainbow'
+require 'fancypath'
+
 module Bananajour::Commands
 
   def check_git!

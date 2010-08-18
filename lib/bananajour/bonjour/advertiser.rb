@@ -1,3 +1,5 @@
+require 'dnssd'
+
 class Bananajour::Bonjour::Advertiser
   def initialize
     @services = []

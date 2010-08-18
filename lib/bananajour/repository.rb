@@ -1,4 +1,5 @@
 require 'grit'
+require 'fancypath'
 
 module Bananajour
   class Repository
