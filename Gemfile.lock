@@ -1,0 +1,37 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (2.3.2)
+    daemons (1.0.10)
+    diff-lcs (1.1.2)
+    dnssd (1.3.1)
+    eventmachine (0.12.10)
+    fancypath (0.5.13)
+    grit (1.1.1)
+      diff-lcs (>= 1.1.2)
+      mime-types (>= 1.15)
+    haml (2.0.9)
+    json (1.1.7)
+    mime-types (1.16)
+    rack (1.2.1)
+    rainbow (1.0.1)
+    sinatra (1.0)
+      rack (>= 1.0)
+    thin (1.2.7)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport (= 2.3.2)
+  dnssd (= 1.3.1)
+  fancypath (= 0.5.13)
+  grit (= 1.1.1)
+  haml (= 2.0.9)
+  json (= 1.1.7)
+  rainbow (= 1.0.1)
+  sinatra (= 1.0.0)
+  thin (= 1.2.7)
