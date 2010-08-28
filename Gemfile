@@ -2,7 +2,6 @@ source :rubyforge
 
 gem "sinatra",       "~> 1.0"
 gem "json",          "~> 1.1"
-gem "fancypath",     "~> 0.5"
 gem "rainbow",       "~> 1.0"
 gem "grit",          "~> 1.1"
 gem "dnssd",         "~> 1.3"

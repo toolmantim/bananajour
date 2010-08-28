@@ -10,7 +10,7 @@ require 'bananajour/commands'
 
 require 'ostruct'
 require 'socket'
-require 'fancypath'
+require 'pathname'
 
 module Bananajour
   
@@ -21,7 +21,7 @@ module Bananajour
     include Commands
     
     def setup?
-      repositories_path.exists?
+      repositories_path.exist?
     end
     
     def setup!
@@ -29,11 +29,11 @@ module Bananajour
     end
     
     def path
-      Fancypath("~/.bananajour").expand_path
+      Pathname("~/.bananajour").expand_path
     end
     
     def repositories_path
-      path/"repositories"
+      path + "repositories"
     end
 
     def get_git_global_config(key)

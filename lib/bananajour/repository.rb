@@ -1,5 +1,5 @@
 require 'grit'
-require 'fancypath'
+require 'pathname'
 
 module Bananajour
   class Repository
@@ -10,14 +10,14 @@ module Bananajour
       name.gsub(/[^A-Za-z-]+/, '').downcase
     end
     def initialize(path)
-      @path = Fancypath(path)
+      @path = Pathname(path)
     end
     def ==(other)
       other.respond_to?(:path) && self.path == other.path
     end
     attr_reader :path
-    def exists?
-      path.exists?
+    def exist?
+      path.exist?
     end
     def init!
       path.create_dir

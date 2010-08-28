@@ -1,5 +1,5 @@
 require 'rainbow'
-require 'fancypath'
+require 'pathname'
 
 module Bananajour::Commands
 
@@ -37,7 +37,7 @@ module Bananajour::Commands
   end
   
   def add!(dir, name = nil)
-    dir = Fancypath(dir)
+    dir = Pathname(dir)
 
     unless dir.join(".git").directory?
       abort "Can't init project #{dir}, no .git directory found."
@@ -52,7 +52,7 @@ module Bananajour::Commands
 
     repo = Bananajour::Repository.for_name(name)
 
-    if repo.exists?
+    if repo.exist?
       abort "You've already a project #{repo}."
     end
 
@@ -74,7 +74,7 @@ module Bananajour::Commands
   def clone!(url, clone_name)
     dir = clone_name || File.basename(url).chomp('.git')
 
-    if File.exists?(dir)
+    if File.exist?(dir)
       abort "Can't clone #{url} to #{dir}, the directory already exists."
     end
 
