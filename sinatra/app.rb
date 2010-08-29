@@ -1,6 +1,6 @@
 Thread.abort_on_exception = true
 
-__DIR__ = File.dirname(__FILE__)
+$:.unshift File.dirname(__FILE__) + "/lib"
 
 require "bananajour"
 
@@ -15,12 +15,12 @@ set :server, 'thin'
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
 
-require "#{__DIR__}/lib/mock_browsers" if Sinatra::Application.development?
+require "mock_browsers" if Sinatra::Application.development?
 
 set :bananajour_browser, Bananajour::Bonjour::BananajourBrowser.new
 set :repository_browser, Bananajour::Bonjour::RepositoryBrowser.new
 
-load "#{__DIR__}/lib/diff_helpers.rb"
+require "diff_helpers"
 helpers DiffHelpers
 
 require "bananajour/helpers"

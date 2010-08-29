@@ -8,7 +8,7 @@ end
 
 desc "Boot up just the web interface"
 task :web do
-  exec "bundle exec ruby -I#{lib} sinatra/app.rb -p 4567 -s thin"
+  exec "bundle exec thin start -c #{File.dirname(__FILE__)}/sinatra -p 4567"
 end
 
 require "bananajour/version"
