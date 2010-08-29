@@ -15,13 +15,12 @@ require "bananajour/version"
 version = Bananajour::VERSION
 gem_name = "bananajour-#{version}.gem"
 
-desc "Build #{gem_name} into pkg"
+desc "Build #{gem_name}"
 task :build do
   system "gem build bananajour.gemspec"
 end
 
 desc "Tag and push #{gem_name}"
 task :push => :build do
-  abort "Push failed: #{version} already tagged. Do you need to bump the version?" if `git tag`.split.include?(version)
-  system "git tag #{version} && git push --all && git push --tags && gem push #{gem_name}"
+  system "git tag #{version} && git push && git push --tags && gem push #{gem_name}"
 end
