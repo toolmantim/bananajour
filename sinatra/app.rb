@@ -14,6 +14,7 @@ require 'active_support/core_ext/array'
 set :server, 'thin'
 set :haml, {:format => :html5, :attr_wrapper => '"'}
 set :logging, false
+set :root, File.dirname(__FILE__)
 
 require "mock_browsers" if Sinatra::Application.development?
 
