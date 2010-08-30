@@ -25,7 +25,7 @@ module Bananajour
     end
     
     def setup!
-      repositories_path.create_dir
+      repositories_path.mkpath
     end
     
     def path

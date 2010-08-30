@@ -20,7 +20,7 @@ module Bananajour
       path.exist?
     end
     def init!
-      path.create_dir
+      path.mkpath
       Dir.chdir(path) { `git init --bare` }
     end
     def name
