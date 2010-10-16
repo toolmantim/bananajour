@@ -60,7 +60,7 @@ To install the dnssd gem on Linux you'll need [avahi](http://avahi.org/). For Ub
 
     sudo aptitude update
 
-    sudo aptitude install ruby-dev \
+    sudo aptitude install g++ ruby-dev \
      libavahi-compat-libdnssd-dev avahi-discover avahi-utils
 
 and you'll need to set the domain-name:
