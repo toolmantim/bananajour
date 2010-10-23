@@ -9,7 +9,7 @@ module DiffHelpers
     raw_diff = diff.diff.split(/\n/)
 
     if diff.a_blob.nil?
-      filename = diff.b_blob.name
+      filename = parse_filename(raw_diff[0..1])
       line_num = 1
       lines = diff.b_blob.data.split(/\n/).map do |line|
         line_num += 1
