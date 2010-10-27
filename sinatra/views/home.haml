@@ -44,7 +44,7 @@
         :display inline
 
       h2
-        :color #333
+        :color #369
         :font-size 24px
       p.uri
         :color #666
@@ -146,8 +146,8 @@
     .projects, .people
       :float left
       :width 48%
-      :background-color #fff
-      :border 4px solid #ff0
+      :background-color #eee
+      :border 4px solid #ccc
       :-webkit-border-radius 10px
       :-moz-border-radius 10px
       :margin-top 10px
@@ -157,8 +157,8 @@
         :text-align center
         :font-size 16px
         :line-height 28px
-        :background-color #ff0
-        :color #960
+        :background-color #ccc
+        :color #333
         :text-transform uppercase
 
       h3
@@ -201,7 +201,7 @@
               :vertical-align middle
       
     .local .repository
-      :border-color #980
+      :border-color #ccc
   
 - for repository in @my_repositories
   - heads = repository.grit_repo.heads
