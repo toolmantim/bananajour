@@ -19,7 +19,7 @@ module Bananajour::Commands
   def serve_web!
     puts "* Starting " + web_uri.foreground(:yellow)
     fork do
-      ENV["RACK_ENV"] = "production"
+      ENV["RACK_ENV"] ||= "production"
       require "bananajour/../../sinatra/app"
       Sinatra::Application.set :port, web_port
       Sinatra::Application.set :server, "thin"

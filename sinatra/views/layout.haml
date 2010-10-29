@@ -6,9 +6,17 @@
     
     %style{:type => "text/css"}
       :sass
+        @-webkit-keyframes spin
+          from
+            :-webkit-transform rotate(0deg)
+          to
+            :-webkit-transform rotate(360deg)
+      
+        html
+          :background -webkit-gradient(linear, left center, right center, from(red), color-stop(14%, orange), color-stop(28%, yellow), color-stop(42%, green), color-stop(56%, blue), color-stop(70%, indigo), to(violet))
+        
         body
           :position relative
-          :background-color #dc0
           :color black
           :font-family "Helvetica", arial, sans-serif
           :width 650px
@@ -26,21 +34,29 @@
             :float right
             :margin-right 10px
             :border 2px solid #ff0
-            :-webkit-border-radius 3px
+            :border-radius 3px
+            :background #ff0
           a
             :color #000
             :text-decoration none
+            :text-shadow 1px 1px 0 rgba(255,255,255,0.6)
             img
               :position absolute
               :top 0
               :left -140px
               :border none
+              &:hover
+                :-webkit-animation-name spin
+                :-webkit-animation-duration 0.5s
+                :-webkit-animation-timing-function linear
+                :-webkit-animation-iteration-count infinite
             .owner
               :display block
               :font-size 16px
               :font-weight bold
               :text-transform uppercase
               :color #fff
+              :text-shadow 1px 1px 0 rgba(0,0,0,0.4)
     
         pre
           :overflow auto
