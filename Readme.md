@@ -12,7 +12,7 @@ Unlike Gitjour, the repositories you're serving are not your working git reposit
 
 Follow [@bananajour](http://twitter.com/bananajour) on twitter for all release updates.
 
-![Screenshot of local view of Bananajour 2.1.3](http://cloud.github.com/downloads/toolmantim/bananajour/screenshot.png)
+![Screenshot of local view of Bananajour 2.1.3](http://github.com/downloads/toolmantim/bananajour/screenshot.png)
 
 Installation and usage
 ----------------------
