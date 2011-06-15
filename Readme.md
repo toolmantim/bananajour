@@ -56,7 +56,7 @@ If you set this setting, then bananajour will assume that you know precisely wha
 Linux support
 -------------
 
-To install the dnssd gem on Linux you'll need [avahi](http://avahi.org/). For Ubunutu peeps this means:
+To install the dnssd gem on Linux you'll need [avahi](http://avahi.org/). For Ubuntu peeps this means:
 
     sudo aptitude update
 
