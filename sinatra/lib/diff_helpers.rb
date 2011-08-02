@@ -8,7 +8,10 @@ module DiffHelpers
   def parse_diff(diff)
     raw_diff = diff.diff.split(/\n/)
 
-    if diff.a_blob.nil?
+    if raw_diff.length < 2 && raw_diff[0].start_with?("Binary files")
+      filename = raw_diff[0].match(/Binary\ files\ (.*)\ and\ (.*)\ differ/i)
+      lines = Array[]
+    elsif diff.a_blob.nil?
       filename = parse_filename(raw_diff[0..1])
       line_num = 1
       lines = diff.b_blob.data.split(/\n/).map do |line|
