@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "grit",          "~> 1.1"
   gem.add_dependency "dnssd",         "~> 1.3"
   gem.add_dependency "haml",          "~> 3.0"
+  gem.add_dependency "sass",          "~> 3.0"
   gem.add_dependency "activesupport", "~> 2.3"
   gem.add_dependency "thin",          "~> 1.2"
 end

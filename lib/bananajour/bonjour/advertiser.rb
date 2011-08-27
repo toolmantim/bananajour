@@ -20,10 +20,16 @@ class Bananajour::Bonjour::Advertiser
       DNSSD.register("#{Bananajour.config.name}'s bananajour", "_http._tcp,_bananajour", nil, Bananajour.web_port, tr)
     end
     def register_repos
-      loop do
+      interrupted = false
+      while !interrupted  
         stop_old_services
         register_new_repositories
-        sleep(1)
+        begin
+          sleep(1)
+        rescue Interrupt
+          # CTRL-C, shut down cleanly (sans stack trace)
+          interrupted = true
+        end
       end
     end
     def stop_old_services
