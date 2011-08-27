@@ -28,7 +28,12 @@ when nil
   pids << Bananajour.serve_web!
   pids << Bananajour.serve_git!
   pids << Bananajour.advertise!
-  Process.waitall
+
+  begin
+    Process.waitall
+  rescue Interrupt
+    # CTRL-C, shut down cleanly (sans stack trace)
+  end
 
 when "add", "init"
   repo = Bananajour.add!(ARGV[1] || File.expand_path("."))
