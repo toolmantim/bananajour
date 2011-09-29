@@ -53,7 +53,7 @@ module Bananajour::Commands
     repo = Bananajour::Repository.for_name(name)
 
     if repo.exist?
-      abort "You've already a project #{repo}."
+      abort "You've already created a project named #{repo}."
     end
 
     repo.init!
