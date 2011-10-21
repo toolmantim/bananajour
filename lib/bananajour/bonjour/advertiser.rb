@@ -21,7 +21,7 @@ class Bananajour::Bonjour::Advertiser
     end
     def register_repos
       interrupted = false
-      while !interrupted  
+      while !interrupted
         stop_old_services
         register_new_repositories
         begin

@@ -6,11 +6,11 @@
       :font-size 14px
       a
         :color black
-  
+
 - if @my_repositories.empty?
 
   %h2 Add a project
-  
+
   %pre
     :preserve
       $ cd ~/code/myproj
@@ -36,10 +36,10 @@
       :position relative
       :border 4px solid #ff0
       :border 4px solid rgba(0,0,0,0.5)
-      
+
       a
         :color #888
-      
+
       h2, p.uri
         :margin 0
         :display inline
@@ -51,16 +51,16 @@
         :color #666
         :margin 5px 0
         :font-size 12px
-      
+
       p.branches
         :margin 5px 0
         :font-size 12px
-      
+
       ul, li
         :margin 0
         :padding 0
         :list-style none
-        
+
       p.readme
         :margin 0 -5px 0 0
         a
@@ -79,13 +79,13 @@
           &:hover
             :color #666
             :background-color #ddd
-        
+
       h3
         :margin 10px 0 0 0
         :font-size 12px
         :color #999
         :text-transform uppercase
-      
+
       ul.network
         :margin-top 5px
         li
@@ -139,11 +139,11 @@
             :float left
             :margin-left -30px
             :margin-top 2px
-    
+
     img.gravatar
       :width 20px
       :height 20px
-    
+
     .projects, .people
       :float left
       :width 48%
@@ -152,7 +152,7 @@
       :-webkit-border-radius 10px
       :-moz-border-radius 10px
       :margin-top 10px
-      
+
       h2
         :margin 0
         :text-align center
@@ -164,7 +164,7 @@
 
       h3
         :margin 0 0 5px 0
-        
+
       ul, li
         :margin 0
         :padding 0
@@ -179,14 +179,14 @@
           :margin-right 0.2em
         a
           :color #000
-      
+
     .projects
       ul li
         ul, li
           :display inline
       a
         :white-space nowrap
-    
+
     .people
       :margin-left 10px
       ul
@@ -200,13 +200,13 @@
               :text-decoration underline
             img
               :vertical-align middle
-      
+
     .local .repository
       :border-color #980
-  
+
 - for repository in @my_repositories
   - heads = repository.grit_repo.heads
-  
+
   .repository{:id => repository.html_id, 'data-name' => repository.name}
 
     - if repository.readme_file && !local?
@@ -279,7 +279,7 @@
         });
       });
     });
-  
+
   .projects
     - if @other_repos_by_name.empty?
       %h2 No other projects

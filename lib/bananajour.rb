@@ -13,25 +13,25 @@ require 'socket'
 require 'pathname'
 
 module Bananajour
-  
+
   class << self
 
     include DateHelpers
     include GravatarHelpers
     include Commands
-    
+
     def setup?
       repositories_path.exist?
     end
-    
+
     def setup!
       repositories_path.mkpath
     end
-    
+
     def path
       Pathname("~/.bananajour").expand_path
     end
-    
+
     def repositories_path
       path + "repositories"
     end
@@ -39,7 +39,7 @@ module Bananajour
     def get_git_global_config(key)
       `git config --global #{key}`.strip
     end
-    
+
     def config
       @config ||= begin
         OpenStruct.new({
@@ -48,15 +48,15 @@ module Bananajour
         })
       end
     end
-    
+
     def web_port
       9331
     end
-    
+
     def web_uri
       "http://#{host_name}:#{web_port}/"
     end
-    
+
     def host_name
       hn = get_git_global_config("bananajour.hostname")
       unless hn.nil? or hn.empty?
@@ -75,7 +75,7 @@ module Bananajour
         hn + ".local"
       end
     end
-    
+
     def git_uri
       "git://#{host_name}/"
     end
@@ -83,11 +83,11 @@ module Bananajour
     def repositories
       repositories_path.children.map {|r| Repository.new(r)}.sort_by {|r| r.name}
     end
-    
+
     def repository(name)
       repositories.find {|r| r.name == name}
     end
-    
+
     def to_hash
       {
         "name" => config.name,
@@ -101,7 +101,7 @@ module Bananajour
         end
       }
     end
-    
+
   end
-  
+
 end
