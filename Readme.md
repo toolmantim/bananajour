@@ -1,6 +1,7 @@
 Bananajour - Local git publication and collaboration
 ====================================================
 
+
 Via the [best reddit comment ever written](http://www.reddit.com/r/programming/comments/9txsd/git_bonjour_bananajour_version_22_released/c0efrxz):
 
 > The logo is the fucking business. The mustache just bring[s] it to a whole
@@ -13,6 +14,11 @@ Unlike Gitjour, the repositories you're serving are not your working git reposit
 Follow [@bananajour](http://twitter.com/bananajour) on twitter for all release updates.
 
 ![Screenshot of local view of Bananajour 2.1.3](https://github.com/toolmantim/bananajour/raw/master/screenshot.png)
+
+Purpose
+-------
+
+Hosting/sharing git repos is painful. This is the core value that github originally solved. When you don't have internet access, say at railscamp, then bananajour allows for discovery and read-only access of projects. - @drnic
 
 Installation and usage
 ----------------------
