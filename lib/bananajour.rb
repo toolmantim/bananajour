@@ -49,7 +49,11 @@ module Bananajour
     end
 
     def get_git_global_config(key)
-      `git config --global #{key}`.strip
+      if git_version_at_least? '1.7.10'
+        `git config --global --includes #{key}`.strip
+      else
+        `git config --global #{key}`.strip
+      end
     end
     
     def config
