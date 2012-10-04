@@ -36,8 +36,24 @@ module Bananajour
       path + "repositories"
     end
 
+    def git_version
+      `git --version`[/\d+(\.\d+)+/]
+    end
+
+    def version_array(version_string)
+      version_string.split('.').map { |s| s.to_i }
+    end
+
+    def git_version_at_least?(required_version)
+      (version_array(git_version) <=> version_array(required_version)) >= 0
+    end
+
     def get_git_global_config(key)
-      `git config --global #{key}`.strip
+      if git_version_at_least? '1.7.10'
+        `git config --global --includes #{key}`.strip
+      else
+        `git config --global #{key}`.strip
+      end
     end
     
     def config
