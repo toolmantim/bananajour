@@ -8,7 +8,7 @@ module Bananajour::Commands
       abort "You have #{version}, you need at least 1.6"
     end
   end
-  
+
   def check_git_config!
     config_message = lambda {|key, example| "You haven't set your #{key} in your git config yet. To set it: git config --global #{key} '#{example}'"}
     abort(config_message["user.name", "My Name"]) if config.name.empty?
@@ -31,11 +31,11 @@ module Bananajour::Commands
     puts "* Starting " + "#{git_uri}".foreground(:yellow)
     fork { exec "git daemon --base-path=#{repositories_path} --export-all" }
   end
-  
+
   def advertise!
     fork { Bananajour::Bonjour::Advertiser.new.go! }
   end
-  
+
   def add!(dir, name = nil)
     dir = Pathname(dir)
 
@@ -62,15 +62,15 @@ module Bananajour::Commands
 
     repo
   end
-  
+
   def init_success_message(repo_dirname)
     plain_init_success_message(repo_dirname).gsub("git push banana master", "git push banana master".foreground(:yellow))
   end
-  
+
   def plain_init_success_message(repo_dirname)
     "Bananajour repository #{repo_dirname} initialised and remote banana added.\nNext: git push banana master"
   end
-  
+
   def clone!(url, clone_name)
     dir = clone_name || File.basename(url).chomp('.git')
 

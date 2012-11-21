@@ -3,7 +3,7 @@
   %head
     %meta{:charset => "UTF-8"}
     %title= @page_title
-    
+
     %style{:type => "text/css"}
       :sass
         @-webkit-keyframes spin
@@ -11,7 +11,7 @@
             :-webkit-transform rotate(0deg)
           to
             :-webkit-transform rotate(360deg)
-      
+
         html
           :background-color #dc0
           &.rm
@@ -21,7 +21,7 @@
               :-webkit-animation-duration 0.5s
               :-webkit-animation-timing-function linear
               :-webkit-animation-iteration-count infinite
-        
+
         body
           :position relative
           :color black
@@ -29,7 +29,7 @@
           :width 650px
           :margin 0 auto
           :padding 30px 0
-          
+
         h1#title
           :font-size 32px
           :margin 0 0 10px 12px
@@ -62,7 +62,7 @@
 
         pre
           :overflow auto
-          
+
         ul.commits
           :width 100%
           :margin-top 5px
@@ -73,7 +73,7 @@
           :padding 8px 0
           :border 0px solid #ddd
           :border-top-width 1px
-          
+
           a
             :text-decoration none
             :color #333
@@ -101,10 +101,10 @@
             :width 25px
             :height 25px
             :float left
-        
+
         .clear
           :clear both
-        
+
         #pbjt
           :width 100px
           :height 100px
@@ -113,7 +113,7 @@
           :right -100px
           &:hover
             :background url(/peanut.png) bottom right no-repeat
-        
+
         #rm
           :width 100px
           :height 100px
@@ -122,7 +122,7 @@
           :left -100px
           &:hover
             :background url(/rm.gif) bottom left no-repeat
-      
+
     %script{:src => "/jquery-1.3.2.min.js", :type => "text/javascript"}
 
   %body{:class => ("local" if local?)}
@@ -143,7 +143,7 @@
     .clear
 
     :javascript
-      $("#pbjt").bind("click", function(){ 
+      $("#pbjt").bind("click", function(){
         $("<embed bgcolor='#000000' height='400' width='550' name='pbjt' pluginspage='http://www.adobe.com/go/getflashplayer' quality='high' src='/pbjt.swf' style='position:fixed;top:0;left:0;width:100%;height:100%' type='application/x-shockwave-flash' />").appendTo($("body"));
       });
       $("#rm").bind("click", function(){  $("html").toggleClass("rm") });

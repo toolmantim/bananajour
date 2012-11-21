@@ -9,7 +9,7 @@ module Bananajour
       "http://gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}.png"
     end
   end
-  
+
   # Lifted from Rails
   module DateHelpers
     # Reports the approximate distance in time between two Time or Date objects or integers as seconds.

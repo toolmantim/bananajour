@@ -19,18 +19,18 @@ class RepositoryBrowser
       )
     end
   end
-  
+
   def other_repositories
     repositories.reject {|r| Bananajour.repositories.any? {|my_rep| my_rep.name == r.name}}
   end
-  
+
   def repositories_similar_to(repository)
     repositories.select {|r| r.name == repository.name}
   end
-  
+
   def repositories_for(person)
     repositories.select {|r| r.person == person}
   end
-  
+
 end
 end

@@ -15,10 +15,10 @@ class BananajourBrowser
       )
     end
   end
-  
+
   def other_bananajours
     bananajours.reject {|b| b.uri == Bananajour.web_uri}
   end
-  
+
 end
 end
