@@ -7,7 +7,7 @@ Via the [best reddit comment ever written](http://www.reddit.com/r/programming/c
 > The logo is the fucking business. The mustache just bring[s] it to a whole
 > other level.
 
-Bananajour is local git repository hosting with a sexy web interface and Bonjour discovery. It's like a bunch of adhoc, local, network-aware githubs!
+Bananajour is local git repository hosting with a friendly web interface and Bonjour discovery. It's like a bunch of adhoc, local, network-aware githubs!
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories, they're served from `~/.bananajour/repositories`. You can push to your bananajour repositories from your working copies just like you do with github.
 
