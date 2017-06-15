@@ -11,8 +11,6 @@ Bananajour is local git repository hosting with a friendly web interface and Bon
 
 Unlike Gitjour, the repositories you're serving are not your working git repositories, they're served from `~/.bananajour/repositories`. You can push to your bananajour repositories from your working copies just like you do with github.
 
-Follow [@bananajour](http://twitter.com/bananajour) on twitter for all release updates.
-
 ![Screenshot of local view of Bananajour 2.1.3](https://github.com/toolmantim/bananajour/raw/master/screenshot.png)
 
 Purpose
